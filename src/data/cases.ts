@@ -11,6 +11,7 @@ export const cases: CaseStudy[] = [
     sector: { nl: 'Hospitality en entertainment', en: 'Hospitality and entertainment' },
     status: 'ongoing',
     image: olearys,
+    liveUrl: 'https://olearys.com/nl-be/',
     summary: {
       nl: 'Van één website voor iedereen naar aparte, duidelijke beslistrajecten voor B2C-bezoekers en B2B-organisatoren.',
       en: 'From one website for everyone to separate, clear decision paths for B2C visitors and B2B organisers.',
@@ -63,6 +64,7 @@ export const cases: CaseStudy[] = [
     name: 'Pinacello',
     sector: { nl: 'Consumer ecommerce', en: 'Consumer ecommerce' },
     status: 'ongoing',
+    liveUrl: 'https://promo.pinacello.com/',
     image: pinacello,
     summary: {
       nl: 'Aandacht voor het merk omzetten in een meetbare, doorlopende ecommerce-verkoopmotor.',
@@ -114,6 +116,7 @@ export const cases: CaseStudy[] = [
     name: 'HealthFactor',
     sector: { nl: 'Lokale gezondheid en fitness', en: 'Local health and fitness' },
     status: 'ongoing',
+    liveUrl: 'https://promo.healthfactor.be/',
     image: healthfactor,
     summary: {
       nl: 'Lokale aandacht omzetten in bezoeken, leads en nieuwe klanten via gerichte landingspagina’s en campagnes.',
@@ -165,6 +168,7 @@ export const cases: CaseStudy[] = [
     name: 'Nooms',
     sector: { nl: 'Supplementen en ecommerce', en: 'Supplements and ecommerce' },
     status: 'ongoing',
+    liveUrl: 'https://noomsdaily.com/',
     image: nooms,
     summary: {
       nl: 'Pre-sale via influencer marketing volledig uitverkocht — op weg naar een schaalbare digitale route van productontdekking tot herhaalaankoop.',

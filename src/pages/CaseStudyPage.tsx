@@ -1,10 +1,8 @@
 import { Link } from 'react-router-dom'
 import Seo from '../components/Seo'
-import Placeholder from '../components/Placeholder'
 import CaseVisual from '../components/CaseVisual'
 import Breadcrumbs from '../components/Breadcrumbs'
 import { getCase } from '../data/cases'
-import { portfolioItems } from '../data/portfolio'
 import type { CaseSlug } from '../data/types'
 import { trackEvent } from '../lib/analytics'
 import { useInView } from '../lib/useInView'
@@ -22,7 +20,7 @@ const COPY = {
     built: 'Wat er gebouwd werd',
     measurement: 'Hoe succes gemeten wordt',
     ongoingNote: 'Dit project loopt nog — cijfers volgen zodra beschikbaar.',
-    landingPages: 'Landingspagina’s',
+    visitSite: 'Bezoek de website',
     closingTitle: 'Herkenbaar? Laten we jullie klantreis bekijken',
   },
   en: {
@@ -35,7 +33,7 @@ const COPY = {
     built: 'What was built',
     measurement: 'How success is measured',
     ongoingNote: 'This project is still ongoing — numbers will follow once available.',
-    landingPages: 'Landing pages',
+    visitSite: 'Visit the website',
     closingTitle: 'Sound familiar? Let’s look at your customer journey',
   },
 }
@@ -47,7 +45,6 @@ export default function CaseStudyPage({ slug }: { slug: CaseSlug }) {
   const { ref } = useInView<HTMLDivElement>(() => trackEvent('case_viewed', { case: slug, placement: 'page' }))
 
   if (!c) return null
-  const relatedPortfolio = portfolioItems.filter((item) => item.caseSlug === slug)
 
   return (
     <div ref={ref}>
@@ -63,6 +60,17 @@ export default function CaseStudyPage({ slug }: { slug: CaseSlug }) {
           </div>
           <p className="mt-2 text-sm uppercase tracking-widest text-mute">{c.sector[lang]}</p>
           <p className="mt-6 max-w-2xl text-lg text-bone">{c.summary[lang]}</p>
+
+          {c.liveUrl && (
+            <a
+              href={c.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-block text-sm font-medium text-accent-2 hover:text-accent"
+            >
+              {t.visitSite} ↗
+            </a>
+          )}
 
           <CaseVisual case={c} lang={lang} ratio="aspect-[16/9]" className="mt-10" />
         </div>
@@ -102,23 +110,6 @@ export default function CaseStudyPage({ slug }: { slug: CaseSlug }) {
           {c.status === 'ongoing' && <p className="mt-4 text-sm text-mute">{t.ongoingNote}</p>}
         </div>
       </section>
-
-      {relatedPortfolio.length > 0 && (
-        <section className="border-b border-line bg-surface/30">
-          <div className="mx-auto max-w-4xl px-5 py-16 sm:px-8 sm:py-20">
-            <p className="text-sm font-semibold uppercase tracking-widest text-accent-2">{t.landingPages}</p>
-            <div className="mt-6 grid gap-5 sm:grid-cols-2">
-              {relatedPortfolio.map((item) => (
-                <div key={item.id} className="rounded-2xl border border-line bg-ink p-5">
-                  <Placeholder label={item.project} ratio="aspect-[4/3]" />
-                  <h3 className="mt-4 font-display text-base text-paper">{item.project}</h3>
-                  <p className="mt-2 text-sm text-mute">{item.description[lang]}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
 
       <section>
         <div className="mx-auto max-w-4xl px-5 py-16 text-center sm:px-8 sm:py-24">

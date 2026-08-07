@@ -6,7 +6,6 @@ import GrowthSystemVisual from '../components/GrowthSystemVisual'
 import ServiceGrid from '../components/ServiceGrid'
 import PricingSection from '../components/PricingSection'
 import CaseStudyGrid from '../components/CaseStudyGrid'
-import LandingPagePortfolio from '../components/LandingPagePortfolio'
 import AIAutomationFlows from '../components/AIAutomationFlows'
 import ProcessSection from '../components/ProcessSection'
 import AboutStef from '../components/AboutStef'
@@ -43,7 +42,6 @@ export default function Home() {
       <ServiceGrid />
       <PricingSection />
       <CaseStudyGrid />
-      <LandingPagePortfolio />
       <AIAutomationFlows />
       <ProcessSection />
       <AboutStef />

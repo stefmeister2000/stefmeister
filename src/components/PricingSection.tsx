@@ -38,9 +38,12 @@ export default function PricingSection() {
         <h2 className="max-w-2xl font-display text-3xl text-paper text-balance sm:text-4xl">{t.title}</h2>
         <p className="mt-5 max-w-2xl text-bone">{t.body}</p>
 
-        <div className="mt-12 grid gap-5 lg:grid-cols-3">
+        <div className="no-scrollbar -mx-5 mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-2 sm:mx-0 sm:px-0 sm:pb-0 lg:grid lg:grid-cols-3 lg:overflow-visible">
           {pricingTiers.map((tier) => (
-            <div key={tier.key} className="flex flex-col rounded-2xl border border-line bg-surface p-6 sm:p-8">
+            <div
+              key={tier.key}
+              className="flex w-[85%] shrink-0 snap-center flex-col rounded-2xl border border-line bg-surface p-6 sm:w-[60%] sm:p-8 lg:w-auto lg:shrink"
+            >
               <h3 className="font-display text-xl text-paper">{tier.name[lang]}</h3>
               <p className="mt-2 font-display text-2xl text-paper">{tier.price[lang]}</p>
               <p className="mt-3 text-sm text-mute">{tier.audience[lang]}</p>

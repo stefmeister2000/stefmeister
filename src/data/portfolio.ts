@@ -5,6 +5,7 @@ export const portfolioItems: PortfolioItem[] = [
     id: 'olearys-b2c-booking',
     project: "O'Learys — B2C booking landing page",
     caseSlug: 'olearys',
+    liveUrl: 'https://olearys.com/nl-be/',
     category: 'B2C',
     audience: {
       nl: 'Consumenten die een activiteit of avondje uit boeken',
@@ -21,6 +22,7 @@ export const portfolioItems: PortfolioItem[] = [
     id: 'olearys-b2b-events',
     project: "O'Learys — B2B company-event page",
     caseSlug: 'olearys',
+    liveUrl: 'https://olearys.com/nl-be/',
     category: 'B2B',
     audience: {
       nl: 'Bedrijven die een teamevent of bedrijfsfeest organiseren',
@@ -37,6 +39,7 @@ export const portfolioItems: PortfolioItem[] = [
     id: 'pinacello-campaign',
     project: 'Pinacello — ecommerce campagnepagina',
     caseSlug: 'pinacello',
+    liveUrl: 'https://promo.pinacello.com/',
     category: 'ecommerce',
     audience: { nl: 'Consumenten die instromen via Meta-campagnes', en: 'Consumers arriving via Meta campaigns' },
     objective: { nl: 'Meer online aankopen uit campagneverkeer', en: 'More online purchases from campaign traffic' },
@@ -50,6 +53,7 @@ export const portfolioItems: PortfolioItem[] = [
     id: 'healthfactor-promo',
     project: 'HealthFactor — promotiepagina',
     caseSlug: 'healthfactor',
+    liveUrl: 'https://promo.healthfactor.be/',
     category: 'lokaal',
     audience: {
       nl: 'Lokale doelgroep geïnteresseerd in gezondheid en fitness',
@@ -66,6 +70,7 @@ export const portfolioItems: PortfolioItem[] = [
     id: 'nooms-launch',
     project: 'Nooms — productlancering',
     caseSlug: 'nooms',
+    liveUrl: 'https://noomsdaily.com/',
     category: 'launch',
     audience: { nl: 'Vroege kopers en influencer-doelgroep', en: 'Early buyers and influencer audience' },
     objective: { nl: 'Eerste aankopen bij productlancering', en: 'First purchases at product launch' },

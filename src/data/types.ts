@@ -39,6 +39,7 @@ export interface CaseStudy {
   image?: string
   comingSoon?: boolean
   unavailable?: boolean
+  liveUrl?: string
 }
 
 export interface Client {
