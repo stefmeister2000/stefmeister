@@ -69,15 +69,15 @@ export const faqItems: FaqItem[] = [
   {
     question: { nl: 'Werk je projectmatig of op maandbasis?', en: 'Do you work project-based or on a monthly basis?' },
     answer: {
-      nl: 'Beide zijn mogelijk: een afgebakend project zoals een funnel-audit of nieuwe landingspagina, of een doorlopende samenwerking als groeipartner.',
-      en: 'Both are possible: a defined project such as a funnel audit or a new landing page, or an ongoing collaboration as a growth partner.',
+      nl: 'Beide zijn mogelijk: een afgebakend project zoals een groeianalyse of nieuwe landingspagina, of een doorlopend maandpakket als groeipartner.',
+      en: 'Both are possible: a defined project such as a growth analysis or a new landing page, or an ongoing monthly package as a growth partner.',
     },
   },
   {
     question: { nl: 'Hoe start een samenwerking?', en: 'How does a collaboration start?' },
     answer: {
-      nl: 'De meeste samenwerkingen starten met een funnel-audit: ik bekijk de huidige situatie en stel op basis daarvan de beste vervolgstap voor.',
-      en: 'Most collaborations start with a funnel audit: I look at the current situation and propose the best next step based on that.',
+      nl: 'De meeste samenwerkingen starten met een groeianalyse: ik bekijk de huidige situatie en stel op basis daarvan de beste vervolgstap voor.',
+      en: 'Most collaborations start with a growth analysis: I look at the current situation and propose the best next step based on that.',
     },
   },
   {
@@ -88,10 +88,10 @@ export const faqItems: FaqItem[] = [
     },
   },
   {
-    question: { nl: 'Wat kost een funnel-opstart?', en: 'What does a funnel setup cost?' },
+    question: { nl: 'Wat kost een samenwerking?', en: 'What does a collaboration cost?' },
     answer: {
-      nl: 'Een funnel-opstart start aan een vast tarief van €1.500: analyse van je huidige marketing, USP’s en positionering, een landingspagina, e-mailflows en de opzet van Meta Ads. Daarna is de prijs bespreekbaar, bijvoorbeeld voor extra kanalen zoals organische video’s.',
-      en: 'A funnel setup starts at a fixed rate of €1,500: analysis of your current marketing, USPs and positioning, one landing page, email flows and setting up Meta Ads. After that, pricing is discussed case by case — for example to add extra channels like organic video.',
+      nl: 'Doorlopende samenwerkingen lopen via drie groeipakketten, vanaf €1.500 per maand. De opstart — analyse, landingspagina, e-mailflows, campagne-opzet — zit daar altijd in inbegrepen. Losse strategische consulting kan ook, aan €250/uur of €1.250/dag.',
+      en: 'Ongoing collaborations run through three growth packages, starting at €1,500 per month. The setup — analysis, landing page, email flows, campaign setup — is always included. Standalone strategic consulting is also available, at €250/hour or €1,250/day.',
     },
   },
 ]

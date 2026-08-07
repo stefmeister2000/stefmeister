@@ -9,6 +9,7 @@ import type { CaseSlug } from '../data/types'
 import { trackEvent } from '../lib/analytics'
 import { useInView } from '../lib/useInView'
 import { useLang } from '../i18n/LanguageContext'
+import { persistentCta, persistentCtaHref } from '../data/nav'
 
 const COPY = {
   nl: {
@@ -23,7 +24,6 @@ const COPY = {
     ongoingNote: 'Dit project loopt nog — cijfers volgen zodra beschikbaar.',
     landingPages: 'Landingspagina’s',
     closingTitle: 'Herkenbaar? Laten we jullie klantreis bekijken',
-    cta: 'Vraag een funnel-audit aan',
   },
   en: {
     casesCrumb: 'Cases',
@@ -37,7 +37,6 @@ const COPY = {
     ongoingNote: 'This project is still ongoing — numbers will follow once available.',
     landingPages: 'Landing pages',
     closingTitle: 'Sound familiar? Let’s look at your customer journey',
-    cta: 'Request a funnel audit',
   },
 }
 
@@ -125,11 +124,11 @@ export default function CaseStudyPage({ slug }: { slug: CaseSlug }) {
         <div className="mx-auto max-w-4xl px-5 py-16 text-center sm:px-8 sm:py-24">
           <h2 className="font-display text-3xl text-paper text-balance sm:text-4xl">{t.closingTitle}</h2>
           <Link
-            to="/funnel-audit"
+            to={persistentCtaHref}
             onClick={() => trackEvent('audit_cta_clicked', { placement: `case_${c.slug}` })}
             className="mt-8 inline-block rounded-full bg-accent px-7 py-3.5 text-sm font-semibold text-accent-ink transition hover:bg-accent-2"
           >
-            {t.cta}
+            {persistentCta[lang]}
           </Link>
         </div>
       </section>

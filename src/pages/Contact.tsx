@@ -6,18 +6,18 @@ import { useLang } from '../i18n/LanguageContext'
 const COPY = {
   nl: {
     seoTitle: 'Contact',
-    seoDescription: 'Vraag een persoonlijke funnel-audit aan of plan een kennismaking met Stef Keppens.',
+    seoDescription: 'Vraag een persoonlijke groeianalyse aan of plan een groeigesprek met Stef Keppens.',
     title: 'Vertel kort waar jullie vandaag staan',
     body: 'Zeven velden, twee minuten. Op basis daarvan bekijk ik of en hoe ik het beste kan helpen.',
-    meeting: 'Plan een kennismaking',
+    meeting: 'Plan een groeigesprek',
     meetingTooltip: 'Agenda-koppeling volgt — vul ondertussen het formulier in.',
   },
   en: {
     seoTitle: 'Contact',
-    seoDescription: 'Request a personal funnel audit or schedule an introductory call with Stef Keppens.',
+    seoDescription: 'Request a personal growth analysis or schedule a growth call with Stef Keppens.',
     title: 'Tell me briefly where you stand today',
     body: 'Seven fields, two minutes. Based on that I’ll see if and how I can best help.',
-    meeting: 'Schedule an introductory call',
+    meeting: 'Schedule a growth call',
     meetingTooltip: 'Calendar link coming soon — fill in the form below in the meantime.',
   },
 }

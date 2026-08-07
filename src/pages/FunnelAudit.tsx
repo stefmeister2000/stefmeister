@@ -6,17 +6,17 @@ import { useLang } from '../i18n/LanguageContext'
 
 const COPY = {
   nl: {
-    seoTitle: 'Funnel-audit',
+    seoTitle: 'Groeianalyse',
     seoDescription:
-      'Vraag een persoonlijke funnel-audit aan: een gerichte analyse van website, campagnes, ecommerce, tracking en opvolging.',
-    title: 'Vraag een persoonlijke funnel-audit aan',
+      'Vraag een persoonlijke groeianalyse aan: een gerichte analyse van website, campagnes, ecommerce, tracking en opvolging.',
+    title: 'Vraag een groeianalyse aan',
     body: 'Geen algemene template. Ik bekijk jullie huidige situatie, doelgroep en commerciële proces — en waar in de klantreis conversie verloren gaat.',
   },
   en: {
-    seoTitle: 'Funnel audit',
+    seoTitle: 'Growth analysis',
     seoDescription:
-      'Request a personal funnel audit: a focused analysis of website, campaigns, ecommerce, tracking and follow-up.',
-    title: 'Request a personal funnel audit',
+      'Request a personal growth analysis: a focused analysis of website, campaigns, ecommerce, tracking and follow-up.',
+    title: 'Request a growth analysis',
     body: 'No generic template. I look at your current situation, audience and commercial process — and where conversion is lost in the journey.',
   },
 }

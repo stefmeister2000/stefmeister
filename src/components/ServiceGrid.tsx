@@ -31,7 +31,7 @@ export default function ServiceGrid() {
               <h3 className="mt-3 font-display text-xl text-paper">{service.title[lang]}</h3>
               <p className="mt-3 flex-1 text-sm leading-relaxed text-bone">{service.summary[lang]}</p>
               <ul className="mt-5 space-y-1.5 border-t border-line pt-4">
-                {service.includes[lang].slice(0, 3).map((item) => (
+                {service.includes[lang].slice(0, 4).map((item) => (
                   <li key={item} className="text-xs text-mute">
                     {item}
                   </li>

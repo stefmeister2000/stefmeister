@@ -6,20 +6,18 @@ import stefPhoto from '../assets/stef.jpg'
 const COPY = {
   nl: {
     eyebrow: 'Digital growth & conversion specialist',
-    headline: 'Van eerste klik tot meetbare groei',
-    body: 'Landingspagina’s, funnels, Meta Ads, Google Ads, ecommerce-optimalisatie en AI-automatiseringen — gebouwd rond één doel: meer relevante leads, boekingen en omzet.',
-    support: 'Strategie, uitvoering, tracking en automatisering in één commerciële klantreis.',
-    ctaPrimary: 'Vraag een funnel-audit aan',
+    headline: 'Ik bouw het volledige digitale groeisysteem achter ambitieuze bedrijven.',
+    body: 'Van advertenties en landing pages tot tracking, automatisatie en conversie.',
+    ctaPrimary: 'Vraag een groeianalyse aan',
     ctaSecondary: 'Bekijk mijn werk',
     photo: 'Foto — Stef Keppens',
     flow: ['Ads', 'Landingspagina', 'Lead of boeking', 'Opvolging', 'Klant', 'Omzet'],
   },
   en: {
     eyebrow: 'Digital growth & conversion specialist',
-    headline: 'From first click to measurable growth',
-    body: 'Landing pages, funnels, Meta Ads, Google Ads, ecommerce conversion and AI automations — all built around one goal: more relevant leads, bookings and revenue.',
-    support: 'Strategy, execution, tracking and automation in one commercial customer journey.',
-    ctaPrimary: 'Request a funnel audit',
+    headline: 'I build the full digital growth system behind ambitious companies.',
+    body: 'From ads and landing pages to tracking, automation and conversion.',
+    ctaPrimary: 'Request a growth analysis',
     ctaSecondary: 'See my work',
     photo: 'Photo — Stef Keppens',
     flow: ['Ads', 'Landing page', 'Lead or booking', 'Follow-up', 'Customer', 'Revenue'],
@@ -41,8 +39,6 @@ export default function PersonalHero() {
           </h1>
 
           <p className="mt-6 max-w-xl text-lg text-bone">{t.body}</p>
-
-          <p className="mt-3 max-w-xl text-sm text-mute">{t.support}</p>
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
             <Link

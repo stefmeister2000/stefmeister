@@ -18,7 +18,7 @@ const COPY = {
     deliverablesLabel: 'Opleverpunten',
     exampleLabel: 'Voorbeeld',
     view: 'Bekijk de case',
-    formTitle: 'Vraag een persoonlijke funnel-audit aan',
+    formTitle: 'Vraag een groeianalyse aan',
     formBody: 'Geen algemene template. Ik bekijk jullie huidige situatie en proces.',
   },
   en: {
@@ -28,7 +28,7 @@ const COPY = {
     deliverablesLabel: 'Deliverables',
     exampleLabel: 'Example',
     view: 'View the case',
-    formTitle: 'Request a personal funnel audit',
+    formTitle: 'Request a growth analysis',
     formBody: 'No generic template. I look at your current situation and process.',
   },
 }

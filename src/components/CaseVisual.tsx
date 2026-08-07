@@ -2,6 +2,10 @@ import type { CaseStudy, Lang } from '../data/types'
 import Placeholder from './Placeholder'
 
 const COMING_SOON = { nl: 'Binnenkort beschikbaar', en: 'Coming soon' }
+const UNAVAILABLE = {
+  nl: 'Geen beeldmateriaal beschikbaar voor dit afgeronde project.',
+  en: 'No visual material available for this completed project.',
+}
 
 interface CaseVisualProps {
   case: CaseStudy
@@ -24,6 +28,10 @@ export default function CaseVisual({ case: c, lang, ratio = 'aspect-[16/10]', cl
 
   if (c.comingSoon) {
     return <Placeholder label={`${c.name} — ${COMING_SOON[lang]}`} ratio={ratio} className={className} />
+  }
+
+  if (c.unavailable) {
+    return <p className={`text-sm text-mute ${className}`}>{UNAVAILABLE[lang]}</p>
   }
 
   return <Placeholder label={c.name} ratio={ratio} className={className} />

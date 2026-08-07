@@ -38,6 +38,7 @@ export interface CaseStudy {
   objective: Bi<string>
   image?: string
   comingSoon?: boolean
+  unavailable?: boolean
 }
 
 export interface Client {

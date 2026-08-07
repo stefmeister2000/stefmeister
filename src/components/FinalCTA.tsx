@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { persistentCta, persistentCtaHref } from '../data/nav'
 import { trackEvent } from '../lib/analytics'
 import { useInView } from '../lib/useInView'
 import { useLang } from '../i18n/LanguageContext'
@@ -7,13 +8,11 @@ const COPY = {
   nl: {
     title: 'Bouw een digitale route die niet alleen verkeer krijgt, maar converteert',
     body: 'Ontdek waar jullie advertenties, website, ecommerce of opvolging vandaag omzet verliezen.',
-    ctaPrimary: 'Vraag een funnel-audit aan',
     ctaSecondary: 'Bekijk mijn werk',
   },
   en: {
     title: 'Build a digital route that doesn’t just get traffic, but converts it',
     body: 'Find out where your ads, website, ecommerce or follow-up are losing revenue today.',
-    ctaPrimary: 'Request a funnel audit',
     ctaSecondary: 'See my work',
   },
 }
@@ -31,11 +30,11 @@ export default function FinalCTA() {
 
         <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Link
-            to="/funnel-audit"
+            to={persistentCtaHref}
             onClick={() => trackEvent('audit_cta_clicked', { placement: 'final_cta' })}
             className="rounded-full bg-accent px-7 py-3.5 text-sm font-semibold text-accent-ink transition hover:bg-accent-2"
           >
-            {t.ctaPrimary}
+            {persistentCta[lang]}
           </Link>
           <Link
             to="/cases"

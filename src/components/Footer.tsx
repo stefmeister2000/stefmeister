@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { navItems } from '../data/nav'
+import { navItems, persistentCta, persistentCtaHref } from '../data/nav'
 import { services } from '../data/services'
 import { useLang } from '../i18n/LanguageContext'
 
@@ -9,7 +9,6 @@ const COPY = {
     nav: 'Navigatie',
     services: 'Diensten',
     contact: 'Contact',
-    cta: 'Vraag een funnel-audit aan',
     disclaimer: 'Projecten en resultaten worden alleen getoond waar toestemming beschikbaar is.',
   },
   en: {
@@ -17,7 +16,6 @@ const COPY = {
     nav: 'Navigation',
     services: 'Services',
     contact: 'Contact',
-    cta: 'Request a funnel audit',
     disclaimer: 'Projects and results are only shown where permission is available.',
   },
 }
@@ -70,8 +68,8 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <Link to="/funnel-audit" className="transition hover:text-paper">
-                  {t.cta}
+                <Link to={persistentCtaHref} className="transition hover:text-paper">
+                  {persistentCta[lang]}
                 </Link>
               </li>
             </ul>

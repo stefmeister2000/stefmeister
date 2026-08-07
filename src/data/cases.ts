@@ -113,19 +113,19 @@ export const cases: CaseStudy[] = [
     slug: 'healthfactor',
     name: 'HealthFactor',
     sector: { nl: 'Lokale gezondheid en fitness', en: 'Local health and fitness' },
-    status: 'afgerond',
+    status: 'ongoing',
     image: healthfactor,
     summary: {
       nl: 'Lokale aandacht omzetten in bezoeken, leads en nieuwe klanten via gerichte landingspagina’s en campagnes.',
       en: 'Turning local attention into visits, leads and new customers through targeted landing pages and campaigns.',
     },
     situation: {
-      nl: 'HealthFactor wil lokaal zichtbaar zijn en nieuwe klanten aantrekken via digitale kanalen, met een duidelijke koppeling tussen promotie en aanmelding.',
-      en: 'HealthFactor wants local visibility and new customers through digital channels, with a clear link between promotion and sign-up.',
+      nl: 'HealthFactor is een lokale sportschool die zich naast grote budgetketens zoals Basic-Fit wil onderscheiden.',
+      en: 'HealthFactor is a local gym that wants to stand out alongside large budget chains like Basic-Fit.',
     },
     challenge: {
-      nl: 'Lokale campagnes hebben weinig waarde zonder landingspagina’s die de aanbieding en de actie direct duidelijk maken.',
-      en: 'Local campaigns have little value without landing pages that make the offer and the action immediately clear.',
+      nl: 'De uitdaging was om de sterkte van HealthFactor — een persoonlijkere aanpak en begeleiding — zichtbaar te maken in advertenties en landingspagina’s, zodat prospects daar met vertrouwen voor kiezen.',
+      en: 'The challenge was to make HealthFactor’s real strength — a more personal approach and coaching — visible in ads and landing pages, so prospects choose it with confidence.',
     },
     role: {
       nl: 'Ik hielp HealthFactor met digitale promotie, landingspagina’s en lokale leadgeneratie.',
@@ -135,6 +135,7 @@ export const cases: CaseStudy[] = [
       nl: [
         'Landingspagina’s',
         'Lokale campagnes',
+        'Ad-concepten rond de persoonlijke aanpak van HealthFactor',
         'Promotionele aanbiedingen',
         'Leadgeneratie',
         'Koppeling tussen social en betaalde campagnes',
@@ -143,6 +144,7 @@ export const cases: CaseStudy[] = [
       en: [
         'Landing pages',
         'Local campaigns',
+        'Ad concepts built around HealthFactor’s personal approach',
         'Promotional offers',
         'Lead generation',
         'Connection between social and paid campaigns',
@@ -165,8 +167,8 @@ export const cases: CaseStudy[] = [
     status: 'ongoing',
     image: nooms,
     summary: {
-      nl: 'Een schaalbare digitale route bouwen van productontdekking tot eerste aankoop en herhaalaankoop.',
-      en: 'Building a scalable digital route from product discovery to first purchase and repeat purchase.',
+      nl: 'Pre-sale via influencer marketing volledig uitverkocht — op weg naar een schaalbare digitale route van productontdekking tot herhaalaankoop.',
+      en: 'Pre-sale sold out completely via influencer marketing — building a scalable digital route from product discovery to repeat purchase.',
     },
     situation: {
       nl: 'Nooms is een opbouwend ecommerce-merk in de supplementenmarkt, met zowel directe verkoop als retail- en B2B-ambities.',
@@ -203,8 +205,8 @@ export const cases: CaseStudy[] = [
       ],
     },
     measurement: {
-      nl: 'Groei in eerste aankopen en herhaalaankopen, gemeten van productontdekking tot klant.',
-      en: 'Growth in first purchases and repeat purchases, measured from product discovery to customer.',
+      nl: 'De pre-sale, aangedreven door influencer marketing, was volledig uitverkocht. Groei in eerste aankopen en herhaalaankopen wordt gemeten van productontdekking tot klant.',
+      en: 'The pre-sale, driven by influencer marketing, sold out completely. Growth in first purchases and repeat purchases is measured from product discovery to customer.',
     },
     objective: {
       nl: 'Een schaalbare digitale route bouwen van productontdekking tot eerste aankoop en herhaalaankoop.',
@@ -219,9 +221,10 @@ export const cases: CaseStudy[] = [
       en: 'International B2C fintech (proprietary trading)',
     },
     status: 'afgerond',
+    unavailable: true,
     summary: {
-      nl: 'Van nul opgebouwd tot internationaal B2C-fintechmerk voor retailtraders, met een database van meer dan 60.000 leads en klanten.',
-      en: 'Built from zero into an international B2C fintech brand for retail traders, with a database of more than 60,000 leads and customers.',
+      nl: 'Van nul opgebouwd tot internationaal B2C-fintechmerk voor retailtraders — tot €500.000 omzet, met een database van meer dan 60.000 leads en klanten.',
+      en: 'Built from zero into an international B2C fintech brand for retail traders — up to €500,000 in revenue, with a database of more than 60,000 leads and customers.',
     },
     situation: {
       nl: 'Xpert Funding was een online proprietary trading firm die particuliere traders wereldwijd toegang gaf tot gesimuleerd handelskapitaal. Traders kochten online een challenge en moesten binnen vooraf vastgelegde risicoregels aantonen dat ze consistent en verantwoord konden handelen. Wie slaagde, kreeg toegang tot een funded account en een deel van de behaalde winsten.',
@@ -270,8 +273,8 @@ export const cases: CaseStudy[] = [
       ],
     },
     measurement: {
-      nl: 'Xpert Funding groeide uit tot een internationaal B2C-fintechmerk met klanten uit verschillende landen, een eigen online handelsomgeving en een database van meer dan 60.000 leads en klanten. Bij bepaalde e-mailcampagnes werden conversieratio’s tussen 20% en 30% gerealiseerd.',
-      en: 'Xpert Funding grew into an international B2C fintech brand with customers across multiple countries, its own online trading environment, and a database of more than 60,000 leads and customers. Certain email campaigns achieved conversion rates between 20% and 30%.',
+      nl: 'Xpert Funding groeide uit tot een internationaal B2C-fintechmerk met klanten uit verschillende landen, een eigen online handelsomgeving en een database van meer dan 60.000 leads en klanten. De omzet liep op tot €500.000, met conversieratio’s tussen 20% en 30% bij bepaalde e-mailcampagnes.',
+      en: 'Xpert Funding grew into an international B2C fintech brand with customers across multiple countries, its own online trading environment, and a database of more than 60,000 leads and customers. Revenue reached up to €500,000, with certain email campaigns achieving conversion rates between 20% and 30%.',
     },
     objective: {
       nl: 'Een digitaal consumentenmerk van nul opbouwen en internationaal schalen binnen een zeer competitieve markt.',

@@ -39,7 +39,7 @@ const COPY = {
     optioneel: 'Optioneel',
     addOptional: '+ Extra info toevoegen (optioneel)',
     submitting: 'Even geduld…',
-    submit: 'Vraag mijn analyse aan',
+    submit: 'Vraag mijn groeianalyse aan',
     doneTitle: 'Bedankt.',
     doneBody:
       'Ik bekijk jullie website en commerciële klantreis persoonlijk en neem contact op met de beste volgende stap.',
@@ -79,7 +79,7 @@ const COPY = {
     optioneel: 'Optional',
     addOptional: '+ Add more info (optional)',
     submitting: 'One moment…',
-    submit: 'Request my analysis',
+    submit: 'Request my growth analysis',
     doneTitle: 'Thank you.',
     doneBody: 'I’ll personally review your website and commercial customer journey and reach out with the best next step.',
   },

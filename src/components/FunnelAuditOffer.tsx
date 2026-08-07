@@ -1,12 +1,14 @@
+import { Link } from 'react-router-dom'
 import { useInView } from '../lib/useInView'
 import { trackEvent } from '../lib/analytics'
 import { useLang } from '../i18n/LanguageContext'
+import { persistentCta } from '../data/nav'
 
 const COPY = {
   nl: {
     title: 'Waar verliest jullie huidige digitale klantreis conversie?',
     body: 'Geen algemene template. Ik bekijk jullie huidige situatie, doelgroep en commerciële proces.',
-    scopeLabel: 'De audit bekijkt',
+    scopeLabel: 'De analyse bekijkt',
     scope: [
       'Website structuur',
       'Campagne-landingspagina’s',
@@ -31,17 +33,13 @@ const COPY = {
       'Automatiseringskansen',
       'Aanbevolen vervolgstappen',
     ],
-    pricingLabel: 'Funnel-opstart',
-    price: '€1.500',
-    priceNote: '— vast tarief',
-    pricingBody: 'Analyse van je huidige marketing, USP’s en positionering, een landingspagina, e-mailflows en de opzet van Meta Ads.',
-    pricingAfter: 'Daarna is de prijs bespreekbaar — bijvoorbeeld om organische video’s of extra kanalen toe te voegen.',
-    cta: 'Vraag een persoonlijke funnel-audit aan',
+    packagesNote: 'De opstart die hieruit volgt zit altijd inbegrepen in een groeipakket.',
+    packagesLink: 'Bekijk de groeipakketten',
   },
   en: {
     title: 'Where is your current digital customer journey losing conversion?',
     body: 'No generic template. I look at your current situation, audience and commercial process.',
-    scopeLabel: 'The audit reviews',
+    scopeLabel: 'The analysis reviews',
     scope: [
       'Website structure',
       'Campaign landing pages',
@@ -66,12 +64,8 @@ const COPY = {
       'Automation opportunities',
       'Recommended next steps',
     ],
-    pricingLabel: 'Funnel setup',
-    price: '€1,500',
-    priceNote: '— fixed rate',
-    pricingBody: 'Analysis of your current marketing, USPs and positioning, one landing page, email flows and setting up Meta Ads.',
-    pricingAfter: 'After that, pricing is discussed case by case — for example to add organic video or extra channels.',
-    cta: 'Request a personal funnel audit',
+    packagesNote: 'The setup that follows from this is always included in a growth package.',
+    packagesLink: 'See the growth packages',
   },
 }
 
@@ -97,17 +91,14 @@ export default function FunnelAuditOffer() {
           </div>
         </div>
 
-        <div className="mt-12 rounded-2xl border border-accent/30 bg-ink p-6 sm:p-8">
-          <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between sm:gap-10">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-widest text-accent-2">{t.pricingLabel}</p>
-              <p className="mt-2 font-display text-2xl text-paper">
-                {t.price} <span className="font-sans text-base text-mute">{t.priceNote}</span>
-              </p>
-              <p className="mt-3 max-w-md text-sm text-bone">{t.pricingBody}</p>
-            </div>
-            <p className="max-w-xs text-sm text-mute sm:text-right">{t.pricingAfter}</p>
-          </div>
+        <div className="mt-12 flex flex-col gap-3 rounded-2xl border border-line bg-surface/50 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+          <p className="text-sm text-bone">{t.packagesNote}</p>
+          <Link
+            to="/#groeipakketten"
+            className="shrink-0 text-sm font-medium text-accent-2 hover:text-accent"
+          >
+            {t.packagesLink}
+          </Link>
         </div>
 
         <div className="mt-8">
@@ -116,7 +107,7 @@ export default function FunnelAuditOffer() {
             onClick={() => trackEvent('audit_cta_clicked', { placement: 'audit_offer' })}
             className="inline-block rounded-full bg-accent px-7 py-3.5 text-sm font-semibold text-accent-ink transition hover:bg-accent-2"
           >
-            {t.cta}
+            {persistentCta[lang]}
           </a>
         </div>
       </div>
