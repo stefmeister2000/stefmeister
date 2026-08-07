@@ -1,0 +1,44 @@
+import Seo from '../components/Seo'
+import FunnelAuditOffer from '../components/FunnelAuditOffer'
+import QualificationFormSection from '../components/QualificationFormSection'
+import ProcessSection from '../components/ProcessSection'
+import { useLang } from '../i18n/LanguageContext'
+
+const COPY = {
+  nl: {
+    seoTitle: 'Funnel-audit',
+    seoDescription:
+      'Vraag een persoonlijke funnel-audit aan: een gerichte analyse van website, campagnes, ecommerce, tracking en opvolging.',
+    title: 'Vraag een persoonlijke funnel-audit aan',
+    body: 'Geen algemene template. Ik bekijk jullie huidige situatie, doelgroep en commerciële proces — en waar in de klantreis conversie verloren gaat.',
+  },
+  en: {
+    seoTitle: 'Funnel audit',
+    seoDescription:
+      'Request a personal funnel audit: a focused analysis of website, campaigns, ecommerce, tracking and follow-up.',
+    title: 'Request a personal funnel audit',
+    body: 'No generic template. I look at your current situation, audience and commercial process — and where conversion is lost in the journey.',
+  },
+}
+
+export default function FunnelAudit() {
+  const { lang } = useLang()
+  const t = COPY[lang]
+
+  return (
+    <div>
+      <Seo title={t.seoTitle} description={t.seoDescription} path="/funnel-audit" />
+
+      <section className="border-b border-line">
+        <div className="reveal mx-auto max-w-4xl px-5 py-16 sm:px-8 sm:py-24">
+          <h1 className="font-display text-4xl text-paper text-balance sm:text-5xl">{t.title}</h1>
+          <p className="mt-5 max-w-2xl text-lg text-bone">{t.body}</p>
+        </div>
+      </section>
+
+      <FunnelAuditOffer />
+      <ProcessSection />
+      <QualificationFormSection />
+    </div>
+  )
+}
