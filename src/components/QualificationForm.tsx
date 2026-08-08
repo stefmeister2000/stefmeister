@@ -14,6 +14,7 @@ const COPY = {
       'Betere tracking',
       'AI-automatiseringen',
       'Volledige funnel herwerken',
+      'Losse consulting / strategisch gesprek',
     ],
     labels: {
       naam: 'Naam',
@@ -54,6 +55,7 @@ const COPY = {
       'Better tracking',
       'AI automations',
       'Rework the full funnel',
+      'Standalone consulting / strategy session',
     ],
     labels: {
       naam: 'Name',
