@@ -1,24 +1,30 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import express from 'express'
+import { Resend } from 'resend'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const DIST = path.join(__dirname, 'dist')
 
 const {
   RESEND_API_KEY,
-  // Where lead notifications are delivered. Your Resend account email works
-  // with any sending setup (including the onboarding test sender).
+  // Where lead notifications are delivered. Your Resend account email works with
+  // any sending setup, including the onboarding test sender.
   LEAD_TO = 'stefkeppensyt@gmail.com',
-  // "From" address for the notification to Stef. Until a domain is verified in
-  // Resend, only onboarding@resend.dev works (and only delivers to LEAD_TO when
-  // LEAD_TO is your own account email).
+  // "From" address for the notification. Until a domain is verified in Resend,
+  // use the onboarding sender (it only delivers to your own account email).
   LEAD_FROM = 'Stef Keppens website <onboarding@resend.dev>',
   // Optional confirmation reply to the person who submitted the form.
-  // Requires a VERIFIED domain, because it delivers to arbitrary addresses.
+  // Requires a VERIFIED domain, since it delivers to arbitrary addresses.
   LEAD_AUTOREPLY, // set to "true" to enable
   LEAD_REPLY_FROM, // e.g. "Stef Keppens <stef@stefkeppens.be>"
+  // Segment that new contacts are added to. Requires a FULL-ACCESS api key
+  // (send-only keys cannot write contacts). Defaults to the "Website leads"
+  // segment created for this account.
+  LEAD_SEGMENT_ID = 'd7334c7f-8e7c-4822-aa56-29d6c1a2c5d8',
 } = process.env
+
+const resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : null
 
 const app = express()
 app.use(express.json({ limit: '32kb' }))
@@ -28,20 +34,9 @@ const ESC = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;
 const esc = (s = '') => String(s).replace(/[&<>"']/g, (c) => ESC[c])
 const isEmail = (s) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(s || ''))
 
-async function sendResend(payload) {
-  const res = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${RESEND_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
-  })
-  if (!res.ok) {
-    const text = await res.text().catch(() => '')
-    throw new Error(`Resend ${res.status}: ${text}`)
-  }
-  return res.json()
+function splitName(full = '') {
+  const parts = String(full).trim().split(/\s+/)
+  return { firstName: parts.shift() || '', lastName: parts.join(' ') }
 }
 
 function leadHtml(b) {
@@ -49,6 +44,7 @@ function leadHtml(b) {
     ['Naam', b.naam],
     ['Bedrijf', b.bedrijf],
     ['E-mail', b.email],
+    ['Telefoon', b.telefoon],
     ['Website', b.website],
     ['Belangrijkste doel', b.doel],
     ['Grootste uitdaging', b.uitdaging],
@@ -99,40 +95,56 @@ function autoReplyHtml(b) {
   </div>`
 }
 
+// Save the lead as a Resend contact (incl. phone). Best-effort: never blocks the
+// form. Requires a full-access api key — send-only keys return 401 here.
+async function saveContact(b) {
+  const { firstName, lastName } = splitName(b.naam)
+  const properties = {}
+  if (b.telefoon) properties.phone = String(b.telefoon)
+  if (b.bedrijf) properties.company = String(b.bedrijf)
+
+  const payload = { email: b.email, firstName, lastName, properties }
+  if (LEAD_SEGMENT_ID) payload.segments = [{ id: LEAD_SEGMENT_ID }]
+
+  const { error } = await resend.contacts.create(payload)
+  if (error) throw new Error(`${error.name}: ${error.message}`)
+}
+
 app.post('/api/lead', async (req, res) => {
   try {
-    if (!RESEND_API_KEY) return res.status(503).json({ error: 'email_not_configured' })
+    if (!resend) return res.status(503).json({ error: 'email_not_configured' })
 
     const b = req.body || {}
     // Honeypot: real users never fill this hidden field.
     if (b.company_website) return res.json({ ok: true })
 
-    const required = ['naam', 'bedrijf', 'email', 'website', 'doel', 'uitdaging']
+    const required = ['naam', 'bedrijf', 'email', 'telefoon', 'website', 'doel', 'uitdaging']
     for (const f of required) {
       if (!b[f] || !String(b[f]).trim()) return res.status(400).json({ error: 'missing_fields' })
     }
     if (!isEmail(b.email)) return res.status(400).json({ error: 'invalid_email' })
 
-    await sendResend({
+    const { error: sendError } = await resend.emails.send({
       from: LEAD_FROM,
       to: [LEAD_TO],
-      reply_to: b.email,
+      replyTo: b.email,
       subject: `Nieuwe groeianalyse-aanvraag — ${String(b.bedrijf).slice(0, 80)}`,
       html: leadHtml(b),
     })
+    if (sendError) throw new Error(`${sendError.name}: ${sendError.message}`)
+
+    // Save contact (with phone) — best-effort, doesn't affect the response.
+    saveContact(b).catch((err) => console.error('[lead] contact save failed:', err.message))
 
     if (LEAD_AUTOREPLY === 'true' && LEAD_REPLY_FROM) {
-      try {
-        await sendResend({
+      resend.emails
+        .send({
           from: LEAD_REPLY_FROM,
           to: [b.email],
           subject: 'Bedankt voor je aanvraag — Stef Keppens',
           html: autoReplyHtml(b),
         })
-      } catch (err) {
-        // Auto-reply is best-effort; never fail the submission because of it.
-        console.error('[lead] auto-reply failed:', err.message)
-      }
+        .catch((err) => console.error('[lead] auto-reply failed:', err.message))
     }
 
     return res.json({ ok: true })

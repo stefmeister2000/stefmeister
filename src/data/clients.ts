@@ -3,6 +3,7 @@ import pinacello from '../assets/cases/pinacello.png'
 import healthfactor from '../assets/cases/healthfactor.png'
 import nooms from '../assets/cases/nooms.png'
 import olearys from '../assets/cases/olearys.png'
+import ekart from '../assets/cases/ekart.jpg'
 
 export const clients: Client[] = [
   {
@@ -39,6 +40,7 @@ export const clients: Client[] = [
   },
   {
     name: 'E-Kart',
+    image: ekart,
     description: {
       nl: 'Ik werk aan de digitale groei van E-Kart, de snelste indoor karting in Gent — zowel de B2C- als de B2B-kant, om meer klanten en boekingen te behalen.',
       en: 'I work on the digital growth of E-Kart, the fastest indoor karting in Ghent — both the B2C and B2B side, to win more customers and bookings.',

@@ -20,6 +20,7 @@ const COPY = {
       naam: 'Naam',
       bedrijf: 'Bedrijf',
       email: 'Zakelijk e-mailadres',
+      telefoon: 'Telefoonnummer',
       website: 'Website',
       doel: 'Belangrijkste doel',
       doelPlaceholder: 'Kies een doel',
@@ -33,6 +34,7 @@ const COPY = {
       naam: 'Vul je naam in.',
       bedrijf: 'Vul je bedrijfsnaam in.',
       email: 'Vul een geldig zakelijk e-mailadres in.',
+      telefoon: 'Vul je telefoonnummer in.',
       website: 'Vul je website in.',
       doel: 'Kies je belangrijkste doel.',
       uitdaging: 'Beschrijf kort je grootste uitdaging.',
@@ -63,6 +65,7 @@ const COPY = {
       naam: 'Name',
       bedrijf: 'Company',
       email: 'Business email',
+      telefoon: 'Phone number',
       website: 'Website',
       doel: 'Main goal',
       doelPlaceholder: 'Choose a goal',
@@ -76,6 +79,7 @@ const COPY = {
       naam: 'Please enter your name.',
       bedrijf: 'Please enter your company name.',
       email: 'Please enter a valid business email address.',
+      telefoon: 'Please enter your phone number.',
       website: 'Please enter your website.',
       doel: 'Please choose your main goal.',
       uitdaging: 'Briefly describe your biggest challenge.',
@@ -95,6 +99,7 @@ interface FormState {
   naam: string
   bedrijf: string
   email: string
+  telefoon: string
   website: string
   doel: string
   uitdaging: string
@@ -108,6 +113,7 @@ const initialState: FormState = {
   naam: '',
   bedrijf: '',
   email: '',
+  telefoon: '',
   website: '',
   doel: '',
   uitdaging: '',
@@ -160,6 +166,7 @@ export default function QualificationForm({ id = 'audit-formulier', compact = fa
     if (!values.naam.trim()) next.naam = t.errors.naam
     if (!values.bedrijf.trim()) next.bedrijf = t.errors.bedrijf
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) next.email = t.errors.email
+    if (!values.telefoon.trim()) next.telefoon = t.errors.telefoon
     if (!values.website.trim()) next.website = t.errors.website
     if (!values.doel) next.doel = t.errors.doel
     if (!values.uitdaging.trim()) next.uitdaging = t.errors.uitdaging
@@ -233,6 +240,16 @@ export default function QualificationForm({ id = 'audit-formulier', compact = fa
             className="input"
             value={values.email}
             onChange={(e) => update('email', e.target.value)}
+          />
+        </Field>
+        <Field label={t.labels.telefoon} error={errors.telefoon} htmlFor="telefoon">
+          <input
+            id="telefoon"
+            type="tel"
+            autoComplete="tel"
+            className="input"
+            value={values.telefoon}
+            onChange={(e) => update('telefoon', e.target.value)}
           />
         </Field>
         <Field label={t.labels.website} error={errors.website} htmlFor="website">
