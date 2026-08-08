@@ -15,10 +15,9 @@ export default function Layout() {
 
   useEffect(() => {
     if (location.hash) {
-      const id = location.hash.slice(1)
-      const el = document.getElementById(id)
+      const el = document.getElementById(location.hash.slice(1))
       if (el) {
-        requestAnimationFrame(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }))
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' })
         return
       }
     }

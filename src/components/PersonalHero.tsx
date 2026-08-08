@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { trackEvent } from '../lib/analytics'
 import { useLang } from '../i18n/LanguageContext'
+import { persistentCta, persistentCtaHref } from '../data/nav'
 import stefPhoto from '../assets/stef.jpg'
 
 const COPY = {
@@ -8,7 +9,6 @@ const COPY = {
     eyebrow: 'Digital growth & conversion specialist',
     headline: 'Ik bouw het volledige digitale groeisysteem achter ambitieuze bedrijven.',
     body: 'Van advertenties en landing pages tot tracking, automatisatie en conversie.',
-    ctaPrimary: 'Vraag een groeianalyse aan',
     ctaSecondary: 'Bekijk mijn werk',
     photo: 'Foto — Stef Keppens',
     flow: ['Ads', 'Landingspagina', 'Lead of boeking', 'Opvolging', 'Klant', 'Omzet'],
@@ -17,7 +17,6 @@ const COPY = {
     eyebrow: 'Digital growth & conversion specialist',
     headline: 'I build the full digital growth system behind ambitious companies.',
     body: 'From ads and landing pages to tracking, automation and conversion.',
-    ctaPrimary: 'Request a growth analysis',
     ctaSecondary: 'See my work',
     photo: 'Photo — Stef Keppens',
     flow: ['Ads', 'Landing page', 'Lead or booking', 'Follow-up', 'Customer', 'Revenue'],
@@ -42,11 +41,11 @@ export default function PersonalHero() {
 
           <div className="mt-6 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:items-center">
             <Link
-              to="/funnel-audit"
+              to={persistentCtaHref}
               onClick={() => trackEvent('audit_cta_clicked', { placement: 'hero_primary' })}
               className="rounded-full bg-accent px-7 py-3.5 text-center text-sm font-semibold text-accent-ink transition hover:bg-accent-2"
             >
-              {t.ctaPrimary}
+              {persistentCta[lang]}
             </Link>
             <Link
               to="/cases"

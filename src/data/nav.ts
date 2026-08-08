@@ -15,4 +15,4 @@ export const navItems: NavItem[] = [
 ]
 
 export const persistentCta: Bi<string> = { nl: 'Vraag een groeianalyse aan', en: 'Request a growth analysis' }
-export const persistentCtaHref = '/funnel-audit'
+export const persistentCtaHref = '/funnel-audit#audit-formulier'
