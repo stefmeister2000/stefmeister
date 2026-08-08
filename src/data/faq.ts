@@ -88,6 +88,16 @@ export const faqItems: FaqItem[] = [
     },
   },
   {
+    question: {
+      nl: 'Kan ik ook eerst losse consulting doen, zonder maandpakket?',
+      en: 'Can I start with standalone consulting first, without a monthly package?',
+    },
+    answer: {
+      nl: 'Ja. Je kunt starten met een los strategisch gesprek (€250/uur) of een volledige consulting-dag (€1.250/dag) — eerst leren en meedenken over jullie groei, zonder verplichting. Daarna beslis je pas of een verdere samenwerking zinvol is.',
+      en: 'Yes. You can start with a standalone strategy session (€250/hour) or a full consulting day (€1,250/day) — come to learn and think through your growth first, with no commitment. Only then do you decide whether a further collaboration makes sense.',
+    },
+  },
+  {
     question: { nl: 'Wat kost een samenwerking?', en: 'What does a collaboration cost?' },
     answer: {
       nl: 'Doorlopende samenwerkingen lopen via drie groeipakketten, vanaf €1.500 per maand. De opstart — analyse, landingspagina, e-mailflows, campagne-opzet — zit daar altijd in inbegrepen. Losse strategische consulting kan ook, aan €250/uur of €1.250/dag.',

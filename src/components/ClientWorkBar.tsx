@@ -6,12 +6,10 @@ const COPY = {
   nl: {
     title: 'Actief in ecommerce, hospitality en consumer brands',
     body: 'Ik werk aan digitale groei in verschillende commerciële omgevingen: van ecommerce en lokale leadgeneratie tot boekingsfunnels en B2B-events.',
-    footnote: 'Logo’s worden getoond zodra officiële merkbestanden zijn aangeleverd — zie leverpunt 13.',
   },
   en: {
     title: 'Active in ecommerce, hospitality and consumer brands',
     body: 'I work on digital growth across different commercial environments: from ecommerce and local lead generation to booking funnels and B2B events.',
-    footnote: 'Logos will be shown once official brand assets have been provided.',
   },
 }
 
@@ -28,16 +26,24 @@ export default function ClientWorkBar() {
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {clients.map((client) => (
-            <div key={client.name} className="rounded-2xl border border-line bg-surface p-6">
-              <div className="flex h-12 items-center">
-                <span className="font-display text-xl text-paper">{client.name}</span>
+            <div key={client.name} className="overflow-hidden rounded-2xl border border-line bg-surface">
+              {client.image && (
+                <img
+                  src={client.image}
+                  alt={client.name}
+                  loading="lazy"
+                  className="aspect-[16/9] w-full border-b border-line object-cover object-top"
+                />
+              )}
+              <div className="p-6">
+                <div className="flex h-12 items-center">
+                  <span className="font-display text-xl text-paper">{client.name}</span>
+                </div>
+                <p className="mt-4 text-sm leading-relaxed text-mute">{client.description[lang]}</p>
               </div>
-              <p className="mt-4 text-sm leading-relaxed text-mute">{client.description[lang]}</p>
             </div>
           ))}
         </div>
-
-        <p className="mt-6 text-xs text-mute">{t.footnote}</p>
       </div>
     </section>
   )

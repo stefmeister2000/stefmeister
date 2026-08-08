@@ -14,18 +14,27 @@ export interface AddOn {
   key: string
   name: Bi<string>
   price: Bi<string>
+  description: Bi<string>
 }
 
 export const addOns: AddOn[] = [
   {
     key: 'strategic-consulting',
-    name: { nl: 'Strategic Consulting', en: 'Strategic Consulting' },
+    name: { nl: 'Strategisch gesprek', en: 'Strategy session' },
     price: { nl: '€250 / uur', en: '€250 / hour' },
+    description: {
+      nl: 'Een gericht sparringgesprek over jullie groei — kom eerst leren, beslis daarna pas over samenwerking.',
+      en: 'A focused sparring session about your growth — come to learn first, decide on working together later.',
+    },
   },
   {
     key: 'consulting-day',
-    name: { nl: 'Consulting Day', en: 'Consulting Day' },
+    name: { nl: 'Consulting-dag', en: 'Consulting day' },
     price: { nl: '€1.250 / dag', en: '€1,250 / day' },
+    description: {
+      nl: 'Een volledige dag samen door jullie funnel, strategie en prioriteiten — met een concreet actieplan als resultaat.',
+      en: 'A full day through your funnel, strategy and priorities — with a concrete action plan as the outcome.',
+    },
   },
 ]
 

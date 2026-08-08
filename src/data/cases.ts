@@ -66,6 +66,11 @@ export const cases: CaseStudy[] = [
     status: 'ongoing',
     liveUrl: 'https://promo.pinacello.com/',
     image: pinacello,
+    video: '/videos/pinacello.mp4',
+    videoCaption: {
+      nl: '20 verkopen uit één organische video — we focussen op zelfgemaakte producten.',
+      en: '20 sales from one organic video — we focus on self-made products.',
+    },
     summary: {
       nl: 'Aandacht voor het merk omzetten in een meetbare, doorlopende ecommerce-verkoopmotor.',
       en: 'Turning brand attention into a measurable, ongoing ecommerce sales engine.',
@@ -118,6 +123,11 @@ export const cases: CaseStudy[] = [
     status: 'ongoing',
     liveUrl: 'https://promo.healthfactor.be/',
     image: healthfactor,
+    video: '/videos/healthfactor.mp4',
+    videoCaption: {
+      nl: '2 klanten geboekt op de eerste dag — deze video werkt omdat ze persoonlijk aanvoelt.',
+      en: '2 clients booked on the first day — this video works because it feels personal.',
+    },
     summary: {
       nl: 'Lokale aandacht omzetten in bezoeken, leads en nieuwe klanten via gerichte landingspagina’s en campagnes.',
       en: 'Turning local attention into visits, leads and new customers through targeted landing pages and campaigns.',

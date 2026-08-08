@@ -46,10 +46,14 @@ export default function ProblemSection() {
       <div ref={ref} className="reveal mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
         <h2 className="max-w-2xl font-display text-3xl text-paper text-balance sm:text-4xl">{t.title}</h2>
 
-        <ul className="mt-8 grid gap-x-10 gap-y-2.5 sm:grid-cols-2">
+        <ul className="mt-8 grid gap-x-12 sm:mt-10 sm:grid-cols-2">
           {t.problems.map((problem) => (
-            <li key={problem} className="text-bone">
-              {problem}
+            <li
+              key={problem}
+              className="flex items-start gap-2.5 border-t border-line py-2.5 text-sm leading-snug text-bone sm:gap-3 sm:py-3.5 sm:text-base sm:leading-normal"
+            >
+              <span aria-hidden className="mt-0.5 shrink-0 text-accent">✕</span>
+              <span>{problem}</span>
             </li>
           ))}
         </ul>

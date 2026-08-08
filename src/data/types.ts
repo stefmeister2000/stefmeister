@@ -37,6 +37,8 @@ export interface CaseStudy {
   measurement: Bi<string>
   objective: Bi<string>
   image?: string
+  video?: string
+  videoCaption?: Bi<string>
   comingSoon?: boolean
   unavailable?: boolean
   liveUrl?: string
@@ -45,6 +47,7 @@ export interface CaseStudy {
 export interface Client {
   name: string
   description: Bi<string>
+  image?: string
 }
 
 export interface PortfolioItem {

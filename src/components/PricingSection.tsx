@@ -12,7 +12,9 @@ const COPY = {
     toggleShow: 'Bekijk volledige vergelijking',
     toggleHide: 'Verberg volledige vergelijking',
     featureCol: 'Inbegrepen',
-    addOnsLabel: 'Losse consulting',
+    addOnsLabel: 'Liever eerst even sparren?',
+    addOnsLead:
+      'Nog niet klaar voor een maandpakket? Je kunt ook los starten — eerst leren en meedenken, daarna beslis je pas over een verdere samenwerking.',
     note: 'Prijzen zijn richtprijzen op maandbasis.',
   },
   en: {
@@ -21,7 +23,9 @@ const COPY = {
     toggleShow: 'See full comparison',
     toggleHide: 'Hide full comparison',
     featureCol: 'Included',
-    addOnsLabel: 'Standalone consulting',
+    addOnsLabel: 'Rather spar first?',
+    addOnsLead:
+      'Not ready for a monthly package yet? You can also start standalone — come to learn and think it through first, then decide on working together.',
     note: 'Prices are indicative monthly rates.',
   },
 }
@@ -112,20 +116,33 @@ export default function PricingSection() {
           </div>
         )}
 
-        <div className="mt-10 border-t border-line pt-8">
-          <p className="text-sm font-semibold uppercase tracking-widest text-accent-2">{t.addOnsLabel}</p>
-          <div className="mt-4 flex flex-wrap gap-3">
+        <div className="mt-12 rounded-2xl border border-line bg-surface/40 p-6 sm:p-8">
+          <div className="max-w-2xl">
+            <h3 className="font-display text-xl text-paper sm:text-2xl">{t.addOnsLabel}</h3>
+            <p className="mt-3 text-sm leading-relaxed text-bone">{t.addOnsLead}</p>
+          </div>
+
+          <div className="mt-6 grid gap-4 sm:grid-cols-2">
             {addOns.map((addOn) => (
               <div
                 key={addOn.key}
-                className="flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2 text-sm"
+                className="flex flex-col rounded-xl border border-line bg-surface p-5"
               >
-                <span className="text-paper">{addOn.name[lang]}</span>
-                <span className="text-mute">·</span>
-                <span className="text-bone">{addOn.price[lang]}</span>
+                <div className="flex items-baseline justify-between gap-3">
+                  <span className="font-display text-lg text-paper">{addOn.name[lang]}</span>
+                  <span className="shrink-0 text-sm font-semibold text-accent-2">{addOn.price[lang]}</span>
+                </div>
+                <p className="mt-2 text-sm leading-relaxed text-mute">{addOn.description[lang]}</p>
               </div>
             ))}
           </div>
+
+          <Link
+            to={persistentCtaHref}
+            className="mt-6 inline-block rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-ink transition hover:bg-accent-2"
+          >
+            {persistentCta[lang]}
+          </Link>
         </div>
 
         <p className="mt-6 text-xs text-mute">{t.note}</p>

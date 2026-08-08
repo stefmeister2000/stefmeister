@@ -72,7 +72,18 @@ export default function CaseStudyPage({ slug }: { slug: CaseSlug }) {
             </a>
           )}
 
-          <CaseVisual case={c} lang={lang} ratio="aspect-[16/9]" className="mt-10" />
+          {c.video ? (
+            <figure className="mt-10">
+              <CaseVisual case={c} lang={lang} video />
+              {c.videoCaption && (
+                <figcaption className="mt-4 max-w-2xl font-display text-lg text-paper text-balance">
+                  {c.videoCaption[lang]}
+                </figcaption>
+              )}
+            </figure>
+          ) : (
+            <CaseVisual case={c} lang={lang} ratio="aspect-[16/9]" className="mt-10" />
+          )}
         </div>
       </section>
 

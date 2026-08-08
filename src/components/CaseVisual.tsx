@@ -12,9 +12,24 @@ interface CaseVisualProps {
   lang: Lang
   ratio?: string
   className?: string
+  video?: boolean
 }
 
-export default function CaseVisual({ case: c, lang, ratio = 'aspect-[16/10]', className = '' }: CaseVisualProps) {
+export default function CaseVisual({ case: c, lang, ratio = 'aspect-[16/10]', className = '', video = false }: CaseVisualProps) {
+  if (video && c.video) {
+    return (
+      <div className={`mx-auto flex w-fit max-w-full justify-center rounded-2xl border border-line bg-black ${className}`}>
+        <video
+          src={c.video}
+          controls
+          playsInline
+          preload="metadata"
+          className="max-h-[70vh] w-auto max-w-full rounded-2xl"
+        />
+      </div>
+    )
+  }
+
   if (c.image) {
     return (
       <img
