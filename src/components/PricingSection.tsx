@@ -15,6 +15,7 @@ const COPY = {
     addOnsLabel: 'Liever eerst even sparren?',
     addOnsLead:
       'Nog niet klaar voor een maandpakket? Je kunt ook los starten — eerst leren en meedenken, daarna beslis je pas over een verdere samenwerking.',
+    onRequest: 'Op aanvraag',
     note: 'Prijzen zijn richtprijzen op maandbasis.',
   },
   en: {
@@ -26,6 +27,7 @@ const COPY = {
     addOnsLabel: 'Rather spar first?',
     addOnsLead:
       'Not ready for a monthly package yet? You can also start standalone — come to learn and think it through first, then decide on working together.',
+    onRequest: 'On request',
     note: 'Prices are indicative monthly rates.',
   },
 }
@@ -122,7 +124,7 @@ export default function PricingSection() {
             <p className="mt-3 text-sm leading-relaxed text-bone">{t.addOnsLead}</p>
           </div>
 
-          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+          <div className="mt-6 grid gap-4 sm:grid-cols-3">
             {addOns.map((addOn) => (
               <div
                 key={addOn.key}
@@ -130,7 +132,9 @@ export default function PricingSection() {
               >
                 <div className="flex items-baseline justify-between gap-3">
                   <span className="font-display text-lg text-paper">{addOn.name[lang]}</span>
-                  <span className="shrink-0 text-sm font-semibold text-accent-2">{addOn.price[lang]}</span>
+                  <span className="shrink-0 text-sm font-semibold text-accent-2">
+                    {addOn.price ? addOn.price[lang] : t.onRequest}
+                  </span>
                 </div>
                 <p className="mt-2 text-sm leading-relaxed text-mute">{addOn.description[lang]}</p>
               </div>

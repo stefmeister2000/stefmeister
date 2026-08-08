@@ -44,6 +44,8 @@ const COPY = {
     doneTitle: 'Bedankt.',
     doneBody:
       'Ik bekijk jullie website en commerciële klantreis persoonlijk en neem contact op met de beste volgende stap.',
+    errorNote:
+      'Er ging iets mis bij het versturen. Probeer het opnieuw of mail rechtstreeks naar stefkeppensyt@gmail.com.',
   },
   en: {
     goals: [
@@ -84,6 +86,8 @@ const COPY = {
     submit: 'Request my growth analysis',
     doneTitle: 'Thank you.',
     doneBody: 'I’ll personally review your website and commercial customer journey and reach out with the best next step.',
+    errorNote:
+      'Something went wrong while sending. Please try again or email directly at stefkeppensyt@gmail.com.',
   },
 }
 
@@ -124,7 +128,9 @@ export default function QualificationForm({ id = 'audit-formulier', compact = fa
   const [values, setValues] = useState<FormState>(initialState)
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({})
   const [status, setStatus] = useState<'idle' | 'submitting' | 'done'>('idle')
+  const [submitError, setSubmitError] = useState(false)
   const [showOptional, setShowOptional] = useState(false)
+  const honeypotRef = useRef('')
   const startedRef = useRef(false)
   const abandonedRef = useRef(false)
 
@@ -161,20 +167,32 @@ export default function QualificationForm({ id = 'audit-formulier', compact = fa
     return Object.keys(next).length === 0
   }
 
-  function handleSubmit(event: FormEvent) {
+  async function handleSubmit(event: FormEvent) {
     event.preventDefault()
     if (!validate()) return
 
     setStatus('submitting')
+    setSubmitError(false)
     const attribution = captureAttribution()
 
-    // No CRM/backend endpoint is confirmed yet — this simulates submission
-    // so the flow is demonstrable. Wire this to the real intake endpoint
-    // (CRM / email automation) before launch.
-    window.setTimeout(() => {
+    try {
+      const res = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...values,
+          form_id: id,
+          company_website: honeypotRef.current, // honeypot — bots fill this
+          attribution,
+        }),
+      })
+      if (!res.ok) throw new Error(`Request failed: ${res.status}`)
       trackEvent('form_submitted', { form_id: id, doel: values.doel, ...attribution })
       setStatus('done')
-    }, 600)
+    } catch {
+      setSubmitError(true)
+      setStatus('idle')
+    }
   }
 
   if (status === 'done') {
@@ -296,6 +314,20 @@ export default function QualificationForm({ id = 'audit-formulier', compact = fa
           </>
         )}
 
+        {/* Honeypot: hidden from users, visible to bots. */}
+        <div aria-hidden className="hidden">
+          <label htmlFor="company_website">Company website</label>
+          <input
+            id="company_website"
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            onChange={(e) => {
+              honeypotRef.current = e.target.value
+            }}
+          />
+        </div>
+
         <div className="sm:col-span-2 pt-2">
           <button
             type="submit"
@@ -304,6 +336,7 @@ export default function QualificationForm({ id = 'audit-formulier', compact = fa
           >
             {status === 'submitting' ? t.submitting : t.submit}
           </button>
+          {submitError && <p className="mt-3 text-sm text-rose-400">{t.errorNote}</p>}
         </div>
       </form>
     </div>

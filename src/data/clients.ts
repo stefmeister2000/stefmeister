@@ -37,4 +37,11 @@ export const clients: Client[] = [
       en: 'I work on the digital side of O’Learys, including B2C and B2B landing pages, funnels, campaigns, tracking and conversion.',
     },
   },
+  {
+    name: 'E-Kart',
+    description: {
+      nl: 'Ik werk aan de digitale groei van E-Kart, de snelste indoor karting in Gent — zowel de B2C- als de B2B-kant, om meer klanten en boekingen te behalen.',
+      en: 'I work on the digital growth of E-Kart, the fastest indoor karting in Ghent — both the B2C and B2B side, to win more customers and bookings.',
+    },
+  },
 ]

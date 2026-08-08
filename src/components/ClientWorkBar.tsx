@@ -27,13 +27,17 @@ export default function ClientWorkBar() {
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {clients.map((client) => (
             <div key={client.name} className="overflow-hidden rounded-2xl border border-line bg-surface">
-              {client.image && (
+              {client.image ? (
                 <img
                   src={client.image}
                   alt={client.name}
                   loading="lazy"
                   className="aspect-[16/9] w-full border-b border-line object-cover object-top"
                 />
+              ) : (
+                <div className="flex aspect-[16/9] w-full items-center justify-center border-b border-line bg-surface-2">
+                  <span className="font-display text-2xl text-accent-2">{client.name}</span>
+                </div>
               )}
               <div className="p-6">
                 <div className="flex h-12 items-center">

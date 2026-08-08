@@ -13,7 +13,7 @@ export interface PricingTier {
 export interface AddOn {
   key: string
   name: Bi<string>
-  price: Bi<string>
+  price?: Bi<string>
   description: Bi<string>
 }
 
@@ -34,6 +34,14 @@ export const addOns: AddOn[] = [
     description: {
       nl: 'Een volledige dag samen door jullie funnel, strategie en prioriteiten — met een concreet actieplan als resultaat.',
       en: 'A full day through your funnel, strategy and priorities — with a concrete action plan as the outcome.',
+    },
+  },
+  {
+    key: 'learning-track',
+    name: { nl: 'Leertraject', en: 'Learning track' },
+    description: {
+      nl: 'Een begeleidingstraject waarin je zelf leert hoe je jullie digitale groei aanpakt en uitvoert — opzet en invulling bespreken we samen.',
+      en: 'A guided track where you learn to run and execute your own digital growth — scope and setup we discuss together.',
     },
   },
 ]
