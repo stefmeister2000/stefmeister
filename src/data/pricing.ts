@@ -28,15 +28,6 @@ export const addOns: AddOn[] = [
     },
   },
   {
-    key: 'consulting-day',
-    name: { nl: 'Consulting-dag', en: 'Consulting day' },
-    price: { nl: '€1.250 / dag', en: '€1,250 / day' },
-    description: {
-      nl: 'Een volledige dag samen door jullie funnel, strategie en prioriteiten — met een concreet actieplan als resultaat.',
-      en: 'A full day through your funnel, strategy and priorities — with a concrete action plan as the outcome.',
-    },
-  },
-  {
     key: 'learning-track',
     name: { nl: 'Leertraject', en: 'Learning track' },
     description: {

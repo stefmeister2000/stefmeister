@@ -124,7 +124,7 @@ export default function PricingSection() {
             <p className="mt-3 text-sm leading-relaxed text-bone">{t.addOnsLead}</p>
           </div>
 
-          <div className="mt-6 grid gap-4 sm:grid-cols-3">
+          <div className="mt-6 grid gap-4 sm:grid-cols-2">
             {addOns.map((addOn) => (
               <div
                 key={addOn.key}
