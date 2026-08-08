@@ -63,8 +63,8 @@ export default function Footer() {
             <p className="text-sm font-semibold text-paper">{t.contact}</p>
             <ul className="mt-3 space-y-2 text-sm text-mute">
               <li>
-                <a href="mailto:hallo@stefkeppens.be" className="transition hover:text-paper">
-                  hallo@stefkeppens.be
+                <a href="mailto:stefkeppens@gmail.com" className="transition hover:text-paper">
+                  stefkeppens@gmail.com
                 </a>
               </li>
               <li>

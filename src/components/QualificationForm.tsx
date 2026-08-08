@@ -14,14 +14,15 @@ const COPY = {
       'Betere tracking',
       'AI-automatiseringen',
       'Volledige funnel herwerken',
-      'Losse consulting / strategisch gesprek',
+      'Strategisch gesprek',
+      'Leertraject',
     ],
     labels: {
       naam: 'Naam',
-      bedrijf: 'Bedrijf',
+      bedrijf: 'Bedrijf (optioneel)',
       email: 'Zakelijk e-mailadres',
       telefoon: 'Telefoonnummer',
-      website: 'Website',
+      website: 'Website (optioneel)',
       doel: 'Belangrijkste doel',
       doelPlaceholder: 'Kies een doel',
       uitdaging: 'Grootste uitdaging',
@@ -32,10 +33,8 @@ const COPY = {
     },
     errors: {
       naam: 'Vul je naam in.',
-      bedrijf: 'Vul je bedrijfsnaam in.',
       email: 'Vul een geldig zakelijk e-mailadres in.',
       telefoon: 'Vul je telefoonnummer in.',
-      website: 'Vul je website in.',
       doel: 'Kies je belangrijkste doel.',
       uitdaging: 'Beschrijf kort je grootste uitdaging.',
     },
@@ -47,7 +46,7 @@ const COPY = {
     doneBody:
       'Ik bekijk jullie website en commerciële klantreis persoonlijk en neem contact op met de beste volgende stap.',
     errorNote:
-      'Er ging iets mis bij het versturen. Probeer het opnieuw of mail rechtstreeks naar stefkeppensyt@gmail.com.',
+      'Er ging iets mis bij het versturen. Probeer het opnieuw of mail rechtstreeks naar stefkeppens@gmail.com.',
   },
   en: {
     goals: [
@@ -59,14 +58,15 @@ const COPY = {
       'Better tracking',
       'AI automations',
       'Rework the full funnel',
-      'Standalone consulting / strategy session',
+      'Strategy session',
+      'Learning track',
     ],
     labels: {
       naam: 'Name',
-      bedrijf: 'Company',
+      bedrijf: 'Company (optional)',
       email: 'Business email',
       telefoon: 'Phone number',
-      website: 'Website',
+      website: 'Website (optional)',
       doel: 'Main goal',
       doelPlaceholder: 'Choose a goal',
       uitdaging: 'Biggest challenge',
@@ -77,10 +77,8 @@ const COPY = {
     },
     errors: {
       naam: 'Please enter your name.',
-      bedrijf: 'Please enter your company name.',
       email: 'Please enter a valid business email address.',
       telefoon: 'Please enter your phone number.',
-      website: 'Please enter your website.',
       doel: 'Please choose your main goal.',
       uitdaging: 'Briefly describe your biggest challenge.',
     },
@@ -91,7 +89,7 @@ const COPY = {
     doneTitle: 'Thank you.',
     doneBody: 'I’ll personally review your website and commercial customer journey and reach out with the best next step.',
     errorNote:
-      'Something went wrong while sending. Please try again or email directly at stefkeppensyt@gmail.com.',
+      'Something went wrong while sending. Please try again or email directly at stefkeppens@gmail.com.',
   },
 }
 
@@ -164,10 +162,8 @@ export default function QualificationForm({ id = 'audit-formulier', compact = fa
   function validate(): boolean {
     const next: Partial<Record<keyof FormState, string>> = {}
     if (!values.naam.trim()) next.naam = t.errors.naam
-    if (!values.bedrijf.trim()) next.bedrijf = t.errors.bedrijf
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) next.email = t.errors.email
     if (!values.telefoon.trim()) next.telefoon = t.errors.telefoon
-    if (!values.website.trim()) next.website = t.errors.website
     if (!values.doel) next.doel = t.errors.doel
     if (!values.uitdaging.trim()) next.uitdaging = t.errors.uitdaging
     setErrors(next)

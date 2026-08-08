@@ -36,8 +36,8 @@ export default function Contact() {
           <p className="mt-5 text-lg text-bone">{t.body}</p>
 
           <div className="mt-6 flex flex-wrap items-center gap-4">
-            <a href="mailto:hallo@stefkeppens.be" className="text-sm text-accent-2 hover:text-accent">
-              hallo@stefkeppens.be
+            <a href="mailto:stefkeppens@gmail.com" className="text-sm text-accent-2 hover:text-accent">
+              stefkeppens@gmail.com
             </a>
             <span className="text-line">·</span>
             <button

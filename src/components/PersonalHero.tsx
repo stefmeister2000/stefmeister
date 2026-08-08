@@ -30,17 +30,17 @@ export default function PersonalHero() {
 
   return (
     <section className="relative overflow-hidden">
-      <div className="relative mx-auto grid max-w-6xl gap-12 px-5 pb-16 pt-14 sm:px-8 sm:pt-20 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10 lg:pb-20 lg:pt-24">
+      <div className="relative mx-auto grid max-w-6xl gap-8 px-5 pb-16 pt-10 sm:px-8 sm:pt-20 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10 lg:pb-20 lg:pt-24">
         <div className="reveal">
           <p className="text-sm font-medium uppercase tracking-widest text-accent-2">{t.eyebrow}</p>
 
-          <h1 className="mt-5 font-display text-4xl leading-[1.08] text-paper text-balance sm:text-5xl lg:text-6xl">
+          <h1 className="mt-4 font-display text-3xl leading-[1.1] text-paper text-balance sm:mt-5 sm:text-5xl sm:leading-[1.08] lg:text-6xl">
             {t.headline}
           </h1>
 
-          <p className="mt-6 max-w-xl text-lg text-bone">{t.body}</p>
+          <p className="mt-4 max-w-xl text-lg text-bone sm:mt-6">{t.body}</p>
 
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <div className="mt-6 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:items-center">
             <Link
               to="/funnel-audit"
               onClick={() => trackEvent('audit_cta_clicked', { placement: 'hero_primary' })}

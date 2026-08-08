@@ -10,7 +10,7 @@ const {
   RESEND_API_KEY,
   // Where lead notifications are delivered. Your Resend account email works with
   // any sending setup, including the onboarding test sender.
-  LEAD_TO = 'stefkeppensyt@gmail.com',
+  LEAD_TO = 'stefkeppens@gmail.com',
   // "From" address for the notification. Until a domain is verified in Resend,
   // use the onboarding sender (it only delivers to your own account email).
   LEAD_FROM = 'Stef Keppens website <onboarding@resend.dev>',
@@ -22,6 +22,10 @@ const {
   // (send-only keys cannot write contacts). Defaults to the "Website leads"
   // segment created for this account.
   LEAD_SEGMENT_ID = 'd7334c7f-8e7c-4822-aa56-29d6c1a2c5d8',
+  // HubSpot Private App token (Settings → Integrations → Private Apps).
+  // Needs the crm.objects.contacts.write scope. Optional — leads still send
+  // via Resend above if this isn't set.
+  HUBSPOT_ACCESS_TOKEN,
 } = process.env
 
 const resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : null
@@ -110,33 +114,100 @@ async function saveContact(b) {
   if (error) throw new Error(`${error.name}: ${error.message}`)
 }
 
+// The qualification answers don't map to dedicated HubSpot properties on this
+// portal, so they're combined into the standard "message" field (its own
+// description: "for any message or comments a contact may want to leave on a
+// form") rather than guessing at custom property names that may not exist.
+function leadMessage(b) {
+  const lines = [
+    b.doel && `Belangrijkste doel: ${b.doel}`,
+    b.uitdaging && `Grootste uitdaging: ${b.uitdaging}`,
+    b.investering && `Maandelijkse investering: ${b.investering}`,
+    b.kanalen && `Huidige kanalen: ${b.kanalen}`,
+    b.timing && `Gewenste timing: ${b.timing}`,
+    b.extra && `Extra informatie: ${b.extra}`,
+  ].filter(Boolean)
+  return lines.join('\n')
+}
+
+// Upsert the lead as a HubSpot contact by email. Best-effort: never blocks
+// the form. Requires a Private App token with crm.objects.contacts.write.
+async function saveHubspotContact(b) {
+  const { firstName, lastName } = splitName(b.naam)
+  const properties = {
+    email: b.email,
+    firstname: firstName,
+    lastname: lastName,
+    phone: b.telefoon,
+    company: b.bedrijf,
+    website: b.website,
+    message: leadMessage(b),
+  }
+
+  const res = await fetch('https://api.hubapi.com/crm/v3/objects/contacts/batch/upsert', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${HUBSPOT_ACCESS_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ inputs: [{ idProperty: 'email', id: b.email, properties }] }),
+  })
+  if (!res.ok) throw new Error(`HubSpot ${res.status}: ${await res.text()}`)
+}
+
 app.post('/api/lead', async (req, res) => {
   try {
-    if (!resend) return res.status(503).json({ error: 'email_not_configured' })
-
     const b = req.body || {}
     // Honeypot: real users never fill this hidden field.
     if (b.company_website) return res.json({ ok: true })
 
-    const required = ['naam', 'bedrijf', 'email', 'telefoon', 'website', 'doel', 'uitdaging']
+    const required = ['naam', 'email', 'telefoon', 'doel', 'uitdaging']
     for (const f of required) {
       if (!b[f] || !String(b[f]).trim()) return res.status(400).json({ error: 'missing_fields' })
     }
     if (!isEmail(b.email)) return res.status(400).json({ error: 'invalid_email' })
 
-    const { error: sendError } = await resend.emails.send({
-      from: LEAD_FROM,
-      to: [LEAD_TO],
-      replyTo: b.email,
-      subject: `Nieuwe groeianalyse-aanvraag — ${String(b.bedrijf).slice(0, 80)}`,
-      html: leadHtml(b),
-    })
-    if (sendError) throw new Error(`${sendError.name}: ${sendError.message}`)
+    // Every integration below is independent: a misconfigured "from" address
+    // or an expired token in one of them shouldn't fail the whole submission
+    // as long as the lead lands somewhere. Only report failure to the visitor
+    // if literally none of them captured it.
+    const attempts = []
 
-    // Save contact (with phone) — best-effort, doesn't affect the response.
-    saveContact(b).catch((err) => console.error('[lead] contact save failed:', err.message))
+    if (resend) {
+      attempts.push(
+        resend.emails
+          .send({
+            from: LEAD_FROM,
+            to: [LEAD_TO],
+            replyTo: b.email,
+            subject: `Nieuwe groeianalyse-aanvraag — ${String(b.bedrijf || b.naam).slice(0, 80)}`,
+            html: leadHtml(b),
+          })
+          .then(({ error }) => {
+            if (error) throw new Error(`${error.name}: ${error.message}`)
+          }),
+      )
+      attempts.push(saveContact(b))
+    }
 
-    if (LEAD_AUTOREPLY === 'true' && LEAD_REPLY_FROM) {
+    if (HUBSPOT_ACCESS_TOKEN) {
+      attempts.push(saveHubspotContact(b))
+    }
+
+    if (attempts.length === 0) {
+      console.error('[lead] no integration configured (RESEND_API_KEY / HUBSPOT_ACCESS_TOKEN both unset)')
+      return res.status(503).json({ error: 'not_configured' })
+    }
+
+    const results = await Promise.allSettled(attempts)
+    for (const r of results) {
+      if (r.status === 'rejected') console.error('[lead] one integration failed:', r.reason.message)
+    }
+    if (!results.some((r) => r.status === 'fulfilled')) {
+      return res.status(502).json({ error: 'send_failed' })
+    }
+
+    if (resend && LEAD_AUTOREPLY === 'true' && LEAD_REPLY_FROM) {
       resend.emails
         .send({
           from: LEAD_REPLY_FROM,
@@ -149,7 +220,7 @@ app.post('/api/lead', async (req, res) => {
 
     return res.json({ ok: true })
   } catch (err) {
-    console.error('[lead] send failed:', err.message)
+    console.error('[lead] unexpected error:', err.message)
     return res.status(502).json({ error: 'send_failed' })
   }
 })
