@@ -30,6 +30,12 @@ const {
 
 const resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : null
 
+// stefmeister.com is verified in Resend, so always send from it. This also
+// overrides any stale LEAD_FROM (e.g. the onboarding test sender) that can't
+// deliver to external inboxes like stefkeppens@gmail.com.
+const VERIFIED_SENDER = 'Stef Keppens website <noreply@stefmeister.com>'
+const SENDER = /onboarding@resend\.dev/i.test(LEAD_FROM) ? VERIFIED_SENDER : LEAD_FROM
+
 const app = express()
 app.use(express.json({ limit: '32kb' }))
 app.use(express.static(DIST))
@@ -178,7 +184,7 @@ app.post('/api/lead', async (req, res) => {
         label: 'resend_email',
         run: resend.emails
           .send({
-            from: LEAD_FROM,
+            from: SENDER,
             to: [LEAD_TO],
             replyTo: b.email,
             subject: `Nieuwe groeianalyse-aanvraag — ${String(b.bedrijf || b.naam).slice(0, 80)}`,
@@ -211,7 +217,7 @@ app.post('/api/lead', async (req, res) => {
       }
     })
     // Temporary diagnostics so email delivery can be verified from outside.
-    const diag = { build: 'diag-1', from: LEAD_FROM, to: LEAD_TO, failed }
+    const diag = { build: 'diag-2', from: SENDER, to: LEAD_TO, failed }
     if (captured.length === 0) {
       return res.status(502).json({ error: 'send_failed', ...diag })
     }
