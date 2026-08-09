@@ -202,12 +202,18 @@ app.post('/api/lead', async (req, res) => {
 
     const results = await Promise.allSettled(attempts.map((a) => a.run))
     const captured = []
+    const failed = []
     results.forEach((r, i) => {
       if (r.status === 'fulfilled') captured.push(attempts[i].label)
-      else console.error(`[lead] ${attempts[i].label} failed:`, r.reason.message)
+      else {
+        console.error(`[lead] ${attempts[i].label} failed:`, r.reason.message)
+        failed.push({ label: attempts[i].label, error: r.reason.message })
+      }
     })
+    // Temporary diagnostics so email delivery can be verified from outside.
+    const diag = { build: 'diag-1', from: LEAD_FROM, to: LEAD_TO, failed }
     if (captured.length === 0) {
-      return res.status(502).json({ error: 'send_failed' })
+      return res.status(502).json({ error: 'send_failed', ...diag })
     }
 
     if (resend && LEAD_AUTOREPLY === 'true' && LEAD_REPLY_FROM) {
@@ -221,7 +227,7 @@ app.post('/api/lead', async (req, res) => {
         .catch((err) => console.error('[lead] auto-reply failed:', err.message))
     }
 
-    return res.json({ ok: true, captured })
+    return res.json({ ok: true, captured, ...diag })
   } catch (err) {
     console.error('[lead] unexpected error:', err.message)
     return res.status(502).json({ error: 'send_failed' })
