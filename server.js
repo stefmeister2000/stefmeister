@@ -11,9 +11,9 @@ const {
   // Where lead notifications are delivered. Your Resend account email works with
   // any sending setup, including the onboarding test sender.
   LEAD_TO = 'stefkeppens@gmail.com',
-  // "From" address for the notification. Until a domain is verified in Resend,
-  // use the onboarding sender (it only delivers to your own account email).
-  LEAD_FROM = 'Stef Keppens website <onboarding@resend.dev>',
+  // "From" address for the notification. Uses the verified stefmeister.com
+  // domain so notifications deliver to any inbox (e.g. stefkeppens@gmail.com).
+  LEAD_FROM = 'Stef Keppens website <noreply@stefmeister.com>',
   // Optional confirmation reply to the person who submitted the form.
   // Requires a VERIFIED domain, since it delivers to arbitrary addresses.
   LEAD_AUTOREPLY, // set to "true" to enable
