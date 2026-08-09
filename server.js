@@ -174,8 +174,9 @@ app.post('/api/lead', async (req, res) => {
     const attempts = []
 
     if (resend) {
-      attempts.push(
-        resend.emails
+      attempts.push({
+        label: 'resend_email',
+        run: resend.emails
           .send({
             from: LEAD_FROM,
             to: [LEAD_TO],
@@ -186,12 +187,12 @@ app.post('/api/lead', async (req, res) => {
           .then(({ error }) => {
             if (error) throw new Error(`${error.name}: ${error.message}`)
           }),
-      )
-      attempts.push(saveContact(b))
+      })
+      attempts.push({ label: 'resend_contact', run: saveContact(b) })
     }
 
     if (HUBSPOT_ACCESS_TOKEN) {
-      attempts.push(saveHubspotContact(b))
+      attempts.push({ label: 'hubspot', run: saveHubspotContact(b) })
     }
 
     if (attempts.length === 0) {
@@ -199,11 +200,13 @@ app.post('/api/lead', async (req, res) => {
       return res.status(503).json({ error: 'not_configured' })
     }
 
-    const results = await Promise.allSettled(attempts)
-    for (const r of results) {
-      if (r.status === 'rejected') console.error('[lead] one integration failed:', r.reason.message)
-    }
-    if (!results.some((r) => r.status === 'fulfilled')) {
+    const results = await Promise.allSettled(attempts.map((a) => a.run))
+    const captured = []
+    results.forEach((r, i) => {
+      if (r.status === 'fulfilled') captured.push(attempts[i].label)
+      else console.error(`[lead] ${attempts[i].label} failed:`, r.reason.message)
+    })
+    if (captured.length === 0) {
       return res.status(502).json({ error: 'send_failed' })
     }
 
@@ -218,7 +221,7 @@ app.post('/api/lead', async (req, res) => {
         .catch((err) => console.error('[lead] auto-reply failed:', err.message))
     }
 
-    return res.json({ ok: true })
+    return res.json({ ok: true, captured })
   } catch (err) {
     console.error('[lead] unexpected error:', err.message)
     return res.status(502).json({ error: 'send_failed' })
