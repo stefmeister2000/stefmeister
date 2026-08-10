@@ -1,5 +1,6 @@
 import { useInView } from '../lib/useInView'
 import { useLang } from '../i18n/LanguageContext'
+import CheckList from './CheckList'
 import stefPhoto from '../assets/stef.jpg'
 
 const COPY = {
@@ -60,7 +61,7 @@ export default function AboutStef() {
             ))}
           </div>
 
-          <p className="mt-8 border-t border-line pt-5 text-sm text-bone">{t.highlights.join(' · ')}</p>
+          <CheckList items={t.highlights} className="mt-8 border-t border-line pt-6" />
         </div>
       </div>
     </section>

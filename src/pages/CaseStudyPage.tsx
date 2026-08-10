@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import Seo from '../components/Seo'
 import CaseVisual from '../components/CaseVisual'
+import CheckList from '../components/CheckList'
 import Breadcrumbs from '../components/Breadcrumbs'
 import { getCase } from '../data/cases'
 import type { CaseSlug } from '../data/types'
@@ -110,7 +111,7 @@ export default function CaseStudyPage({ slug }: { slug: CaseSlug }) {
       <section className="border-b border-line bg-surface/30">
         <div className="mx-auto max-w-4xl px-5 py-16 sm:px-8 sm:py-20">
           <p className="text-sm font-semibold uppercase tracking-widest text-accent-2">{t.built}</p>
-          <p className="mt-4 text-bone">{c.built[lang].join(' · ')}</p>
+          <CheckList items={c.built[lang]} className="mt-5" />
         </div>
       </section>
 
