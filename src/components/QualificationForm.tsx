@@ -185,6 +185,7 @@ export default function QualificationForm({ id = 'audit-formulier', compact = fa
         body: JSON.stringify({
           ...values,
           form_id: id,
+          lang,
           company_website: honeypotRef.current, // honeypot — bots fill this
           attribution,
         }),
