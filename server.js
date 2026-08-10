@@ -14,9 +14,8 @@ const {
   // "From" address for the notification. Uses the verified stefmeister.com
   // domain so notifications deliver to any inbox (e.g. stefkeppens@gmail.com).
   LEAD_FROM = 'Stef Keppens website <noreply@stefmeister.com>',
-  // Optional confirmation reply to the person who submitted the form.
-  // Requires a VERIFIED domain, since it delivers to arbitrary addresses.
-  LEAD_AUTOREPLY, // set to "true" to enable
+  // Optional override for the confirmation ("thank you") sender. Defaults to
+  // the verified domain sender below.
   LEAD_REPLY_FROM, // e.g. "Stef Keppens <stef@stefkeppens.be>"
   // Segment that new contacts are added to. Requires a FULL-ACCESS api key
   // (send-only keys cannot write contacts). Defaults to the "Website leads"
