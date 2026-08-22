@@ -9,6 +9,7 @@ import CaseStudyGrid from '../components/CaseStudyGrid'
 import AIAutomationFlows from '../components/AIAutomationFlows'
 import ProcessSection from '../components/ProcessSection'
 import AboutStef from '../components/AboutStef'
+import VideoShowcase from '../components/VideoShowcase'
 import FunnelAuditOffer from '../components/FunnelAuditOffer'
 import QualificationFormSection from '../components/QualificationFormSection'
 import FAQ from '../components/FAQ'
@@ -45,6 +46,7 @@ export default function Home() {
       <AIAutomationFlows />
       <ProcessSection />
       <AboutStef />
+      <VideoShowcase />
       <FunnelAuditOffer />
       <QualificationFormSection />
       <FAQ />
