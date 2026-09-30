@@ -22,7 +22,7 @@ npm start
 
 The build creates client assets and pre-renders every public service, case and agency page as Dutch HTML. React hydrates these pages and restores a visitor's saved language after hydration. English remains a visitor language toggle, not a separate indexable URL set.
 
-Configure the lead integration using `.env.example` and the deployment environment. Never commit credentials. SEO tests disable email/CRM credentials and do not submit leads. They start a temporary server on port 18791.
+Configure the lead integration using `.env.example` and the deployment environment. Never commit credentials. SEO tests disable email credentials and do not submit leads. They start a temporary server on port 18791.
 
 ## Search and AI discovery
 

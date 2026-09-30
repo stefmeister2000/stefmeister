@@ -44,7 +44,7 @@ test('every indexable route has crawlable content, unique metadata and valid str
 
 test('production server returns route HTML, permanent redirects and real 404s', async () => {
   const server = spawn(process.execPath, ['server.js'], {
-    env: { ...process.env, PORT: '18791', RESEND_API_KEY: '', HUBSPOT_ACCESS_TOKEN: '' },
+    env: { ...process.env, PORT: '18791', RESEND_API_KEY: '' },
     stdio: ['ignore', 'pipe', 'pipe'],
   })
   try {

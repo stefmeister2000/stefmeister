@@ -22,10 +22,6 @@ const {
   // (send-only keys cannot write contacts). Defaults to the "Website leads"
   // segment created for this account.
   LEAD_SEGMENT_ID = 'd7334c7f-8e7c-4822-aa56-29d6c1a2c5d8',
-  // HubSpot Private App token (Settings → Integrations → Private Apps).
-  // Needs the crm.objects.contacts.write scope. Optional — leads still send
-  // via Resend above if this isn't set.
-  HUBSPOT_ACCESS_TOKEN,
 } = process.env
 
 const resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : null
@@ -143,47 +139,6 @@ async function saveContact(b) {
   if (error) throw new Error(`${error.name}: ${error.message}`)
 }
 
-// The qualification answers don't map to dedicated HubSpot properties on this
-// portal, so they're combined into the standard "message" field (its own
-// description: "for any message or comments a contact may want to leave on a
-// form") rather than guessing at custom property names that may not exist.
-function leadMessage(b) {
-  const lines = [
-    b.doel && `Belangrijkste doel: ${b.doel}`,
-    b.uitdaging && `Grootste uitdaging: ${b.uitdaging}`,
-    b.investering && `Maandelijkse investering: ${b.investering}`,
-    b.kanalen && `Huidige kanalen: ${b.kanalen}`,
-    b.timing && `Gewenste timing: ${b.timing}`,
-    b.extra && `Extra informatie: ${b.extra}`,
-  ].filter(Boolean)
-  return lines.join('\n')
-}
-
-// Upsert the lead as a HubSpot contact by email. Best-effort: never blocks
-// the form. Requires a Private App token with crm.objects.contacts.write.
-async function saveHubspotContact(b) {
-  const { firstName, lastName } = splitName(b.naam)
-  const properties = {
-    email: b.email,
-    firstname: firstName,
-    lastname: lastName,
-    phone: b.telefoon,
-    company: b.bedrijf,
-    website: b.website,
-    message: leadMessage(b),
-  }
-
-  const res = await fetch('https://api.hubapi.com/crm/v3/objects/contacts/batch/upsert', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${HUBSPOT_ACCESS_TOKEN}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ inputs: [{ idProperty: 'email', id: b.email, properties }] }),
-  })
-  if (!res.ok) throw new Error(`HubSpot ${res.status}: ${await res.text()}`)
-}
-
 app.post('/api/lead', async (req, res) => {
   try {
     const b = req.body || {}
@@ -220,12 +175,8 @@ app.post('/api/lead', async (req, res) => {
       attempts.push({ label: 'resend_contact', run: saveContact(b) })
     }
 
-    if (HUBSPOT_ACCESS_TOKEN) {
-      attempts.push({ label: 'hubspot', run: saveHubspotContact(b) })
-    }
-
     if (attempts.length === 0) {
-      console.error('[lead] no integration configured (RESEND_API_KEY / HUBSPOT_ACCESS_TOKEN both unset)')
+      console.error('[lead] no integration configured (RESEND_API_KEY unset)')
       return res.status(503).json({ error: 'not_configured' })
     }
 
