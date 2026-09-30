@@ -4,10 +4,12 @@ import Nav from './Nav'
 import Footer from './Footer'
 import StickyMobileCTA from './StickyMobileCTA'
 import BackToTop from './BackToTop'
+import { usePageMotion } from '../lib/usePageMotion'
 import { captureAttribution } from '../lib/analytics'
 
 export default function Layout() {
   const location = useLocation()
+  const motionRef = usePageMotion(location.pathname)
 
   useEffect(() => {
     captureAttribution()
@@ -17,7 +19,7 @@ export default function Layout() {
     if (location.hash) {
       const el = document.getElementById(location.hash.slice(1))
       if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        el.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' })
         return
       }
     }
@@ -25,7 +27,7 @@ export default function Layout() {
   }, [location.pathname, location.hash])
 
   return (
-    <div className="site-shell min-h-screen pb-28 lg:pb-0">
+    <div ref={motionRef} className="site-shell min-h-screen pb-28 lg:pb-0">
       <Nav />
       <main>
         <Outlet />

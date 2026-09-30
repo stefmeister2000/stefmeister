@@ -1,0 +1,53 @@
+/* Separate translate from existing entrance transforms so they compose cleanly. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-art.hero-graphic > img {
+    translate: var(--motion-x, 0px) var(--motion-y, 0px);
+    transition: translate .65s cubic-bezier(.22,1,.36,1);
+  }
+  .hero-art .floating-strategy {
+    translate: calc(var(--motion-x, 0px) * -.6) calc(var(--motion-y, 0px) * -.6);
+    transition: translate .8s cubic-bezier(.22,1,.36,1), transform .35s;
+  }
+  .project-arrow, .lyte-case-arrow, .service-more > span {
+    transition: transform .4s cubic-bezier(.22,1,.36,1), background .3s, color .3s;
+  }
+  :is(.project-tile, .lyte-case-card, .marketing-card):is(:hover, :focus-visible) :is(.project-arrow, .lyte-case-arrow, .service-more > span) {
+    transform: rotate(45deg);
+  }
+  :is(.button-dark, .button-light) {
+    transition: transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s, background .3s;
+  }
+  :is(.button-dark, .button-light):active { transform: scale(.97); }
+  .creative-front, .creative-back, .concept-search-result, .concept-mail, .dashboard-metrics > span {
+    transition: transform .6s cubic-bezier(.22,1,.36,1), box-shadow .6s;
+  }
+  .marketing-card:is(:hover, :focus-visible) .creative-front { transform: translate(-5px,-5px) rotate(-11deg); }
+  .marketing-card:is(:hover, :focus-visible) .creative-back { transform: translate(8px,-3px) rotate(14deg); }
+  .marketing-card:is(:hover, :focus-visible) :is(.concept-search-result, .concept-mail) { transform: translateY(-5px); box-shadow: 0 16px 28px #21328c18; }
+  .marketing-card:is(:hover, :focus-visible) .dashboard-metrics > span { transform: translateY(-5px); }
+  .dashboard-metrics > span:nth-child(2) { transition-delay: 60ms; }
+  .dashboard-metrics > span:nth-child(3) { transition-delay: 120ms; }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  :is(.project-tile, .lyte-case-card) {
+    transform: perspective(1000px) rotateX(var(--motion-rx, 0deg)) rotateY(var(--motion-ry, 0deg));
+    transition: transform .5s cubic-bezier(.22,1,.36,1), box-shadow .35s;
+  }
+  :is(.project-image, .lyte-case-cover)::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at var(--light-x, 50%) var(--light-y, 50%), #ffffff35, transparent 65%);
+    opacity: 0;
+    transition: opacity .4s;
+  }
+  :is(.project-tile, .lyte-case-card):hover :is(.project-image, .lyte-case-cover)::after { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-shell *, .site-shell *::before, .site-shell *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

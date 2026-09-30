@@ -1,46 +1,87 @@
 import { useEffect, useRef } from 'react'
 
-/** Entry motion never hides content and follows the operating system preference. */
-export function usePageMotion() {
+/** Progressive enhancement: content remains visible without JS or animation support. */
+export function usePageMotion(route = '/') {
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
     const root = ref.current
-    if (!root) return
+    if (!root || !('IntersectionObserver' in window)) return
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const pointer = window.matchMedia('(hover: hover) and (pointer: fine)')
     const animations = new Set<Animation>()
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return
-          observer.unobserve(entry.target)
-          if (preference.matches) return
-          const animation = entry.target.animate(
-            [
-              { opacity: 0, transform: 'translateY(26px)' },
-              { opacity: 1, transform: 'translateY(0)' },
-            ],
-            { duration: 650, easing: 'cubic-bezier(.16,1,.3,1)' },
-          )
-          animations.add(animation)
-          animation.onfinish = () => animations.delete(animation)
+    const cleanups: (() => void)[] = []
+    const play = (el: Element, frames: Keyframe[], delay = 0, duration = 750) => {
+      if (preference.matches || !el.animate) return
+      const animation = el.animate(frames, { duration, delay, easing: 'cubic-bezier(.16,1,.3,1)', fill: 'backwards' })
+      animations.add(animation)
+      animation.onfinish = () => { animations.delete(animation); animation.cancel() }
+    }
+    const observer = new IntersectionObserver(entries => {
+      let index = 0
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return
+        observer.unobserve(entry.target)
+        if (preference.matches) return
+        const delay = Math.min(index++ * 65, 195)
+        play(entry.target, [{ opacity: 0, translate: '0 30px' }, { opacity: 1, translate: '0 0' }], delay)
+        // Each service illustration tells its story in a short, ordered sequence.
+        entry.target.querySelectorAll('.concept-search, .concept-search-result, .concept-creative, .concept-tag, .data-sources, .data-connector, .concept-dashboard, .email-event, .flow-line, .concept-mail, .email-branches').forEach((part, i) => {
+          play(part, [{ opacity: 0, translate: '0 15px', scale: '.94' }, { opacity: 1, translate: '0 0', scale: '1' }], delay + 120 + i * 90, 650)
         })
-      },
-      { threshold: 0.08 },
-    )
-    root
-      .querySelectorAll(
-        '.performance-heading, .channel-selector, .channel-stage, .revenue-copy, .revenue-principles > div, .project-tile, #expertise .group',
-      )
-      .forEach((el) => observer.observe(el))
+      })
+    }, { threshold: 0.12 })
+    root.querySelectorAll('.work-intro, .growth-goal, .project-tile, .revenue-copy, .revenue-proof, .revenue-principles > div, .marketing-intro, .marketing-card, .lyte-case-card, .service-page-visual, #agency > div > p, #agency h2, #agency .rounded-2xl').forEach(el => observer.observe(el))
+
+    // No perpetual render loop: update only while a mouse moves over an artwork.
+    root.querySelectorAll<HTMLElement>('.hero-art, .project-tile, .lyte-case-card').forEach(el => {
+      let frame = 0
+      let clientX = 0
+      let clientY = 0
+      const reset = () => {
+        cancelAnimationFrame(frame)
+        frame = 0
+        ;['--motion-x', '--motion-y', '--motion-rx', '--motion-ry', '--light-x', '--light-y'].forEach(name => el.style.removeProperty(name))
+      }
+      const move = (event: PointerEvent) => {
+        if (preference.matches || !pointer.matches || event.pointerType !== 'mouse') return
+        clientX = event.clientX
+        clientY = event.clientY
+        if (frame) return
+        frame = requestAnimationFrame(() => {
+          frame = 0
+          const bounds = el.getBoundingClientRect()
+          const x = Math.max(-.5, Math.min(.5, (clientX - bounds.left) / bounds.width - .5))
+          const y = Math.max(-.5, Math.min(.5, (clientY - bounds.top) / bounds.height - .5))
+          el.style.setProperty('--motion-x', `${x * 22}px`)
+          el.style.setProperty('--motion-y', `${y * 16}px`)
+          el.style.setProperty('--motion-rx', `${-y * 5}deg`)
+          el.style.setProperty('--motion-ry', `${x * 5}deg`)
+          el.style.setProperty('--light-x', `${(x + .5) * 100}%`)
+          el.style.setProperty('--light-y', `${(y + .5) * 100}%`)
+        })
+      }
+      el.addEventListener('pointermove', move, { passive: true })
+      el.addEventListener('pointerleave', reset)
+      preference.addEventListener('change', reset)
+      pointer.addEventListener('change', reset)
+      cleanups.push(() => {
+        reset()
+        el.removeEventListener('pointermove', move)
+        el.removeEventListener('pointerleave', reset)
+        preference.removeEventListener('change', reset)
+        pointer.removeEventListener('change', reset)
+      })
+    })
     const stop = () => {
-      if (preference.matches) animations.forEach((a) => a.cancel())
+      if (preference.matches) { animations.forEach(animation => animation.cancel()); animations.clear() }
     }
     preference.addEventListener('change', stop)
     return () => {
       observer.disconnect()
-      animations.forEach((a) => a.cancel())
+      animations.forEach(animation => animation.cancel())
+      cleanups.forEach(cleanup => cleanup())
       preference.removeEventListener('change', stop)
     }
-  }, [])
+  }, [route])
   return ref
 }

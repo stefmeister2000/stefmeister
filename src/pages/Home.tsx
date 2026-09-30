@@ -2,7 +2,6 @@ import Seo from '../components/Seo'
 import GrowthGoals from '../components/GrowthGoals'
 import PersonalHero from '../components/PersonalHero'
 import RevenueGrowth from '../components/RevenueGrowth'
-import { usePageMotion } from '../lib/usePageMotion'
 import SelectedWork from '../components/SelectedWork'
 import AgencyCapabilities from '../components/AgencyCapabilities'
 import AboutStef from '../components/AboutStef'
@@ -13,9 +12,8 @@ import FinalCTA from '../components/FinalCTA'
 import { useLang } from '../i18n/LanguageContext'
 export default function Home() {
   const { lang } = useLang()
-  const motionRef = usePageMotion()
   return (
-    <div className="studio-home" ref={motionRef}>
+    <div className="studio-home">
       <Seo
         title={
           lang === 'nl'
