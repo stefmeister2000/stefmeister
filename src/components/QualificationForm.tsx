@@ -3,31 +3,23 @@ import { captureAttribution, trackEvent } from '../lib/analytics'
 import { useInView } from '../lib/useInView'
 import { useLang } from '../i18n/LanguageContext'
 
+const GOALS = [
+  { key: 'customers', nl: ['Meer klanten', 'Meer aanvragen of boekingen.'], en: ['More customers', 'More enquiries or bookings.'] },
+  { key: 'sales', nl: ['Meer online verkopen', 'Je webshop laten groeien.'], en: ['More online sales', 'Grow your online store.'] },
+  { key: 'build', nl: ['Een website of app', 'Iets nieuws bouwen of verbeteren.'], en: ['A website or app', 'Build something new or improve it.'] },
+  { key: 'efficiency', nl: ['Slimmer werken', 'Meer inzicht met data en automatisering.'], en: ['Work smarter', 'Clarity through data and automation.'] },
+  { key: 'explore', nl: ['Ik weet het nog niet', 'Denk samen met ons na over je volgende stap.'], en: ['I’m not sure yet', 'Let’s work out your next step together.'] },
+]
+
 const COPY = {
   nl: {
-    goals: [
-      'Nieuwe website of webshop',
-      'Softwareplatform of mobiele app',
-      'Meer B2B-leads',
-      'Meer online boekingen',
-      'Meer ecommerce-omzet',
-      'Betere landingspagina’s',
-      'Betere advertenties',
-      'Betere tracking en data-analyse',
-      'E-mailmarketing en herhaalaankopen',
-      'AI-automatiseringen',
-      'Volledige funnel herwerken',
-      'Strategisch gesprek',
-      'Leertraject',
-    ],
     labels: {
       naam: 'Naam',
       bedrijf: 'Bedrijf (optioneel)',
       email: 'Zakelijk e-mailadres',
       telefoon: 'Telefoonnummer',
       website: 'Website (optioneel)',
-      doel: 'Belangrijkste doel',
-      doelPlaceholder: 'Kies een doel',
+      doel: 'Waar kunnen we je mee helpen?',
       uitdaging: 'Grootste uitdaging',
       investering: 'Beschikbaar project- of marketingbudget',
       kanalen: 'Huidige kanalen',
@@ -52,29 +44,13 @@ const COPY = {
       'Er ging iets mis bij het versturen. Probeer het opnieuw of mail rechtstreeks naar stefkeppens@gmail.com.',
   },
   en: {
-    goals: [
-      'New website or online store',
-      'Software platform or mobile app',
-      'More B2B leads',
-      'More online bookings',
-      'More ecommerce revenue',
-      'Better landing pages',
-      'Better ads',
-      'Better tracking and analytics',
-      'Email marketing and repeat purchases',
-      'AI automations',
-      'Rework the full funnel',
-      'Strategy session',
-      'Learning track',
-    ],
     labels: {
       naam: 'Name',
       bedrijf: 'Company (optional)',
       email: 'Business email',
       telefoon: 'Phone number',
       website: 'Website (optional)',
-      doel: 'Main goal',
-      doelPlaceholder: 'Choose a goal',
+      doel: 'What can we help you with?',
       uitdaging: 'Biggest challenge',
       investering: 'Available project or marketing budget',
       kanalen: 'Current channels',
@@ -191,6 +167,7 @@ export default function QualificationForm({ id = 'audit-formulier', compact = fa
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...values,
+          doel: GOALS.find(goal => goal.key === values.doel)?.[lang][0] ?? values.doel,
           extra: [inquiryContext, values.extra].filter(Boolean).join('\n'),
           form_id: id,
           lang,
@@ -266,16 +243,19 @@ export default function QualificationForm({ id = 'audit-formulier', compact = fa
             onChange={(e) => update('website', e.target.value)}
           />
         </Field>
-        <Field label={t.labels.doel} error={errors.doel} htmlFor="doel" full>
-          <select id="doel" className="input" value={values.doel} onChange={(e) => update('doel', e.target.value)}>
-            <option value="">{t.labels.doelPlaceholder}</option>
-            {t.goals.map((goal) => (
-              <option key={goal} value={goal}>
-                {goal}
-              </option>
+        <fieldset className="goal-picker sm:col-span-2" aria-describedby={`${id}-goal-hint${errors.doel ? ` ${id}-goal-error` : ''}`} disabled={status === 'submitting'}>
+          <legend>{t.labels.doel}</legend>
+          <p id={`${id}-goal-hint`} className="goal-picker-hint">{lang === 'nl' ? 'Kies wat het best past. De details bekijken we samen.' : 'Choose the closest fit. We’ll work out the details together.'}</p>
+          <div className="goal-options">
+            {GOALS.map(goal => (
+              <label key={goal.key} className={`goal-option ${goal.key === 'explore' ? 'goal-option-explore' : ''}`}>
+                <input type="radio" name={`${id}-goal`} value={goal.key} checked={values.doel === goal.key} onChange={() => update('doel', goal.key)} className="sr-only" required aria-invalid={Boolean(errors.doel)} />
+                <span className="goal-option-body"><span className="goal-option-dot" aria-hidden="true" /><span><strong>{goal[lang][0]}</strong><span className="goal-option-description">{goal[lang][1]}</span></span></span>
+              </label>
             ))}
-          </select>
-        </Field>
+          </div>
+          {errors.doel && <p id={`${id}-goal-error`} className="mt-2 text-sm text-accent-2" role="alert">{t.errors.doel}</p>}
+        </fieldset>
         <Field label={t.labels.uitdaging} error={errors.uitdaging} htmlFor="uitdaging" full>
           <textarea
             id="uitdaging"
