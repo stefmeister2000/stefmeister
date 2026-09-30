@@ -71,24 +71,4 @@ export const lyteCases: LyteCase[] = [
       en: 'A marketing website focused on app downloads and employer sign-ups.',
     },
   },
-  {
-    name: 'Fixie',
-    category: 'Mobile app',
-    url: 'https://lytestudios.be/projects/fixie/',
-    image: '/partners/fixie.jpg',
-    description: {
-      nl: 'De eigen app van LYTE voor persoonlijke doelen en voortgang.',
-      en: 'LYTE’s own app for personal goals and progress.',
-    },
-  },
-  {
-    name: 'Fixie',
-    category: 'Website',
-    url: 'https://lytestudios.be/projects/fixie-website/',
-    image: '/partners/fixie-website.jpg',
-    description: {
-      nl: 'Een compacte website die de app introduceert en naar downloads leidt.',
-      en: 'A compact website introducing the app and driving downloads.',
-    },
-  },
 ]

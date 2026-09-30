@@ -1,10 +1,15 @@
 import { Link } from 'react-router-dom'
 import { useLang } from '../i18n/LanguageContext'
 import { cases } from '../data/cases'
+import { lyteCases } from '../data/lyteCases'
 export default function SelectedWork() {
   const { lang } = useLang()
   const nl = lang === 'nl'
   const selected = ['pinacello', 'nooms', 'olearys', 'e-kart'].flatMap((slug) => cases.filter((c) => c.slug === slug))
+  const featuredPartners = ['Tinrate', 'WERKR'].flatMap(name => {
+    const project = lyteCases.find(c => c.name === name)
+    return project ? [project] : []
+  })
   return (
     <section className="selected-work" id="selected-work">
       <div className="work-intro">
@@ -55,34 +60,25 @@ export default function SelectedWork() {
           </div>
         </Link>
       ))}
-      {[
-        { name: 'Jobr', slug: 'jobr', category: 'Mobile app · LYTE Studios' },
-        {
-          name: 'WERKR',
-          slug: 'werkr',
-          category: 'Software platform · LYTE Studios',
-        },
-      ].map((c) => (
+      {featuredPartners.map((c) => (
         <a
-          className={'project-tile partner-project ' + c.slug}
-          key={c.slug}
-          href={'https://lytestudios.be/projects/' + c.slug + '/'}
+          className="project-tile partner-project"
+          key={c.url}
+          href={c.url}
           target="_blank"
           rel="noopener noreferrer"
         >
           <div className="project-image">
-            <img src={'/partners/' + c.slug + '.jpg'} alt={c.name} loading="lazy" />
+            <img src={c.image} alt={c.name} loading="lazy" />
             <span className="project-arrow">↗</span>
           </div>
           <div className="project-caption">
-            <h3>{c.name}</h3>
-            {c.slug === 'pinacello' && (
-              <strong className="project-result">
-                +120% {nl ? 'online omzet' : 'online revenue'}
-              </strong>
-            )}
-            <p>{c.category}</p>
-            <span>{nl ? 'Bekijk de case' : 'Explore the case'} ↗</span>
+            <div className="partner-project-heading">
+              <h3>{c.name}</h3>
+              {c.logo && <img src={c.logo} alt="" loading="lazy" className="lyte-client-logo" />}
+            </div>
+            <p>{c.description[lang]}</p>
+            <span>{nl ? 'Bekijk de case' : 'Explore the case'} ↗ · LYTE Studios</span>
           </div>
         </a>
       ))}
