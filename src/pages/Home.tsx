@@ -1,7 +1,7 @@
 import Seo from '../components/Seo'
+import GrowthGoals from '../components/GrowthGoals'
 import PersonalHero from '../components/PersonalHero'
 import RevenueGrowth from '../components/RevenueGrowth'
-import PerformanceAds from '../components/PerformanceAds'
 import { usePageMotion } from '../lib/usePageMotion'
 import SelectedWork from '../components/SelectedWork'
 import AgencyCapabilities from '../components/AgencyCapabilities'
@@ -19,20 +19,20 @@ export default function Home() {
       <Seo
         title={
           lang === 'nl'
-            ? 'Meer online sales en omzet met Meta Ads, Google Ads en conversie'
-            : 'More online sales and revenue with Meta Ads, Google Ads and conversion'
+            ? 'Marketingbureau in Lochristi | Google Ads & data'
+            : 'Marketing agency in Lochristi | Google Ads & analytics'
         }
         description={
           lang === 'nl'
-            ? 'Meer klanten en online omzet met performance marketing, sterke websites en conversieoptimalisatie. Ontdek de Pinacello-case: +120% online omzet.'
-            : 'Grow online sales and revenue through performance marketing, strong websites and conversion optimisation. Explore Pinacello: +120% online revenue.'
+            ? 'Freeflow Studio in Lochristi helpt bedrijven groeien met Google Ads, Meta Ads, e-mailmarketing, data-analyse en websites die bezoekers omzetten in klanten.'
+            : 'Freeflow Studio in Lochristi helps businesses grow with Google Ads, Meta Ads, email marketing, analytics and websites that turn visitors into customers.'
         }
         path="/"
       />
       <PersonalHero />
-      <RevenueGrowth />
-      <PerformanceAds />
+      <GrowthGoals />
       <SelectedWork />
+      <RevenueGrowth />
       <AgencyCapabilities />
       <AboutStef />
       <div id="aanpak">

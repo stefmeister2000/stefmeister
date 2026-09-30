@@ -110,7 +110,7 @@ export default function CaseStudyPage({ slug }: { slug: CaseSlug }) {
 
       <section className="border-b border-line bg-surface/30">
         <div className="mx-auto max-w-4xl px-5 py-16 sm:px-8 sm:py-20">
-          <p className="text-sm font-semibold uppercase tracking-widest text-accent-2">{t.built}</p>
+          <p className="text-sm font-semibold uppercase tracking-widest text-accent-2">{c.builtLabel?.[lang] ?? t.built}</p>
           <CheckList items={c.built[lang]} className="mt-5" />
         </div>
       </section>

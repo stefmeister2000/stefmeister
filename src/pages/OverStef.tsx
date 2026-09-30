@@ -8,12 +8,12 @@ const COPY = {
   nl: {
     seoTitle: 'De agency',
     seoDescription:
-      "Stef Keppens en LYTE Studios werken samen met bedrijven aan de volledige digitale klantreis: advertenties, landingspagina's, tracking, ecommerce en automatisering.",
+      "Freeflow Studio uit Lochristi werkt met bedrijven aan de volledige digitale klantreis: advertenties, landingspagina's, tracking, ecommerce en automatisering.",
   },
   en: {
     seoTitle: 'The agency',
     seoDescription:
-      "Stef Keppens and LYTE Studios work together with companies on the full digital customer journey: ads, landing pages, tracking, ecommerce and automation.",
+      "Freeflow Studio in Lochristi works with companies on the full digital customer journey: ads, landing pages, tracking, ecommerce and automation.",
   },
 }
 
@@ -25,7 +25,7 @@ export default function OverStef() {
     <div>
       <Seo title={t.seoTitle} description={t.seoDescription} path="/agency" />
 
-      <AboutStef />
+      <AboutStef standalone />
       <ProcessSection />
       <FinalCTA />
     </div>

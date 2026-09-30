@@ -1,22 +1,21 @@
 import Seo from '../components/Seo'
 import QualificationForm from '../components/QualificationForm'
-import { trackEvent } from '../lib/analytics'
 import { useLang } from '../i18n/LanguageContext'
 
 const COPY = {
   nl: {
     seoTitle: 'Contact',
-    seoDescription: 'Bespreek je website, software, app of groeiplan met Stef Keppens en LYTE Studios.',
-    title: 'Vertel kort waar jullie vandaag staan',
-    body: 'Zeven velden, twee minuten. Op basis daarvan bekijken we hoe we jullie het beste kunnen helpen.',
+    seoDescription: 'Bespreek je website, software, app of groeiplan met Freeflow Studio in Lochristi.',
+    title: 'Waar wil je bedrijf naartoe?',
+    body: 'Vertel ons je doel en wat vandaag vastloopt. We bespreken je huidige aanpak, bepalen waar de grootste kans zit en bekijken welke samenwerking past.',
     meeting: 'Plan een groeigesprek',
     meetingTooltip: 'Agenda-koppeling volgt — vul ondertussen het formulier in.',
   },
   en: {
     seoTitle: 'Contact',
-    seoDescription: 'Discuss your website, software, app or growth plan with Stef Keppens and LYTE Studios.',
-    title: 'Tell us briefly where you stand today',
-    body: 'Seven fields, two minutes. Based on that We’ll see if and how we can best help.',
+    seoDescription: 'Discuss your website, software, app or growth plan with Freeflow Studio in Lochristi.',
+    title: 'Where do you want your business to go?',
+    body: 'Tell us your goal and what is holding you back. We discuss your current approach, identify the biggest opportunity and explore how we can help.',
     meeting: 'Schedule a growth call',
     meetingTooltip: 'Calendar link coming soon — fill in the form below in the meantime.',
   },
@@ -39,17 +38,14 @@ export default function Contact() {
             <a href="mailto:stefkeppens@gmail.com" className="text-sm text-accent-2 hover:text-accent">
               stefkeppens@gmail.com
             </a>
-            <span className="text-line">·</span>
-            <button
-              type="button"
-              onClick={() => trackEvent('calendar_opened', { placement: 'contact_page' })}
-              className="rounded-full border border-line px-5 py-2.5 text-sm font-semibold text-paper transition hover:border-accent"
-              title={t.meetingTooltip}
-            >
-              {t.meeting}
-            </button>
+
           </div>
 
+          <ol className="contact-next-steps">
+            <li>{lang === 'nl' ? '01 · Jij deelt je doel en uitdaging.' : '01 · You share your goal and challenge.'}</li>
+            <li>{lang === 'nl' ? '02 · We bespreken de kansen en prioriteiten.' : '02 · We discuss opportunities and priorities.'}</li>
+            <li>{lang === 'nl' ? '03 · Je krijgt een voorstel met scope en budget.' : '03 · You receive a proposal with scope and budget.'}</li>
+          </ol>
           <div className="mt-10">
             <QualificationForm id="audit-formulier-contact" />
           </div>

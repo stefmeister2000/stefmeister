@@ -2,6 +2,24 @@ import type { Service } from './types'
 
 export const services: Service[] = [
   {
+    slug: 'email-marketing', number: '11',
+    title: { nl: 'E-mailmarketing', en: 'Email marketing' },
+    summary: { nl: 'Bouw een relatie die verder gaat dan de eerste klik. Met relevante campagnes en automatische flows begeleid je contacten van interesse naar aankoop en herhaalaankoop.', en: 'Build a relationship beyond the first click. Relevant campaigns and automated flows guide contacts from interest to purchase and repeat purchase.' },
+    includes: { nl: ['E-mailstrategie', 'Campagnes & nieuwsbrieven', 'Automatische flows', 'Segmentatie & analyse'], en: ['Email strategy', 'Campaigns & newsletters', 'Automated flows', 'Segmentation & analysis'] },
+    problem: { nl: 'Je investeert in bezoekers en nieuwe klanten, maar na een inschrijving of aankoop blijft het stil. Losse nieuwsbrieven missen vaak de timing en relevantie die een klant naar de volgende stap helpen.', en: 'You invest in visitors and new customers, but things go quiet after a sign-up or purchase. Occasional newsletters often miss the timing and relevance that help customers take the next step.' },
+    process: { nl: ['We brengen je doelgroepen, toestemming, klantreis en beschikbare data in kaart.', 'We bepalen welke flows prioriteit krijgen: welkom, opvolging, verlaten winkelmand of herhaalaankoop.', 'We ontwerpen herkenbare e-mails met één duidelijke boodschap en volgende stap.', 'We testen inhoud, weergave, links en triggers voordat een flow live gaat.', 'We evalueren kliks, conversies, uitschrijvingen en beschikbare omzetdata en verbeteren gericht.'], en: ['We map audiences, consent, the customer journey and available data.', 'We prioritise flows: welcome, follow-up, abandoned cart or repeat purchase.', 'We design recognisable emails with one clear message and next step.', 'We test content, rendering, links and triggers before launching a flow.', 'We review clicks, conversions, unsubscribes and available revenue data to improve.'] },
+    deliverables: { nl: ['E-mailplan met prioriteiten per doelgroep', 'Herbruikbaar e-maildesign voor desktop en mobiel', 'Afgesproken campagnes en automatische flows', 'Segmentatie, testplan en rapportage'], en: ['Email plan with priorities for each audience', 'Reusable email design for desktop and mobile', 'Agreed campaigns and automated flows', 'Segmentation, testing plan and reporting'] },
+  },
+  {
+    slug: 'data-analytics', number: '10',
+    title: { nl: 'Data & analytics', en: 'Data & analytics' },
+    summary: { nl: 'Van verspreide cijfers naar duidelijke beslissingen. We verbinden websitegedrag, campagnes en conversies zodat je ziet waar je groei vandaan komt.', en: 'From scattered numbers to clear decisions. We connect website behaviour, campaigns and conversions so you can see what drives growth.' },
+    includes: { nl: ['GA4', 'Google Tag Manager', 'Conversietracking', 'Looker Studio dashboards'], en: ['GA4', 'Google Tag Manager', 'Conversion tracking', 'Looker Studio dashboards'] },
+    problem: { nl: 'Je investeert in marketing, maar weet niet welke campagnes goede aanvragen opleveren. Of je dashboard toont verkeer, terwijl je wilt weten wat klanten en omzet brengt.', en: 'You invest in marketing but cannot see which campaigns bring qualified enquiries. Or your dashboard shows traffic when you need to understand customers and revenue.' },
+    process: { nl: ['We bepalen welke acties waardevol zijn: aanvragen, boekingen, aankopen en gekwalificeerde leads.', 'We controleren je meetplan, GA4, tags en conversies op fouten en dubbele registraties.', 'We richten rapportage in rond de afgesproken KPI’s en beschikbare databronnen.', 'We vertalen de inzichten naar prioriteiten voor campagnes en conversie.'], en: ['We define valuable actions: enquiries, bookings, purchases and qualified leads.', 'We review your measurement plan, GA4, tags and conversions for errors and duplication.', 'We build reporting around agreed KPIs and available data sources.', 'We turn insights into priorities for campaigns and conversion.'] },
+    deliverables: { nl: ['Meetplan met duidelijke conversiedefinities', 'Trackingcontrole en afgesproken implementaties', 'Dashboard met kosten, conversies en beschikbare omzetdata', 'Uitleg bij datakwaliteit, meetbeperkingen en concrete vervolgstappen'], en: ['Measurement plan with clear conversion definitions', 'Tracking review and agreed implementations', 'Dashboard covering cost, conversions and available revenue data', 'Explanation of data quality, measurement limits and next actions'] },
+  },
+  {
     slug: 'websites',
     number: '01',
     title: { nl: 'Websites & ecommerce', en: 'Websites & ecommerce' },
@@ -351,7 +369,7 @@ export const services: Service[] = [
         'Remarketing setup',
       ],
     },
-    relatedCase: 'healthfactor',
+    relatedCase: 'e-kart',
   },
   {
     slug: 'ecommerce-conversie',
@@ -541,7 +559,6 @@ export const services: Service[] = [
         'Overview of what does and doesn’t work per channel',
       ],
     },
-    relatedCase: 'xpert-funding',
   },
 ]
 

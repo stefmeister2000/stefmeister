@@ -10,18 +10,18 @@ const COPY = {
   nl: {
     seoTitle: 'Cases',
     seoDescription:
-      "Ecommerce, hospitality en consumer brands: cases van Pinacello, O'Learys, HealthFactor en Nooms.",
+      "Ecommerce, hospitality en consumer brands: cases van Pinacello, O'Learys, E-Kart en Nooms.",
     title: 'Werk dat ideeën verder brengt',
-    body: 'Van groeicampagnes en ecommerce tot apps en platformen. Ontdek het werk van Stef Keppens en LYTE Studios, met de uitvoerende partner bij elk project.',
+    body: 'Van groeicampagnes en ecommerce tot apps en platformen. Ontdek de ervaring achter Freeflow Studio, met de oorspronkelijke uitvoerder bij elk project.',
     ongoing: 'Lopend project',
     view: 'Bekijk de case',
   },
   en: {
     seoTitle: 'Cases',
     seoDescription:
-      "Ecommerce, hospitality and consumer brands: cases from Pinacello, O'Learys, HealthFactor and Nooms.",
+      "Ecommerce, hospitality and consumer brands: cases from Pinacello, O'Learys, E-Kart and Nooms.",
     title: 'Work that takes ideas further',
-    body: 'From growth campaigns and ecommerce to apps and platforms. Explore work by Stef Keppens and LYTE Studios, with the delivery partner credited on each project.',
+    body: 'From growth campaigns and ecommerce to apps and platforms. Explore the experience behind Freeflow Studio, with the original team credited on each project.',
     ongoing: 'Ongoing project',
     view: 'View the case',
   },

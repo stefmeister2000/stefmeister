@@ -2,6 +2,8 @@ export type Lang = 'nl' | 'en'
 export type Bi<T> = Record<Lang, T>
 
 export type ServiceSlug =
+  | 'email-marketing'
+  | 'data-analytics'
   | 'websites'
   | 'software'
   | 'landing-pages'
@@ -25,7 +27,7 @@ export interface Service {
   partnerCase?: { name: string; url: string; description: Bi<string> }
 }
 
-export type CaseSlug = 'olearys' | 'pinacello' | 'healthfactor' | 'nooms' | 'xpert-funding'
+export type CaseSlug = 'olearys' | 'pinacello' | 'e-kart' | 'nooms'
 
 export interface CaseStudy {
   slug: CaseSlug
@@ -36,6 +38,7 @@ export interface CaseStudy {
   situation: Bi<string>
   challenge: Bi<string>
   role: Bi<string>
+  builtLabel?: Bi<string>
   built: Bi<string[]>
   measurement: Bi<string>
   objective: Bi<string>

@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom'
+import ServiceVisual from '../components/ServiceVisual'
+import { hasServiceVisual } from '../data/visualServices'
 import Seo from '../components/Seo'
 import CaseVisual from '../components/CaseVisual'
 import QualificationForm from '../components/QualificationForm'
@@ -75,6 +77,8 @@ export default function ServicePage({ slug }: { slug: ServiceSlug }) {
             {service.summary[lang]}
           </p>
 
+          <Link to="/contact" className="button-dark service-page-cta" onClick={() => trackEvent('audit_cta_clicked', { placement: 'service_hero', service: slug })}>{lang === 'nl' ? 'Bespreek jouw aanpak' : 'Discuss your approach'} ↗</Link>
+          {hasServiceVisual(slug) && <div className="service-page-visual"><ServiceVisual service={slug} /></div>}
           <p className="mt-6 max-w-2xl border-t border-line pt-5 text-sm text-mute">
             {service.includes[lang].join(' · ')}
           </p>

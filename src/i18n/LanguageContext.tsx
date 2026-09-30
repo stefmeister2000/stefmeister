@@ -13,21 +13,29 @@ const STORAGE_KEY = 'sk_lang'
 
 function readInitialLang(): Lang {
   if (typeof window === 'undefined') return 'nl'
-  const stored = window.localStorage.getItem(STORAGE_KEY)
-  return stored === 'en' ? 'en' : 'nl'
+  try {
+    return window.localStorage.getItem(STORAGE_KEY) === 'en' ? 'en' : 'nl'
+  } catch { return 'nl' }
 }
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>(readInitialLang)
+  const [lang, setLangState] = useState<Lang>('nl')
+  const [storageReady, setStorageReady] = useState(false)
 
   useEffect(() => {
+    setLangState(readInitialLang())
+    setStorageReady(true)
+  }, [])
+
+  useEffect(() => {
+    if (!storageReady) return
     document.documentElement.lang = lang
     try {
       window.localStorage.setItem(STORAGE_KEY, lang)
     } catch {
       // storage unavailable — language choice just won't persist
     }
-  }, [lang])
+  }, [lang, storageReady])
 
   const value = useMemo<LanguageContextValue>(
     () => ({

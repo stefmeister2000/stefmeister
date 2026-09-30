@@ -1,6 +1,7 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, StaticRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import Home from './pages/Home'
+import NotFound from './pages/NotFound'
 import ServicePage from './pages/ServicePage'
 import CasesIndex from './pages/CasesIndex'
 import CaseStudyPage from './pages/CaseStudyPage'
@@ -8,9 +9,10 @@ import FunnelAudit from './pages/FunnelAudit'
 import OverStef from './pages/OverStef'
 import Contact from './pages/Contact'
 
-export default function App() {
+export default function App({ location }: { location?: string }) {
+  const Router = location ? StaticRouter : BrowserRouter
   return (
-    <BrowserRouter>
+    <Router location={location ?? "/"}>
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<Home />} />
@@ -26,20 +28,21 @@ export default function App() {
           <Route path="cases" element={<CasesIndex />} />
           <Route path="cases/olearys" element={<CaseStudyPage slug="olearys" />} />
           <Route path="cases/pinacello" element={<CaseStudyPage slug="pinacello" />} />
-          <Route path="cases/healthfactor" element={<CaseStudyPage slug="healthfactor" />} />
+          <Route path="cases/e-kart" element={<CaseStudyPage slug="e-kart" />} />
           <Route path="cases/nooms" element={<CaseStudyPage slug="nooms" />} />
-          <Route path="cases/xpert-funding" element={<CaseStudyPage slug="xpert-funding" />} />
 
           <Route path="funnel-audit" element={<FunnelAudit />} />
           <Route path="agency" element={<OverStef />} />
+          <Route path="email-marketing" element={<ServicePage slug="email-marketing" />} />
+          <Route path="data-analytics" element={<ServicePage slug="data-analytics" />} />
           <Route path="websites" element={<ServicePage slug="websites" />} />
           <Route path="software" element={<ServicePage slug="software" />} />
           <Route path="over-stef" element={<OverStef />} />
           <Route path="contact" element={<Contact />} />
 
-          <Route path="*" element={<Home />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </Router>
   )
 }

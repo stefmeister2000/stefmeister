@@ -1,83 +1,25 @@
 import { Link } from 'react-router-dom'
 import { useLang } from '../i18n/LanguageContext'
-const items = [
-  {
-    n: '01',
-    title: ['Strategie & merk', 'Strategy & brand'],
-    text: [
-      'Een helder aanbod, een herkenbaar verhaal en een plan dat vertrekt vanuit je bedrijfsdoelen.',
-      'A clear offer, a distinct story and a plan grounded in your business goals.',
-    ],
-    tags: 'Positioning · Brand direction · Roadmap',
-    href: '/distributie',
-  },
-  {
-    n: '02',
-    title: ['Websites & ecommerce', 'Websites & ecommerce'],
-    text: [
-      'Van een eerste indruk tot een aankoop: digitale ervaringen waarin design en conversie samenwerken.',
-      'From first impression to purchase: digital experiences that bring design and conversion together.',
-    ],
-    tags: 'Web design · Development · Ecommerce',
-    href: '/websites',
-  },
-  {
-    n: '03',
-    title: ['Software & apps', 'Software & apps'],
-    text: [
-      'Webplatformen, mobiele apps en integraties die je product en dagelijkse werking ondersteunen.',
-      'Web platforms, mobile apps and integrations that support your product and daily operations.',
-    ],
-    tags: 'Platforms · iOS & Android · Integrations',
-    href: '/software',
-  },
-  {
-    n: '04',
-    title: ['Marketing & automatisering', 'Marketing & automation'],
-    text: [
-      'Bereik de juiste mensen. Zet aandacht om in klanten. Verbind campagnes, data en slimme opvolging.',
-      'Reach the right people. Turn attention into customers. Connect campaigns, data and smart follow-up.',
-    ],
-    tags: 'Meta & Google Ads · CRO · AI workflows',
-    href: '/ai-automatiseringen',
-  },
+import ServiceVisual from './ServiceVisual'
+import type { VisualService } from '../data/visualServices'
+const items: { slug: VisualService; title: string; outcome: [string, string]; text: [string, string]; tags: string }[] = [
+  { slug: 'google-ads', title: 'Google Ads', outcome: ['Bereik wie vandaag naar jou zoekt.', 'Reach people looking for you today.'], text: ['Maak van koopintentie geschikte aanvragen en verkopen. We stemmen zoekwoorden, advertenties en landingspagina’s op elkaar af.', 'Turn buying intent into qualified enquiries and sales. We align keywords, ads and landing pages.'], tags: 'Search · Shopping · Conversietracking' },
+  { slug: 'meta-ads', title: 'Meta Ads', outcome: ['Maak van aandacht nieuwe klanten.', 'Turn attention into new customers.'], text: ['Laat de juiste mensen je aanbod ontdekken op Facebook en Instagram. We testen beelden, boodschappen en doelgroepen en volgen geïnteresseerde bezoekers opnieuw op.', 'Help the right people discover your offer on Facebook and Instagram. We test visuals, messages and audiences and reconnect with interested visitors.'], tags: 'Facebook · Instagram · Creative testing' },
+  { slug: 'data-analytics', title: 'Data & analytics', outcome: ['Weet wat werkt. Beslis met inzicht.', 'Know what works. Decide with clarity.'], text: ['Verbind campagnekosten, aanvragen en verkoop. Met betrouwbare tracking en begrijpelijke dashboards zie je waar je moet bijsturen.', 'Connect campaign costs, enquiries and sales. Reliable tracking and clear dashboards show where to make adjustments.'], tags: 'GA4 · Tag Manager · Looker Studio' },
+  { slug: 'email-marketing', title: 'E-mailmarketing', outcome: ['Haal meer uit elke klantrelatie.', 'Get more from every customer relationship.'], text: ['Van eerste inschrijving tot herhaalaankoop: relevante campagnes en automatische e-mailflows houden je merk dichtbij op het juiste moment.', 'From first sign-up to repeat purchase: relevant campaigns and automated email flows keep your brand close at the right moment.'], tags: 'Welcome · Retention · Automation' },
 ]
 export default function AgencyCapabilities() {
   const { lang } = useLang()
   const i = lang === 'nl' ? 0 : 1
-  return (
-    <section id="expertise" className="border-b border-line">
-      <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
-        <p className="text-xs uppercase tracking-widest text-accent-2">
-          {i === 0 ? 'Onze expertise' : 'Our expertise'}
-        </p>
-        <h2 className="mt-4 max-w-2xl font-display text-4xl text-paper sm:text-5xl">
-          {i === 0
-            ? 'Van eerste idee tot volgende groeifase.'
-            : 'From first idea to the next stage of growth.'}
-        </h2>
-        <div className="mt-12 grid gap-x-10 sm:grid-cols-2">
-          {items.map((item) => (
-            <Link
-              key={item.n}
-              to={item.href}
-              className="group border-t border-line py-8"
-            >
-              <div className="flex justify-between text-xs text-mute">
-                <span>{item.n}</span>
-                <span className="text-accent-2">↗</span>
-              </div>
-              <h3 className="mt-4 font-display text-2xl text-paper group-hover:text-accent-2">
-                {item.title[i]}
-              </h3>
-              <p className="mt-3 max-w-md text-sm leading-relaxed text-bone">
-                {item.text[i]}
-              </p>
-              <p className="mt-5 text-xs text-mute">{item.tags}</p>
-            </Link>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
+  return <section id="expertise" className="marketing-services">
+    <div className="marketing-intro"><p className="eyebrow">{i === 0 ? 'Vier specialismen. Eén groeiplan.' : 'Four specialisms. One growth plan.'}</p>
+      <h2>{i === 0 ? 'De juiste mensen bereiken. Meer klanten behouden.' : 'Reach the right people. Keep more customers.'}</h2>
+      <p>{i === 0 ? 'Google Ads vangt vraag op. Meta Ads maakt je merk zichtbaar. Data laat zien wat rendeert. E-mailmarketing bouwt de relatie verder uit.' : 'Google Ads captures demand. Meta Ads builds visibility. Data shows what delivers. Email marketing develops the relationship.'}</p>
+    </div>
+    <div className="marketing-grid">{items.map((item) => <Link key={item.slug} to={`/${item.slug}`} className="marketing-card">
+      <ServiceVisual service={item.slug} />
+      <div className="marketing-card-copy"><span className="service-name">{item.slug === 'email-marketing' && i === 1 ? 'Email marketing' : item.title}</span><h3>{item.outcome[i]}</h3><p>{item.text[i]}</p><div className="service-tags">{item.tags.split(' · ').map(tag => <span key={tag}>{tag}</span>)}</div><span className="service-more">{i === 0 ? 'Ontdek de aanpak' : 'Explore the approach'} <span>↗</span></span></div>
+    </Link>)}</div>
+    <div className="marketing-support"><p>{i === 0 ? 'Ook de techniek achter je groei.' : 'The technology behind your growth, too.'}</p><div><Link to="/websites">Websites & ecommerce ↗</Link><Link to="/ai-automatiseringen">CRM & {i === 0 ? 'automatisering' : 'automation'} ↗</Link><Link to="/software">Software & apps ↗</Link></div></div>
+  </section>
 }

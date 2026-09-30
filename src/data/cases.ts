@@ -2,7 +2,7 @@ import type { CaseStudy } from './types'
 import olearys from '../assets/cases/olearys.png'
 import nooms from '../assets/cases/nooms.png'
 import pinacello from '../assets/cases/pinacello.png'
-import healthfactor from '../assets/cases/healthfactor.png'
+import ekart from '../assets/cases/ekart.jpg'
 
 export const cases: CaseStudy[] = [
   {
@@ -117,60 +117,39 @@ export const cases: CaseStudy[] = [
     },
   },
   {
-    slug: 'healthfactor',
-    name: 'HealthFactor',
-    sector: { nl: 'Lokale gezondheid en fitness', en: 'Local health and fitness' },
+    slug: 'e-kart',
+    name: 'E-Kart',
+    sector: { nl: 'Indoor karting · B2C & B2B', en: 'Indoor karting · B2C & B2B' },
     status: 'ongoing',
-    liveUrl: 'https://promo.healthfactor.be/',
-    image: healthfactor,
-    video: '/videos/healthfactor.mp4',
-    videoCaption: {
-      nl: '2 klanten geboekt op de eerste dag — deze video werkt omdat ze persoonlijk aanvoelt.',
-      en: '2 clients booked on the first day — this video works because it feels personal.',
-    },
+    image: ekart,
     summary: {
-      nl: 'Lokale aandacht omzetten in bezoeken, leads en nieuwe klanten via gerichte landingspagina’s en campagnes.',
-      en: 'Turning local attention into visits, leads and new customers through targeted landing pages and campaigns.',
+      nl: 'Van zin in een race naar een boeking. Digitale groei voor E-Kart in Gent, met aandacht voor particuliere rijders én zakelijke groepen.',
+      en: 'From the thrill of racing to a booking. Digital growth for E-Kart in Ghent, focused on individual drivers and business groups.',
     },
     situation: {
-      nl: 'HealthFactor is een lokale sportschool die zich naast grote budgetketens zoals Basic-Fit wil onderscheiden.',
-      en: 'HealthFactor is a local gym that wants to stand out alongside large budget chains like Basic-Fit.',
+      nl: 'E-Kart brengt indoor karting naar Gent. De digitale groeivraag speelt op twee fronten: consumenten bereiken die willen rijden en bedrijven aanspreken die een groepsactiviteit zoeken.',
+      en: 'E-Kart brings indoor karting to Ghent. Digital growth involves two audiences: consumers looking to race and businesses looking for a group activity.',
     },
     challenge: {
-      nl: 'De uitdaging was om de sterkte van HealthFactor — een persoonlijkere aanpak en begeleiding — zichtbaar te maken in advertenties en landingspagina’s, zodat prospects daar met vertrouwen voor kiezen.',
-      en: 'The challenge was to make HealthFactor’s real strength — a more personal approach and coaching — visible in ads and landing pages, so prospects choose it with confidence.',
+      nl: 'Een individuele rijder en een organisator beslissen anders. De ene wil snel weten hoe hij kan rijden; de andere zoekt houvast om een activiteit voor een groep te organiseren. Beide routes moeten naar een duidelijke volgende stap leiden.',
+      en: 'An individual driver and an event organiser make different decisions. One wants to know how to race; the other needs clarity to organise a group activity. Both journeys need a clear next step.',
     },
     role: {
-      nl: 'Ik hielp HealthFactor met digitale promotie, landingspagina’s en lokale leadgeneratie.',
-      en: 'I helped HealthFactor with digital promotion, landing pages and local lead generation.',
+      nl: 'Stef werkt aan de digitale groei van E-Kart, aan zowel de B2C- als de B2B-kant. De focus ligt op meer klanten en boekingen.',
+      en: 'Stef works on digital growth for E-Kart across B2C and B2B, with a focus on attracting more customers and bookings.',
     },
+    builtLabel: { nl: 'Focus van de aanpak', en: 'Focus of the approach' },
     built: {
-      nl: [
-        'Landingspagina’s',
-        'Lokale campagnes',
-        'Ad-concepten rond de persoonlijke aanpak van HealthFactor',
-        'Promotionele aanbiedingen',
-        'Leadgeneratie',
-        'Koppeling tussen social en betaalde campagnes',
-        'Conversieoptimalisatie',
-      ],
-      en: [
-        'Landing pages',
-        'Local campaigns',
-        'Ad concepts built around HealthFactor’s personal approach',
-        'Promotional offers',
-        'Lead generation',
-        'Connection between social and paid campaigns',
-        'Conversion optimisation',
-      ],
+      nl: ['B2C: de stap van interesse naar een boeking verduidelijken', 'B2B: inspelen op de vragen van groepsorganisatoren', 'Digitale groei verbinden aan klanten en boekingen'],
+      en: ['B2C: clarify the path from interest to booking', 'B2B: address the needs of group organisers', 'Connect digital growth to customers and bookings'],
     },
     measurement: {
-      nl: 'Meer lokale aanmeldingen en leads als resultaat van de campagnes en landingspagina’s.',
-      en: 'More local sign-ups and leads as a result of the campaigns and landing pages.',
+      nl: 'Het doel is meer klanten en boekingen, met afzonderlijke aandacht voor B2C en B2B. Er zijn voor deze case nog geen gevalideerde resultaatcijfers opgenomen.',
+      en: 'The goal is more customers and bookings, with separate attention to B2C and B2B. No validated performance figures are included for this case yet.',
     },
     objective: {
-      nl: 'Lokale aandacht omzetten in bezoeken, leads en nieuwe klanten.',
-      en: 'Turning local attention into visits, leads and new customers.',
+      nl: 'Meer klanten en boekingen voor indoor karting in Gent.',
+      en: 'More customers and bookings for indoor karting in Ghent.',
     },
   },
   {
@@ -227,74 +206,7 @@ export const cases: CaseStudy[] = [
       en: 'Building a scalable digital route from product discovery to first purchase and repeat purchase.',
     },
   },
-  {
-    slug: 'xpert-funding',
-    name: 'Xpert Funding',
-    sector: {
-      nl: 'Internationaal B2C-fintech (proprietary trading)',
-      en: 'International B2C fintech (proprietary trading)',
-    },
-    status: 'afgerond',
-    unavailable: true,
-    summary: {
-      nl: 'Van nul opgebouwd tot internationaal B2C-fintechmerk voor retailtraders — tot €500.000 omzet, met een database van meer dan 60.000 leads en klanten.',
-      en: 'Built from zero into an international B2C fintech brand for retail traders — up to €500,000 in revenue, with a database of more than 60,000 leads and customers.',
-    },
-    situation: {
-      nl: 'Xpert Funding was een online proprietary trading firm die particuliere traders wereldwijd toegang gaf tot gesimuleerd handelskapitaal. Traders kochten online een challenge en moesten binnen vooraf vastgelegde risicoregels aantonen dat ze consistent en verantwoord konden handelen. Wie slaagde, kreeg toegang tot een funded account en een deel van de behaalde winsten.',
-      en: 'Xpert Funding was an online proprietary trading firm that gave retail traders worldwide access to simulated trading capital. Traders bought a challenge online and had to prove, within preset risk rules, that they could trade consistently and responsibly. Those who passed got access to a funded account and a share of the profits earned.',
-    },
-    challenge: {
-      nl: 'Het volledige B2C-model moest van nul worden opgebouwd en internationaal geschaald — merk, aanbod, website, klantenacquisitie, software-integraties, betalingsstromen — in een zeer competitieve markt, volledig digitaal.',
-      en: 'The full B2C model had to be built from zero and scaled internationally — brand, offer, website, customer acquisition, software integrations, payment flows — in a highly competitive market, entirely digital.',
-    },
-    role: {
-      nl: 'Ik stond aan de basis van de volledige digitale en commerciële uitbouw van Xpert Funding: van merk, website en aanbod tot klantenacquisitie, software-integraties, betalingsstromen en internationale schaalvergroting.',
-      en: 'I was behind the full digital and commercial build-out of Xpert Funding: from brand, website and offer to customer acquisition, software integrations, payment flows and international scaling.',
-    },
-    built: {
-      nl: [
-        'Ontwikkeling van het volledige B2C-businessmodel',
-        'Branding en marktpositionering',
-        'Website en internationale verkoopfunnels',
-        'Challenge- en accountstructuren',
-        'Pricing, promoties en kortingsstrategieën',
-        'Integratie van tradingplatformen en dashboards',
-        'Betaalproviders en automatische accountlevering',
-        'Meta-, Google- en socialmediacampagnes',
-        'E-mailmarketing naar een database van 60.000+ contacten',
-        'Affiliate- en influencerprogramma’s',
-        'Partnerships met tradingcommunities',
-        'Conversieoptimalisatie en retargeting',
-        'Internationale klantenservice en communitymanagement',
-        'Analyse van klantgedrag, acquisitiekosten en omzet',
-      ],
-      en: [
-        'Development of the full B2C business model',
-        'Branding and market positioning',
-        'Website and international sales funnels',
-        'Challenge and account structures',
-        'Pricing, promotions and discount strategies',
-        'Trading-platform and dashboard integrations',
-        'Payment providers and automatic account delivery',
-        'Meta, Google and social media campaigns',
-        'Email marketing to a database of 60,000+ contacts',
-        'Affiliate and influencer programmes',
-        'Partnerships with trading communities',
-        'Conversion optimisation and retargeting',
-        'International customer service and community management',
-        'Analysis of customer behaviour, acquisition cost and revenue',
-      ],
-    },
-    measurement: {
-      nl: 'Xpert Funding groeide uit tot een internationaal B2C-fintechmerk met klanten uit verschillende landen, een eigen online handelsomgeving en een database van meer dan 60.000 leads en klanten. De omzet liep op tot €500.000, met conversieratio’s tussen 20% en 30% bij bepaalde e-mailcampagnes.',
-      en: 'Xpert Funding grew into an international B2C fintech brand with customers across multiple countries, its own online trading environment, and a database of more than 60,000 leads and customers. Revenue reached up to €500,000, with certain email campaigns achieving conversion rates between 20% and 30%.',
-    },
-    objective: {
-      nl: 'Een digitaal consumentenmerk van nul opbouwen en internationaal schalen binnen een zeer competitieve markt.',
-      en: 'Building a digital consumer brand from zero and scaling it internationally within a highly competitive market.',
-    },
-  },
+
 ]
 
 export const getCase = (slug: string) =>

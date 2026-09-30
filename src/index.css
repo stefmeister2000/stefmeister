@@ -331,14 +331,14 @@ body {
   gap: 0;
   max-width: 420px;
 }
-.hero-disciplines > div {
+.hero-disciplines > a {
   padding: 0 18px;
   border-right: 1px solid #d9ddeb;
 }
-.hero-disciplines > div:first-child {
+.hero-disciplines > a:first-child {
   padding-left: 0;
 }
-.hero-disciplines > div:last-child {
+.hero-disciplines > a:last-child {
   border-right: 0;
 }
 .hero-disciplines span {
@@ -768,7 +768,7 @@ button:focus-visible {
   .hero-disciplines {
     margin-top: 32px;
   }
-  .hero-disciplines > div {
+  .hero-disciplines > a {
     padding: 0 12px;
   }
   .hero-disciplines strong {

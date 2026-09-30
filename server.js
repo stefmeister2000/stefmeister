@@ -1,6 +1,7 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import express from 'express'
+import { readFileSync } from 'node:fs'
 import { Resend } from 'resend'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -37,7 +38,7 @@ const SENDER = /onboarding@resend\.dev/i.test(LEAD_FROM) ? VERIFIED_SENDER : LEA
 
 const app = express()
 app.use(express.json({ limit: '32kb' }))
-app.use(express.static(DIST))
+app.use(express.static(DIST, { redirect: false, index: false }))
 
 const ESC = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }
 const esc = (s = '') => String(s).replace(/[&<>"']/g, (c) => ESC[c])
@@ -260,10 +261,17 @@ app.post('/api/lead', async (req, res) => {
   }
 })
 
-// SPA fallback — must come after the API routes.
+// Serve the same pre-rendered content to visitors and crawlers.
+const pageRoutes = new Set(JSON.parse(readFileSync(path.join(DIST, 'routes.json'), 'utf8')))
 app.use((req, res) => {
-  if (req.method !== 'GET') return res.status(404).json({ error: 'not_found' })
-  res.sendFile(path.join(DIST, 'index.html'))
+  if (!['GET', 'HEAD'].includes(req.method)) return res.status(404).json({ error: 'not_found' })
+  const pathname = req.path
+  if (pathname === '/over-stef' || pathname === '/over-stef/') return res.redirect(301, '/agency')
+  if (pathname.length > 1 && pathname.endsWith('/') && pageRoutes.has(pathname.slice(0, -1))) {
+    return res.redirect(301, pathname.slice(0, -1) + (req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : ''))
+  }
+  if (pageRoutes.has(pathname)) return res.sendFile(path.join(DIST, pathname, 'index.html'))
+  res.status(404).sendFile(path.join(DIST, '404', 'index.html'))
 })
 
 const PORT = process.env.PORT || 8787

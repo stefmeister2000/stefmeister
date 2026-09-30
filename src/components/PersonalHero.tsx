@@ -1,53 +1,49 @@
 import { Link } from 'react-router-dom'
 import { useLang } from '../i18n/LanguageContext'
+import { trackEvent } from '../lib/analytics'
+import heroGraphic from '../assets/freeflow-hero-3d.png'
 export default function PersonalHero() {
   const { lang } = useLang()
   const nl = lang === 'nl'
   return (
-    <section className="studio-hero">
+    <section className="studio-hero" aria-labelledby="hero-title">
       <div className="hero-copy">
-        <p className="eyebrow">Sales & revenue growth</p>
-        <h1>
-          {nl ? 'Meer klanten.' : 'More customers.'}
+        <p className="eyebrow">Performance marketing · Lochristi</p>
+        <h1 id="hero-title">
+          {nl ? 'Meer aanvragen.' : 'More enquiries.'}
           <br />
-          {nl ? 'Meer online sales.' : 'More online sales.'}
+          {nl ? 'Meer verkoop.' : 'More sales.'}
           <br />
-          <span>{nl ? 'Meer omzet.' : 'More revenue.'}</span>
+          <span>{nl ? 'Grip op je groei.' : 'Clarity on growth.'}</span>
         </h1>
         <p className="hero-description">
           {nl
-            ? 'Meta Ads, Google Ads en websites die samenwerken aan één doel: meer omzet. We verbinden sterke creatives met conversie, tracking en slimme opvolging.'
-            : 'Meta Ads, Google Ads and websites working towards one goal: more revenue. We connect compelling creatives with conversion, tracking and smart follow-up.'}
+            ? 'We helpen bedrijven groeien met Google Ads, Meta Ads, e-mailmarketing en heldere data-analyse. Zo zie je welke campagnes klanten opleveren en waar je budget beter rendeert.'
+            : 'We help businesses grow with Google Ads, Meta Ads, email marketing and clear data analysis. See which campaigns bring customers and where your budget works harder.'}
         </p>
         <div className="hero-actions">
-          <Link className="button-dark" to="/contact">
-            {nl ? 'Bespreek je groei' : 'Discuss your growth'} <span>↗</span>
+          <Link className="button-dark" to="/contact" onClick={() => trackEvent('audit_cta_clicked', { placement: 'hero' })}>
+            {nl ? 'Bespreek je groeikansen' : 'Discuss your growth'} <span>↗</span>
           </Link>
-          <Link className="button-light" to="/#resultaten">
+          <a className="button-light" href="#resultaten">
             {nl ? 'Bekijk resultaten' : 'See results'}{' '}
             <span className="button-play">↗</span>
-          </Link>
+          </a>
         </div>
-        <div className="hero-disciplines">
-          {['Meta Ads', 'Google Ads', 'Conversion', 'Revenue'].map(
-            (item, i) => (
-              <div key={item}>
-                <span>0{i + 1}</span>
-                <strong>{item}</strong>
-              </div>
-            ),
-          )}
+        <p className="hero-reassurance">{nl ? 'Een eerste gesprek over je doelen, huidige aanpak en volgende stap. Vanuit Lochristi.' : 'A first conversation about your goals, current approach and next step. Based in Lochristi.'}</p>
+        <div className="hero-disciplines" aria-label={nl ? 'Onze diensten' : 'Our services'}>
+          {[
+            ['Google Ads', '/google-ads'],
+            ['Meta Ads', '/meta-ads'],
+            ['Data & analytics', '/data-analytics'],
+            [nl ? 'E-mailmarketing' : 'Email marketing', '/email-marketing'],
+          ].map(([label, href], i) => (
+            <Link key={href} to={href}><span>0{i + 1}</span><strong>{label}</strong></Link>
+          ))}
         </div>
       </div>
-      <div className="hero-art">
-        <img src="/agency-glass.png" alt="" fetchPriority="high" />
-        <div className="glass-caption" aria-hidden="true">
-          Better ads.
-          <br />
-          More sales.
-          <br />
-          Real growth.<span>↗</span>
-        </div>
+      <div className="hero-art hero-graphic">
+        <img src={heroGraphic} alt="" width="1254" height="1254" fetchPriority="high" decoding="async" />
         <Link to="/cases/pinacello" className="floating-strategy">
           <div>
             <span>+120%</span>

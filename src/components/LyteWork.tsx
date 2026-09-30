@@ -19,8 +19,8 @@ export default function LyteWork({ featured = false }: { featured?: boolean }) {
             </h2>
             <p className="mt-4 max-w-2xl text-sm text-bone">
               {nl
-                ? 'Geselecteerd werk van LYTE Studios, onze partner voor design en development. Bekijk de originele cases voor hun aanpak en uitvoering.'
-                : 'Selected work by LYTE Studios, our design and development partner. Explore the original cases for their approach and execution.'}
+                ? 'Eerder werk van LYTE Studios binnen de ervaring achter ons team. Bekijk de originele cases voor hun aanpak en uitvoering.'
+                : 'Previous work by LYTE Studios within the experience behind our team. Explore the original cases for their approach and execution.'}
             </p>
           </div>
           {featured && (
@@ -29,37 +29,29 @@ export default function LyteWork({ featured = false }: { featured?: boolean }) {
             </Link>
           )}
         </div>
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {(featured ? lyteCases.slice(0, 3) : lyteCases).map((c, i) => (
+        <div className="mt-10 grid gap-5 sm:grid-cols-2">
+          {(featured ? lyteCases.slice(0, 3) : lyteCases).map((c) => (
             <a
               key={c.url}
               href={c.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group overflow-hidden rounded-2xl border border-line bg-ink transition hover:border-accent"
+              className="lyte-case-card"
             >
-              <div className={'lyte-project-art lyte-art-' + (i % 3)}>
-                <span className="text-xs uppercase tracking-widest opacity-70">
-                  {c.category}
-                </span>
-                <span className="font-display text-5xl">
-                  {c.name}
-                  <span className="text-accent-2">.</span>
-                </span>
-                <span className="text-xs tracking-widest opacity-70">
-                  LYTE STUDIOS ↗
-                </span>
+              <div className="lyte-case-cover">
+                <img src={c.image} alt={`${c.name} — ${c.category}`} loading="lazy" width="1200" height="800" />
+                <span className="lyte-case-category">{c.category}</span>
+                <span className="lyte-case-arrow" aria-hidden="true">↗</span>
               </div>
-              <div className="p-6">
+              <div className="lyte-case-copy">
+                <div className="lyte-case-heading"><h3>{c.name}</h3>{c.logo && <img src={c.logo} alt="" className="lyte-client-logo" loading="lazy" />}</div>
                 <p className="text-sm leading-relaxed text-bone">
                   {c.description[lang]}
                 </p>
                 <p className="mt-5 text-xs text-accent-2">
-                  {nl
-                    ? 'Lees de case bij LYTE Studios'
-                    : 'Read the case at LYTE Studios'}{' '}
-                  ↗
+                  {nl ? 'Bekijk de case' : 'Explore the case'} ↗
                 </p>
+                <div className="lyte-credit"><span>{nl ? 'Design & development door' : 'Design & development by'}</span><img src="/partners/lyte-logo.png" alt="LYTE Studios" loading="lazy" /></div>
               </div>
             </a>
           ))}

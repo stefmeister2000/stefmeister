@@ -7,7 +7,7 @@ export interface NavItem {
 
 export const navItems: NavItem[] = [
   { label: { nl: 'Home', en: 'Home' }, href: '/' },
-  { label: { nl: 'Ads & groei', en: 'Ads & growth' }, href: '/#performance' },
+  { label: { nl: 'Diensten', en: 'Services' }, href: '/#expertise' },
   { label: { nl: 'Resultaten', en: 'Results' }, href: '/#resultaten' },
   { label: { nl: 'Cases', en: 'Cases' }, href: '/cases' },
   { label: { nl: 'Agency', en: 'Agency' }, href: '/agency' },

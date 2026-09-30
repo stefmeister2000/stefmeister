@@ -2,8 +2,8 @@ import type { FaqItem } from './types'
 
 export const faqItems: FaqItem[] = [
   {
-    question: { nl: 'Hoe werken Stef Keppens en LYTE Studios samen?', en: 'How do Stef Keppens and LYTE Studios work together?' },
-    answer: { nl: 'Stef brengt strategie, marketing en automatisering samen. LYTE Studios brengt expertise in design, websites, software en apps. Per project stemmen we de scope en verantwoordelijkheden af. De portfolio vermeldt wie de bestaande projecten uitvoerde.', en: 'Stef connects strategy, marketing and automation. LYTE Studios brings expertise in design, websites, software and apps. Scope and responsibilities are agreed per project. The portfolio credits the team behind existing projects.' },
+    question: { nl: 'Wie is Freeflow Studio?', en: 'Who is Freeflow Studio?' },
+    answer: { nl: 'Freeflow Studio is een studio in Lochristi voor strategie, marketing, design en development. We verbinden commerciële groei met de websites, apps en systemen erachter. In ons portfolio vermelden we wie de bestaande projecten uitvoerde.', en: 'Freeflow Studio is a studio in Lochristi for strategy, marketing, design and development. We connect commercial growth with the websites, apps and systems behind it. Our portfolio credits the teams behind existing projects.' },
   },
   {
     question: { nl: 'Kunnen we ook alleen een website of app laten bouwen?', en: 'Can we work with you just on a website or app?' },

@@ -4,7 +4,7 @@ import { cases } from '../data/cases'
 export default function SelectedWork() {
   const { lang } = useLang()
   const nl = lang === 'nl'
-  const selected = [cases[1], cases[3], cases[0], cases[2]]
+  const selected = ['pinacello', 'nooms', 'olearys', 'e-kart'].flatMap((slug) => cases.filter((c) => c.slug === slug))
   return (
     <section className="selected-work" id="selected-work">
       <div className="work-intro">
@@ -18,8 +18,8 @@ export default function SelectedWork() {
         </h2>
         <p>
           {nl
-            ? 'Van eerste indruk tot dagelijkse interactie. Ontdek het werk van Stef Keppens en LYTE Studios.'
-            : 'From first impression to everyday interaction. Explore work by Stef Keppens and LYTE Studios.'}
+            ? 'Van eerste indruk tot dagelijkse interactie. Ontdek de projecten achter ons team.'
+            : 'From first impression to everyday interaction. Explore the projects behind our team.'}
         </p>
         <Link className="button-dark" to="/cases">
           {nl ? 'Alle projecten' : 'All projects'} <span>↗</span>
@@ -50,8 +50,8 @@ export default function SelectedWork() {
                 +120% {nl ? 'online omzet' : 'online revenue'}
               </strong>
             )}
-            <p>{c.sector[lang]}</p>
-            <span>Stef Keppens</span>
+            <p>{c.summary[lang]}</p>
+            <span>{nl ? 'Bekijk de case' : 'Explore the case'} ↗ · Stef Keppens</span>
           </div>
         </Link>
       ))}
@@ -71,7 +71,7 @@ export default function SelectedWork() {
           rel="noopener noreferrer"
         >
           <div className="project-image">
-            <img src={'/' + c.slug + '.jpg'} alt={c.name} loading="lazy" />
+            <img src={'/partners/' + c.slug + '.jpg'} alt={c.name} loading="lazy" />
             <span className="project-arrow">↗</span>
           </div>
           <div className="project-caption">

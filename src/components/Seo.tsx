@@ -1,49 +1,47 @@
-import { useEffect } from 'react'
+import { useLang } from '../i18n/LanguageContext'
+import { SITE_NAME, SITE_URL, socialImage } from '../lib/site'
+import { services } from '../data/services'
 
-interface SeoProps {
-  title: string
-  description: string
-  path: string
-}
-
-const SITE_NAME = 'Stef Keppens × LYTE Studios'
-const SITE_URL = 'https://www.stefkeppens.be'
-
-function setMeta(name: string, content: string, attr: 'name' | 'property' = 'name') {
-  let el = document.head.querySelector<HTMLMetaElement>(`meta[${attr}="${name}"]`)
-  if (!el) {
-    el = document.createElement('meta')
-    el.setAttribute(attr, name)
-    document.head.appendChild(el)
+interface SeoProps { title: string; description: string; path: string; noindex?: boolean }
+export default function Seo({ title, description, path, noindex = false }: SeoProps) {
+  const { lang } = useLang()
+  const url = `${SITE_URL}${path === '/' ? '/' : path}`
+  const fullTitle = `${title} — ${SITE_NAME}`
+  const service = services.find(s => `/${s.slug}` === path)
+  const organization = {
+    '@type': 'ProfessionalService', '@id': `${SITE_URL}/#organization`, name: SITE_NAME,
+    url: `${SITE_URL}/`, logo: `${SITE_URL}/favicon.svg`, image: socialImage,
+    email: 'stefkeppens@gmail.com',
+    address: { '@type': 'PostalAddress', addressLocality: 'Lochristi', addressCountry: 'BE' },
+    description: 'Google Ads, Meta Ads, e-mailmarketing, data-analyse, websites en software vanuit Lochristi.',
   }
-  el.setAttribute('content', content)
-}
-
-function setCanonical(href: string) {
-  let el = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]')
-  if (!el) {
-    el = document.createElement('link')
-    el.setAttribute('rel', 'canonical')
-    document.head.appendChild(el)
-  }
-  el.setAttribute('href', href)
-}
-
-export default function Seo({ title, description, path }: SeoProps) {
-  useEffect(() => {
-    const fullTitle = `${title} — ${SITE_NAME}`
-    document.title = fullTitle
-    setMeta('description', description)
-    setMeta('og:title', fullTitle, 'property')
-    setMeta('og:description', description, 'property')
-    setMeta('og:type', 'website', 'property')
-    setMeta('og:url', `${SITE_URL}${path}`, 'property')
-    setMeta('twitter:card', 'summary_large_image')
-    setMeta('twitter:title', fullTitle)
-    setMeta('twitter:description', description)
-    setCanonical(`${SITE_URL}${path}`)
-    window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior })
-  }, [title, description, path])
-
-  return null
+  const graph = [organization,
+    { '@type': 'WebSite', '@id': `${SITE_URL}/#website`, url: `${SITE_URL}/`, name: SITE_NAME, publisher: { '@id': organization['@id'] } },
+    { '@type': 'WebPage', '@id': `${url}#webpage`, url, name: fullTitle, description, inLanguage: lang === 'nl' ? 'nl-BE' : 'en', isPartOf: { '@id': `${SITE_URL}/#website` }, about: { '@id': organization['@id'] } },
+    ...(service ? [{ '@type': 'Service', name: service.title[lang], description: service.summary[lang], url, provider: { '@id': organization['@id'] }, serviceType: service.title[lang] }] : []),
+    ...(path !== '/' && !noindex ? [{ '@type': 'BreadcrumbList', itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
+      ...(path.startsWith('/cases/') ? [{ '@type': 'ListItem', position: 2, name: 'Cases', item: `${SITE_URL}/cases` }] : []),
+      { '@type': 'ListItem', position: path.startsWith('/cases/') ? 3 : 2, name: title, item: url },
+    ] }] : []),
+  ]
+  return <>
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
+    <link rel="canonical" href={url} />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={url} />
+    <meta property="og:locale" content={lang === 'nl' ? 'nl_BE' : 'en_GB'} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:alt" content="Freeflow Studio — blue glass flow sculpture" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c') }} />
+  </>
 }

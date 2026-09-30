@@ -1,6 +1,5 @@
 import type { Client } from './types'
 import pinacello from '../assets/cases/pinacello.png'
-import healthfactor from '../assets/cases/healthfactor.png'
 import nooms from '../assets/cases/nooms.png'
 import olearys from '../assets/cases/olearys.png'
 import ekart from '../assets/cases/ekart.jpg'
@@ -12,14 +11,6 @@ export const clients: Client[] = [
     description: {
       nl: 'Ik werk aan de ecommerce en digitale groeikant van Pinacello, waaronder campagnes, landingspagina’s, conversie en online verkoop.',
       en: 'I work on the ecommerce and digital growth side of Pinacello, including campaigns, landing pages, conversion and online sales.',
-    },
-  },
-  {
-    name: 'HealthFactor',
-    image: healthfactor,
-    description: {
-      nl: 'Ik hielp HealthFactor met digitale promotie, landingspagina’s en lokale leadgeneratie.',
-      en: 'I helped HealthFactor with digital promotion, landing pages and local lead generation.',
     },
   },
   {

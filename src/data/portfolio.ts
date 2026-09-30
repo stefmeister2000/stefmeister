@@ -50,23 +50,6 @@ export const portfolioItems: PortfolioItem[] = [
     },
   },
   {
-    id: 'healthfactor-promo',
-    project: 'HealthFactor — promotiepagina',
-    caseSlug: 'healthfactor',
-    liveUrl: 'https://promo.healthfactor.be/',
-    category: 'lokaal',
-    audience: {
-      nl: 'Lokale doelgroep geïnteresseerd in gezondheid en fitness',
-      en: 'Local audience interested in health and fitness',
-    },
-    objective: { nl: 'Meer lokale aanmeldingen', en: 'More local sign-ups' },
-    conversion: { nl: 'Aanmelden voor aanbieding', en: 'Sign up for the offer' },
-    description: {
-      nl: 'Lokale landingspagina gekoppeld aan een tijdelijke aanbieding, met één duidelijke aanmeldstap.',
-      en: 'A local landing page tied to a limited-time offer, with one clear sign-up step.',
-    },
-  },
-  {
     id: 'nooms-launch',
     project: 'Nooms — productlancering',
     caseSlug: 'nooms',

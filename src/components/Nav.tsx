@@ -40,13 +40,11 @@ export default function Nav() {
         <Link
           to="/"
           className="studio-brand"
-          aria-label="Stef Keppens × LYTE — Home"
+          aria-label="Freeflow Studio — Home"
         >
-          <span className="brand-symbol" aria-hidden="true">
-            ↗
-          </span>
+          <img src="/favicon.svg?v=freeflow-2" className="freeflow-brand-icon" alt="" width="34" height="34" />
           <span className="brand-name">
-            Keppens <span>× LYTE</span>
+            Freeflow <span>Studio</span>
           </span>
         </Link>
 
