@@ -1,3 +1,4 @@
+import PinacelloCase from './PinacelloCase'
 import { Link } from 'react-router-dom'
 import Seo from '../components/Seo'
 import CaseVisual from '../components/CaseVisual'
@@ -46,6 +47,7 @@ export default function CaseStudyPage({ slug }: { slug: CaseSlug }) {
   const { ref } = useInView<HTMLDivElement>(() => trackEvent('case_viewed', { case: slug, placement: 'page' }))
 
   if (!c) return null
+  if (slug === 'pinacello') return <div ref={ref}><PinacelloCase project={c} /></div>
 
   return (
     <div ref={ref}>
