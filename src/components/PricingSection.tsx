@@ -16,7 +16,7 @@ const COPY = {
     addOnsLead:
       'Nog niet klaar voor een maandpakket? Je kunt ook los starten — eerst leren en meedenken, daarna beslis je pas over een verdere samenwerking.',
     onRequest: 'Op aanvraag',
-    note: 'Prijzen zijn richtprijzen op maandbasis.',
+    note: 'Richtprijzen voor doorlopende marketing. Websites, apps en software worden apart begroot op basis van de scope.',
   },
   en: {
     title: 'Growth packages',
@@ -28,7 +28,7 @@ const COPY = {
     addOnsLead:
       'Not ready for a monthly package yet? You can also start standalone — come to learn and think it through first, then decide on working together.',
     onRequest: 'On request',
-    note: 'Prices are indicative monthly rates.',
+    note: 'Indicative rates for ongoing marketing. Websites, apps and software are scoped and quoted separately.',
   },
 }
 

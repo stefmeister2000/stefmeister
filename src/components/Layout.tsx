@@ -25,7 +25,7 @@ export default function Layout() {
   }, [location.pathname, location.hash])
 
   return (
-    <div className="min-h-screen bg-ink pb-28 lg:pb-0">
+    <div className="site-shell min-h-screen pb-28 lg:pb-0">
       <Nav />
       <main>
         <Outlet />

@@ -2,6 +2,8 @@ export type Lang = 'nl' | 'en'
 export type Bi<T> = Record<Lang, T>
 
 export type ServiceSlug =
+  | 'websites'
+  | 'software'
   | 'landing-pages'
   | 'funnels'
   | 'meta-ads'
@@ -19,7 +21,8 @@ export interface Service {
   problem: Bi<string>
   process: Bi<string[]>
   deliverables: Bi<string[]>
-  relatedCase: CaseSlug
+  relatedCase?: CaseSlug
+  partnerCase?: { name: string; url: string; description: Bi<string> }
 }
 
 export type CaseSlug = 'olearys' | 'pinacello' | 'healthfactor' | 'nooms' | 'xpert-funding'

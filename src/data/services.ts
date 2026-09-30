@@ -2,8 +2,120 @@ import type { Service } from './types'
 
 export const services: Service[] = [
   {
-    slug: 'landing-pages',
+    slug: 'websites',
     number: '01',
+    title: { nl: 'Websites & ecommerce', en: 'Websites & ecommerce' },
+    summary: {
+      nl: 'Een digitale thuisbasis die je merk sterk neerzet en bezoekers naar de juiste volgende stap brengt.',
+      en: 'A digital home that expresses your brand and guides visitors towards the right next step.',
+    },
+    includes: {
+      nl: ['Webdesign', 'Webdevelopment', 'Ecommerce', 'Contentstructuur'],
+      en: ['Web design', 'Web development', 'Ecommerce', 'Content structure'],
+    },
+    problem: {
+      nl: 'Je bedrijf groeit, maar je website vertelt niet meer het juiste verhaal of maakt het bezoekers te moeilijk om actie te ondernemen.',
+      en: 'Your business is growing, but your website no longer tells the right story or makes it too hard for visitors to act.',
+    },
+    process: {
+      nl: [
+        'We bepalen doelgroep, boodschap en de gewenste actie.',
+        'We ontwerpen de structuur en visuele ervaring.',
+        'We bouwen, testen en bereiden de lancering voor met LYTE Studios.',
+      ],
+      en: [
+        'We define the audience, message and desired action.',
+        'We design the structure and visual experience.',
+        'We build, test and prepare the launch with LYTE Studios.',
+      ],
+    },
+    deliverables: {
+      nl: [
+        'Responsieve website of webshop',
+        'Content- en navigatiestructuur',
+        'Afgesproken integraties',
+        'Overdracht en lanceringsplan',
+      ],
+      en: [
+        'Responsive website or online store',
+        'Content and navigation structure',
+        'Agreed integrations',
+        'Handover and launch plan',
+      ],
+    },
+    partnerCase: {
+      name: 'Jobr website',
+      url: 'https://lytestudios.be/projects/jobr-website/',
+      description: {
+        nl: 'Door LYTE Studios: een website die de Jobr-app introduceert en bezoekers naar downloads en werkgeversregistraties leidt.',
+        en: 'By LYTE Studios: a website introducing the Jobr app and guiding visitors to downloads and employer registration.',
+      },
+    },
+  },
+  {
+    slug: 'software',
+    number: '02',
+    title: { nl: 'Software & apps', en: 'Software & apps' },
+    summary: {
+      nl: 'Van productidee tot werkende applicatie. Samen met LYTE Studios bouwen we platformen, mobiele apps en software op maat.',
+      en: 'From product idea to working application. Together with LYTE Studios, we build platforms, mobile apps and custom software.',
+    },
+    includes: {
+      nl: [
+        'Productstrategie',
+        'Webplatformen',
+        'iOS & Android',
+        'API-integraties',
+      ],
+      en: [
+        'Product strategy',
+        'Web platforms',
+        'iOS & Android',
+        'API integrations',
+      ],
+    },
+    problem: {
+      nl: 'Je product vraagt meer dan een website, of je team verliest tijd aan tools en processen die niet goed samenwerken.',
+      en: 'Your product needs more than a website, or your team loses time to tools and processes that do not work well together.',
+    },
+    process: {
+      nl: [
+        'We brengen gebruikers, processen en technische vereisten in kaart.',
+        'We bepalen de eerste versie en werken de gebruikerservaring uit.',
+        'LYTE Studios ontwikkelt de applicatie; samen stemmen we product en marktintroductie af.',
+      ],
+      en: [
+        'We map users, workflows and technical requirements.',
+        'We scope the first release and design the user experience.',
+        'LYTE Studios develops the application; together we align the product and its launch.',
+      ],
+    },
+    deliverables: {
+      nl: [
+        'Afgebakende productscope',
+        'UX- en UI-design',
+        'Geteste applicatie',
+        'Integraties en overdracht',
+      ],
+      en: [
+        'Defined product scope',
+        'UX and UI design',
+        'Tested application',
+        'Integrations and handover',
+      ],
+    },
+    partnerCase: {
+      name: 'WERKR',
+      url: 'https://lytestudios.be/projects/werkr/',
+      description: {
+        nl: 'Door LYTE Studios: een softwareplatform voor flexibele personeelsplanning en uitvoering van opdrachten.',
+        en: 'By LYTE Studios: a software platform for flexible workforce planning and job delivery.',
+      },
+    },
+  },
+  {
+    slug: 'landing-pages',
+    number: '03',
     title: { nl: 'Landing pages', en: 'Landing pages' },
     summary: {
       nl: 'Gerichte pagina’s die aansluiten op één doelgroep, campagne en conversiedoel.',
@@ -33,13 +145,13 @@ export const services: Service[] = [
     },
     process: {
       nl: [
-        'Ik bekijk de campagne, de doelgroep en het conversiedoel voor er één regel copy geschreven wordt.',
+        'We bekijken de campagne, de doelgroep en het conversiedoel voor er één regel copy geschreven wordt.',
         'De pagina krijgt één boodschap en één actie — geen concurrerende keuzes.',
         'Structuur, copy en design worden afgestemd op hoe de bezoeker binnenkomt: via Meta, Google, e-mail of referral.',
         'Tracking wordt ingebouwd zodat gedrag op de pagina meetbaar is, niet enkel het bezoek.',
       ],
       en: [
-        'I look at the campaign, the audience and the conversion goal before a single line of copy is written.',
+        'We look at the campaign, the audience and the conversion goal before a single line of copy is written.',
         'The page gets one message and one action — no competing choices.',
         'Structure, copy and design are matched to how the visitor arrives: via Meta, Google, email or referral.',
         'Tracking is built in so behaviour on the page is measurable, not just the visit.',
@@ -63,7 +175,7 @@ export const services: Service[] = [
   },
   {
     slug: 'funnels',
-    number: '02',
+    number: '04',
     title: { nl: 'Funnels', en: 'Funnels' },
     summary: {
       nl: 'De volledige klantreis van eerste contact tot lead, boeking of aankoop.',
@@ -93,13 +205,13 @@ export const services: Service[] = [
     },
     process: {
       nl: [
-        'Ik breng de volledige klantreis in kaart: van eerste klik tot klant en herhaalaankoop.',
+        'We brengen de volledige klantreis in kaart: van eerste klik tot klant en herhaalaankoop.',
         'Elke stap krijgt een duidelijke commerciële functie — geen stap zonder doel.',
         'Opvolging via e-mail, CRM of AI-automatisering wordt gekoppeld aan de funnel.',
         'De funnel wordt gebouwd zodat elke stap meetbaar is.',
       ],
       en: [
-        'I map out the full customer journey: from first click to customer and repeat purchase.',
+        'We map out the full customer journey: from first click to customer and repeat purchase.',
         'Every step gets a clear commercial function — no step without a purpose.',
         'Follow-up via email, CRM or AI automation is connected to the funnel.',
         'The funnel is built so every step is measurable.',
@@ -123,15 +235,29 @@ export const services: Service[] = [
   },
   {
     slug: 'meta-ads',
-    number: '03',
+    number: '05',
     title: { nl: 'Meta Ads', en: 'Meta Ads' },
     summary: {
       nl: 'Campagnes die niet alleen bereik kopen, maar mensen naar de juiste commerciële route sturen.',
       en: 'Campaigns that don’t just buy reach, but send people down the right commercial route.',
     },
     includes: {
-      nl: ['campaign strategy', 'creative concepts', 'audience structure', 'retargeting', 'conversion campaigns', 'performance analysis'],
-      en: ['campaign strategy', 'creative concepts', 'audience structure', 'retargeting', 'conversion campaigns', 'performance analysis'],
+      nl: [
+        'campaign strategy',
+        'creative concepts',
+        'audience structure',
+        'retargeting',
+        'conversion campaigns',
+        'performance analysis',
+      ],
+      en: [
+        'campaign strategy',
+        'creative concepts',
+        'audience structure',
+        'retargeting',
+        'conversion campaigns',
+        'performance analysis',
+      ],
     },
     problem: {
       nl: 'Meta Ads worden vaak gemeten op klikken en bereik, terwijl het doel leads, boekingen of omzet is. Zonder een heldere structuur tussen campagne, landingspagina en opvolging blijft het resultaat oppervlakkig.',
@@ -169,15 +295,29 @@ export const services: Service[] = [
   },
   {
     slug: 'google-ads',
-    number: '04',
+    number: '06',
     title: { nl: 'Google Ads', en: 'Google Ads' },
     summary: {
       nl: 'Zoekcampagnes die aansluiten op de intentie van de gebruiker.',
       en: 'Search campaigns that match the user’s intent.',
     },
     includes: {
-      nl: ['search campaigns', 'local campaigns', 'brand and non-brand structure', 'conversion tracking', 'landing-page alignment', 'remarketing'],
-      en: ['search campaigns', 'local campaigns', 'brand and non-brand structure', 'conversion tracking', 'landing-page alignment', 'remarketing'],
+      nl: [
+        'search campaigns',
+        'local campaigns',
+        'brand and non-brand structure',
+        'conversion tracking',
+        'landing-page alignment',
+        'remarketing',
+      ],
+      en: [
+        'search campaigns',
+        'local campaigns',
+        'brand and non-brand structure',
+        'conversion tracking',
+        'landing-page alignment',
+        'remarketing',
+      ],
     },
     problem: {
       nl: 'Zoekverkeer heeft al een intentie. Wanneer de landingspagina die intentie niet direct beantwoordt, verliest de campagne rendement die er eigenlijk al lag.',
@@ -215,7 +355,7 @@ export const services: Service[] = [
   },
   {
     slug: 'ecommerce-conversie',
-    number: '05',
+    number: '07',
     title: { nl: 'Ecommerce conversie', en: 'Ecommerce conversion' },
     summary: {
       nl: 'Verbeteringen die meer bezoekers richting productkeuze, checkout en herhaalaankoop sturen.',
@@ -247,13 +387,13 @@ export const services: Service[] = [
     },
     process: {
       nl: [
-        'Ik analyseer de volledige aankoopreis: van productpagina tot bevestiging.',
+        'We analyseren de volledige aankoopreis: van productpagina tot bevestiging.',
         'Productpagina’s, aanbiedingen en bundels worden scherper afgestemd op de koopbeslissing.',
         'Checkout-flow en upsells worden herzien waar wrijving zit.',
         'E-mailflows vangen verlaten winkelmandjes op en stimuleren herhaalaankoop.',
       ],
       en: [
-        'I analyse the full purchase journey: from product page to confirmation.',
+        'We analyse the full purchase journey: from product page to confirmation.',
         'Product pages, offers and bundles are sharpened around the buying decision.',
         'Checkout flow and upsells are reviewed wherever there’s friction.',
         'Email flows catch abandoned carts and encourage repeat purchase.',
@@ -277,7 +417,7 @@ export const services: Service[] = [
   },
   {
     slug: 'ai-automatiseringen',
-    number: '06',
+    number: '08',
     title: { nl: 'AI-automatiseringen', en: 'AI automations' },
     summary: {
       nl: 'Automatiseringen die repetitieve marketing- en salesprocessen sneller en slimmer maken.',
@@ -311,13 +451,13 @@ export const services: Service[] = [
     },
     process: {
       nl: [
-        'Ik breng in kaart welke terugkerende taken het meeste tijd kosten.',
+        'We brengen in kaart welke terugkerende taken het meeste tijd kosten.',
         'Workflows worden ontworpen rond bestaande tools: CRM, e-mail, formulieren, agenda.',
         'AI wordt ingezet om te kwalificeren, samen te vatten en voor te bereiden — een mens blijft eindverantwoordelijk.',
         'De workflow wordt getest en verfijnd op basis van echte gevallen.',
       ],
       en: [
-        'I map out which recurring tasks cost the most time.',
+        'We map out which recurring tasks cost the most time.',
         'Workflows are designed around existing tools: CRM, email, forms, calendar.',
         'AI is used to qualify, summarise and prepare — a human stays in charge.',
         'The workflow is tested and refined on real cases.',
@@ -341,7 +481,7 @@ export const services: Service[] = [
   },
   {
     slug: 'distributie',
-    number: '07',
+    number: '09',
     title: { nl: 'Offer & distributie', en: 'Offer & distribution' },
     summary: {
       nl: 'Een scherp aanbod en de juiste distributiekanalen — B2B-outreach, B2C-advertenties en offline campagnes — zodat de juiste mensen je zien, op meer dan één manier.',
@@ -375,13 +515,13 @@ export const services: Service[] = [
     },
     process: {
       nl: [
-        'Ik bekijk het huidige aanbod en waar de aandacht nu vandaan komt.',
+        'We bekijken het huidige aanbod en waar de aandacht nu vandaan komt.',
         'Het aanbod wordt scherper gepositioneerd rond één duidelijke actie.',
         'De juiste mix van kanalen wordt opgezet — B2B-outreach, B2C-advertenties, offline campagnes, SEO/GEO — als trackbare campagne.',
         'Resultaten per kanaal worden gemeten, zodat duidelijk wordt wat wél werkt.',
       ],
       en: [
-        'I look at the current offer and where attention is coming from today.',
+        'We look at the current offer and where attention is coming from today.',
         'The offer is positioned more sharply around one clear action.',
         'The right channel mix is set up — B2B outreach, B2C ads, offline campaigns, SEO/GEO — as a trackable campaign.',
         'Results per channel are measured, so it becomes clear what actually works.',

@@ -5,8 +5,8 @@ import { useInView } from '../lib/useInView'
 import { useLang } from '../i18n/LanguageContext'
 
 const COPY = {
-  nl: { title: 'Wat ik concreet bouw', link: 'Bekijk dienst' },
-  en: { title: 'What I concretely build', link: 'View service' },
+  nl: { title: 'Onze diensten, concreet', link: 'Bekijk dienst' },
+  en: { title: 'Our services, in detail', link: 'View service' },
 }
 
 export default function ServiceGrid() {

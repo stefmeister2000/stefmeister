@@ -6,6 +6,8 @@ import { useLang } from '../i18n/LanguageContext'
 const COPY = {
   nl: {
     goals: [
+      'Nieuwe website of webshop',
+      'Softwareplatform of mobiele app',
       'Meer B2B-leads',
       'Meer online boekingen',
       'Meer ecommerce-omzet',
@@ -26,7 +28,7 @@ const COPY = {
       doel: 'Belangrijkste doel',
       doelPlaceholder: 'Kies een doel',
       uitdaging: 'Grootste uitdaging',
-      investering: 'Maandelijkse marketinginvestering',
+      investering: 'Beschikbaar project- of marketingbudget',
       kanalen: 'Huidige kanalen',
       timing: 'Gewenste timing',
       extra: 'Extra informatie',
@@ -41,15 +43,17 @@ const COPY = {
     optioneel: 'Optioneel',
     addOptional: '+ Extra info toevoegen (optioneel)',
     submitting: 'Even geduld…',
-    submit: 'Vraag mijn groeianalyse aan',
+    submit: 'Verstuur je aanvraag',
     doneTitle: 'Bedankt.',
     doneBody:
-      'Ik bekijk jullie website en commerciële klantreis persoonlijk en neem contact op met de beste volgende stap.',
+      'We bekijken jullie website en commerciële klantreis persoonlijk en nemen contact op met de beste volgende stap.',
     errorNote:
       'Er ging iets mis bij het versturen. Probeer het opnieuw of mail rechtstreeks naar stefkeppens@gmail.com.',
   },
   en: {
     goals: [
+      'New website or online store',
+      'Software platform or mobile app',
       'More B2B leads',
       'More online bookings',
       'More ecommerce revenue',
@@ -70,7 +74,7 @@ const COPY = {
       doel: 'Main goal',
       doelPlaceholder: 'Choose a goal',
       uitdaging: 'Biggest challenge',
-      investering: 'Monthly marketing budget',
+      investering: 'Available project or marketing budget',
       kanalen: 'Current channels',
       timing: 'Desired timing',
       extra: 'Additional information',
@@ -85,9 +89,9 @@ const COPY = {
     optioneel: 'Optional',
     addOptional: '+ Add more info (optional)',
     submitting: 'One moment…',
-    submit: 'Request my growth analysis',
+    submit: 'Send your enquiry',
     doneTitle: 'Thank you.',
-    doneBody: 'I’ll personally review your website and commercial customer journey and reach out with the best next step.',
+    doneBody: 'We’ll personally review your website and commercial customer journey and reach out with the best next step.',
     errorNote:
       'Something went wrong while sending. Please try again or email directly at stefkeppens@gmail.com.',
   },

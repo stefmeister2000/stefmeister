@@ -3,8 +3,8 @@ import { useInView } from '../lib/useInView'
 import { useLang } from '../i18n/LanguageContext'
 
 const COPY = {
-  nl: { title: 'Van probleem naar werkend systeem', iWork: 'Ik werk: ' },
-  en: { title: 'From problem to working system', iWork: 'I work: ' },
+  nl: { title: 'Van probleem naar werkend systeem', iWork: 'We werken: ' },
+  en: { title: 'From problem to working system', iWork: 'We work: ' },
 }
 
 export default function ProcessSection() {

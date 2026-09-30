@@ -7,18 +7,18 @@ const VIDEO_EMBED = 'https://www.youtube-nocookie.com/embed/G4jEwA_Znz4?start=12
 const COPY = {
   nl: {
     eyebrow: 'YouTube',
-    title: 'Ik laat zien wat werkt — van AI-ads tot funnels',
-    body: 'Op mijn YouTube-kanaal deel ik nieuwe vormen van adverteren en digitale groei, zoals AI-gegenereerde advertenties. Concreet, met echte voorbeelden.',
+    title: 'Inzichten uit de praktijk — van AI-ads tot funnels',
+    body: 'Op zijn YouTube-kanaal deelt Stef nieuwe vormen van adverteren en digitale groei, zoals AI-gegenereerde advertenties. Concreet, met echte voorbeelden.',
     caption: 'Uitgelicht: een nieuwe vorm van AI-advertenties.',
-    cta: 'Bekijk mijn YouTube-kanaal',
+    cta: 'Bekijk het YouTube-kanaal van Stef',
     videoTitle: 'Nieuwe vorm van AI-advertenties — Stefmeister',
   },
   en: {
     eyebrow: 'YouTube',
-    title: 'I show what works — from AI ads to funnels',
-    body: 'On my YouTube channel I break down new forms of advertising and digital growth, like AI-generated ads. Practical, with real examples.',
+    title: 'Insights from practice — from AI ads to funnels',
+    body: 'On his YouTube channel, Stef breaks down new forms of advertising and digital growth, like AI-generated ads. Practical, with real examples.',
     caption: 'Featured: a new form of AI-generated ads.',
-    cta: 'Visit my YouTube channel',
+    cta: 'Visit Stef’s YouTube channel',
     videoTitle: 'A new form of AI ads — Stefmeister',
   },
 }

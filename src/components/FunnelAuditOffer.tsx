@@ -7,7 +7,7 @@ import { persistentCta } from '../data/nav'
 const COPY = {
   nl: {
     title: 'Waar verliest jullie huidige digitale klantreis conversie?',
-    body: 'Geen algemene template. Ik bekijk jullie huidige situatie, doelgroep en commerciële proces.',
+    body: 'Geen algemene template. We bekijken jullie huidige situatie, doelgroep en commerciële proces.',
     scopeLabel: 'De analyse bekijkt',
     scope: [
       'Website structuur',
@@ -38,7 +38,7 @@ const COPY = {
   },
   en: {
     title: 'Where is your current digital customer journey losing conversion?',
-    body: 'No generic template. I look at your current situation, audience and commercial process.',
+    body: 'No generic template. We look at your current situation, audience and commercial process.',
     scopeLabel: 'The analysis reviews',
     scope: [
       'Website structure',

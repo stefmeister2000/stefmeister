@@ -7,13 +7,13 @@ import CaseVisual from './CaseVisual'
 
 const COPY = {
   nl: {
-    title: 'Van analyse naar een betere commerciële klantreis',
+    title: 'Groei begint bij het werk.',
     all: 'Alle cases',
     ongoing: 'Lopend project',
     view: 'Bekijk de case',
   },
   en: {
-    title: 'From analysis to a better commercial customer journey',
+    title: 'Growth starts with the work.',
     all: 'All cases',
     ongoing: 'Ongoing project',
     view: 'View the case',
@@ -36,7 +36,7 @@ export default function CaseStudyGrid() {
         </div>
 
         <div className="no-scrollbar -mx-5 mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-0">
-          {cases.map((c) => (
+          {cases.slice(0, 4).map((c) => (
             <Link
               key={c.slug}
               to={`/cases/${c.slug}`}
@@ -49,6 +49,7 @@ export default function CaseStudyGrid() {
                 {c.status === 'ongoing' && <span className="text-xs italic text-accent-2">{t.ongoing}</span>}
               </div>
               <p className="mt-1 text-xs uppercase tracking-widest text-mute">{c.sector[lang]}</p>
+              <p className="mt-2 text-xs text-accent-2">Stef Keppens · Growth & strategy</p>
               <p className="mt-3 text-sm leading-relaxed text-bone">{c.summary[lang]}</p>
               <span className="mt-5 text-sm font-medium text-accent-2 underline decoration-transparent underline-offset-4 transition group-hover:decoration-accent-2">
                 {t.view}

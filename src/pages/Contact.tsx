@@ -6,17 +6,17 @@ import { useLang } from '../i18n/LanguageContext'
 const COPY = {
   nl: {
     seoTitle: 'Contact',
-    seoDescription: 'Vraag een persoonlijke groeianalyse aan of plan een groeigesprek met Stef Keppens.',
+    seoDescription: 'Bespreek je website, software, app of groeiplan met Stef Keppens en LYTE Studios.',
     title: 'Vertel kort waar jullie vandaag staan',
-    body: 'Zeven velden, twee minuten. Op basis daarvan bekijk ik of en hoe ik het beste kan helpen.',
+    body: 'Zeven velden, twee minuten. Op basis daarvan bekijken we hoe we jullie het beste kunnen helpen.',
     meeting: 'Plan een groeigesprek',
     meetingTooltip: 'Agenda-koppeling volgt — vul ondertussen het formulier in.',
   },
   en: {
     seoTitle: 'Contact',
-    seoDescription: 'Request a personal growth analysis or schedule a growth call with Stef Keppens.',
-    title: 'Tell me briefly where you stand today',
-    body: 'Seven fields, two minutes. Based on that I’ll see if and how I can best help.',
+    seoDescription: 'Discuss your website, software, app or growth plan with Stef Keppens and LYTE Studios.',
+    title: 'Tell us briefly where you stand today',
+    body: 'Seven fields, two minutes. Based on that We’ll see if and how we can best help.',
     meeting: 'Schedule a growth call',
     meetingTooltip: 'Calendar link coming soon — fill in the form below in the meantime.',
   },

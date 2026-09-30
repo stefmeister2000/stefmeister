@@ -6,14 +6,14 @@ import { useLang } from '../i18n/LanguageContext'
 
 const COPY = {
   nl: {
-    title: 'Bouw een digitale route die niet alleen verkeer krijgt, maar converteert',
+    title: 'Klaar om van marketing meer omzet te maken?',
     body: 'Ontdek waar jullie advertenties, website, ecommerce of opvolging vandaag omzet verliezen.',
-    ctaSecondary: 'Bekijk mijn werk',
+    ctaSecondary: 'Bekijk ons werk',
   },
   en: {
-    title: 'Build a digital route that doesn’t just get traffic, but converts it',
+    title: 'Ready to turn marketing into more revenue?',
     body: 'Find out where your ads, website, ecommerce or follow-up are losing revenue today.',
-    ctaSecondary: 'See my work',
+    ctaSecondary: 'See our work',
   },
 }
 

@@ -5,11 +5,11 @@ import { useLang } from '../i18n/LanguageContext'
 const COPY = {
   nl: {
     title: 'Actief in ecommerce, hospitality en consumer brands',
-    body: 'Ik werk aan digitale groei in verschillende commerciële omgevingen: van ecommerce en lokale leadgeneratie tot boekingsfunnels en B2B-events.',
+    body: 'We werken aan digitale groei in verschillende commerciële omgevingen: van ecommerce en lokale leadgeneratie tot boekingsfunnels en B2B-events.',
   },
   en: {
     title: 'Active in ecommerce, hospitality and consumer brands',
-    body: 'I work on digital growth across different commercial environments: from ecommerce and local lead generation to booking funnels and B2B events.',
+    body: 'We work on digital growth across different commercial environments: from ecommerce and local lead generation to booking funnels and B2B events.',
   },
 }
 

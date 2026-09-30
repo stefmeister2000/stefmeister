@@ -72,8 +72,8 @@ export const cases: CaseStudy[] = [
       en: '20 sales from one organic video — we focus on self-made products.',
     },
     summary: {
-      nl: 'Aandacht voor het merk omzetten in een meetbare, doorlopende ecommerce-verkoopmotor.',
-      en: 'Turning brand attention into a measurable, ongoing ecommerce sales engine.',
+      nl: '+120% online omzet bij Pinacello. Campagnes, landingspagina’s en conversie verbonden tot een ecommerce-verkoopmotor.',
+      en: '+120% online revenue at Pinacello. Campaigns, landing pages and conversion connected into an ecommerce sales engine.',
     },
     situation: {
       nl: 'Pinacello bouwt merkbekendheid op in een consumentenmarkt. De uitdaging is om die aandacht consequent te vertalen naar online verkoop, niet enkel naar bereik.',
@@ -108,8 +108,8 @@ export const cases: CaseStudy[] = [
       ],
     },
     measurement: {
-      nl: 'Meer voltooide aankopen als resultaat van campagneverkeer, gemeten van eerste klik tot bestelling.',
-      en: 'More completed purchases as a result of campaign traffic, measured from first click to order.',
+      nl: 'Pinacello behaalde 120% groei in online omzet.',
+      en: 'Pinacello achieved 120% growth in online revenue.',
     },
     objective: {
       nl: 'Aandacht voor het merk omzetten in meetbare ecommerce-omzet.',

@@ -1,0 +1,91 @@
+import { Link } from 'react-router-dom'
+import { useLang } from '../i18n/LanguageContext'
+import { cases } from '../data/cases'
+export default function SelectedWork() {
+  const { lang } = useLang()
+  const nl = lang === 'nl'
+  const selected = [cases[1], cases[3], cases[0], cases[2]]
+  return (
+    <section className="selected-work" id="selected-work">
+      <div className="work-intro">
+        <p className="eyebrow">{nl ? 'Geselecteerd werk' : 'Selected work'}</p>
+        <h2>
+          {nl ? 'Sterke campagnes.' : 'Strong campaigns.'}
+          <br />
+          {nl ? 'Slimme websites.' : 'Smart websites.'}
+          <br />
+          <span>{nl ? 'Meetbare groei.' : 'Measurable growth.'}</span>
+        </h2>
+        <p>
+          {nl
+            ? 'Van eerste indruk tot dagelijkse interactie. Ontdek het werk van Stef Keppens en LYTE Studios.'
+            : 'From first impression to everyday interaction. Explore work by Stef Keppens and LYTE Studios.'}
+        </p>
+        <Link className="button-dark" to="/cases">
+          {nl ? 'Alle projecten' : 'All projects'} <span>↗</span>
+        </Link>
+        <div className="work-signoff">
+          <span>✳</span>
+          <p>
+            {nl
+              ? 'Van idee naar iets dat het verschil maakt.'
+              : 'From an idea to something that makes a difference.'}
+          </p>
+        </div>
+      </div>
+      {selected.map((c) => (
+        <Link
+          className={'project-tile project-' + c.slug}
+          key={c.slug}
+          to={'/cases/' + c.slug}
+        >
+          <div className="project-image">
+            <img src={c.image} alt={c.name} loading="lazy" />
+            <span className="project-arrow">↗</span>
+          </div>
+          <div className="project-caption">
+            <h3>{c.name}</h3>
+            {c.slug === 'pinacello' && (
+              <strong className="project-result">
+                +120% {nl ? 'online omzet' : 'online revenue'}
+              </strong>
+            )}
+            <p>{c.sector[lang]}</p>
+            <span>Stef Keppens</span>
+          </div>
+        </Link>
+      ))}
+      {[
+        { name: 'Jobr', slug: 'jobr', category: 'Mobile app · LYTE Studios' },
+        {
+          name: 'WERKR',
+          slug: 'werkr',
+          category: 'Software platform · LYTE Studios',
+        },
+      ].map((c) => (
+        <a
+          className={'project-tile partner-project ' + c.slug}
+          key={c.slug}
+          href={'https://lytestudios.be/projects/' + c.slug + '/'}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <div className="project-image">
+            <img src={'/' + c.slug + '.jpg'} alt={c.name} loading="lazy" />
+            <span className="project-arrow">↗</span>
+          </div>
+          <div className="project-caption">
+            <h3>{c.name}</h3>
+            {c.slug === 'pinacello' && (
+              <strong className="project-result">
+                +120% {nl ? 'online omzet' : 'online revenue'}
+              </strong>
+            )}
+            <p>{c.category}</p>
+            <span>{nl ? 'Bekijk de case' : 'Explore the case'} ↗</span>
+          </div>
+        </a>
+      ))}
+    </section>
+  )
+}

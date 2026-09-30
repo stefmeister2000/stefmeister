@@ -5,8 +5,8 @@ export const processSteps: ProcessStep[] = [
     number: '01',
     title: { nl: 'Analyse', en: 'Analysis' },
     description: {
-      nl: 'Ik bekijk de website, campagnes, data en huidige klantreis.',
-      en: 'I look at the website, campaigns, data and current customer journey.',
+      nl: 'We bekijken de website, campagnes, data en huidige klantreis.',
+      en: 'We look at the website, campaigns, data and current customer journey.',
     },
   },
   {
@@ -21,8 +21,8 @@ export const processSteps: ProcessStep[] = [
     number: '03',
     title: { nl: 'Funnel design', en: 'Funnel design' },
     description: {
-      nl: 'Ik ontwerp de pagina’s, campagnes, tracking en opvolging als één geheel.',
-      en: 'I design the pages, campaigns, tracking and follow-up as one system.',
+      nl: 'We ontwerpen de pagina’s, campagnes, tracking en opvolging als één geheel.',
+      en: 'We design the pages, campaigns, tracking and follow-up as one system.',
     },
   },
   {

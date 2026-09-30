@@ -17,7 +17,7 @@ const COPY = {
     caseLabel: 'Case',
     situation: 'Situatie',
     challenge: 'Commerciële uitdaging',
-    role: 'Mijn rol',
+    role: 'Bijdrage van Stef Keppens',
     built: 'Wat er gebouwd werd',
     measurement: 'Hoe succes gemeten wordt',
     ongoingNote: 'Dit project loopt nog — cijfers volgen zodra beschikbaar.',
@@ -30,7 +30,7 @@ const COPY = {
     caseLabel: 'Case',
     situation: 'Situation',
     challenge: 'Commercial challenge',
-    role: 'My role',
+    role: 'Stef Keppens’ contribution',
     built: 'What was built',
     measurement: 'How success is measured',
     ongoingNote: 'This project is still ongoing — numbers will follow once available.',
@@ -119,7 +119,7 @@ export default function CaseStudyPage({ slug }: { slug: CaseSlug }) {
         <div className="mx-auto max-w-4xl px-5 py-16 sm:px-8 sm:py-20">
           <p className="text-sm font-semibold uppercase tracking-widest text-accent-2">{t.measurement}</p>
           <p className="mt-4 max-w-2xl font-display text-2xl text-paper text-balance">{c.measurement[lang]}</p>
-          {c.status === 'ongoing' && <p className="mt-4 text-sm text-mute">{t.ongoingNote}</p>}
+          {c.status === 'ongoing' && c.slug !== 'pinacello' && <p className="mt-4 text-sm text-mute">{t.ongoingNote}</p>}
         </div>
       </section>
 

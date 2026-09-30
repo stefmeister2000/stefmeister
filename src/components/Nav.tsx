@@ -23,18 +23,31 @@ export default function Nav() {
 
   function isActive(href: string) {
     if (href.startsWith('/#')) return false
-    return location.pathname === href || location.pathname.startsWith(`${href}/`)
+    return (
+      location.pathname === href || location.pathname.startsWith(`${href}/`)
+    )
   }
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b transition-colors ${
-        scrolled ? 'border-line bg-ink/90 backdrop-blur' : 'border-transparent bg-transparent'
+      className={`studio-nav sticky top-0 z-50 border-b transition-colors ${
+        scrolled
+          ? 'border-line bg-ink/90 backdrop-blur'
+          : 'border-transparent bg-transparent'
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
-        <Link to="/" className="font-display text-lg tracking-tight text-paper">
-          Stef Keppens
+        <Link
+          to="/"
+          className="studio-brand"
+          aria-label="Stef Keppens × LYTE — Home"
+        >
+          <span className="brand-symbol" aria-hidden="true">
+            ↗
+          </span>
+          <span className="brand-name">
+            Keppens <span>× LYTE</span>
+          </span>
         </Link>
 
         <nav className="hidden items-center gap-8 lg:flex">
@@ -56,8 +69,10 @@ export default function Nav() {
           <LangSwitch lang={lang} onToggle={toggleLang} />
           <Link
             to={persistentCtaHref}
-            onClick={() => trackEvent('audit_cta_clicked', { placement: 'nav' })}
-            className="rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-accent-ink transition hover:bg-accent-2"
+            onClick={() =>
+              trackEvent('audit_cta_clicked', { placement: 'nav' })
+            }
+            className="button-dark nav-cta"
           >
             {persistentCta[lang]}
           </Link>
@@ -67,17 +82,26 @@ export default function Nav() {
           <LangSwitch lang={lang} onToggle={toggleLang} />
           <button
             aria-label="Menu"
+            aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
             className="flex h-11 w-11 items-center justify-center rounded-full border border-line text-paper"
           >
             <span className="sr-only">Menu</span>
             {open ? (
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <path d="M1 1L17 17M17 1L1 17" stroke="currentColor" strokeWidth="1.5" />
+                <path
+                  d="M1 1L17 17M17 1L1 17"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                />
               </svg>
             ) : (
               <svg width="18" height="14" viewBox="0 0 18 14" fill="none">
-                <path d="M0 1H18M0 7H18M0 13H18" stroke="currentColor" strokeWidth="1.5" />
+                <path
+                  d="M0 1H18M0 7H18M0 13H18"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                />
               </svg>
             )}
           </button>
@@ -102,7 +126,9 @@ export default function Nav() {
           </nav>
           <Link
             to={persistentCtaHref}
-            onClick={() => trackEvent('audit_cta_clicked', { placement: 'nav_mobile' })}
+            onClick={() =>
+              trackEvent('audit_cta_clicked', { placement: 'nav_mobile' })
+            }
             className="mt-4 block rounded-full bg-accent px-5 py-3 text-center text-sm font-semibold text-accent-ink"
           >
             {persistentCta[lang]}
@@ -113,7 +139,13 @@ export default function Nav() {
   )
 }
 
-function LangSwitch({ lang, onToggle }: { lang: 'nl' | 'en'; onToggle: () => void }) {
+function LangSwitch({
+  lang,
+  onToggle,
+}: {
+  lang: 'nl' | 'en'
+  onToggle: () => void
+}) {
   return (
     <button
       onClick={onToggle}

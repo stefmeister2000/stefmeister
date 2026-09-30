@@ -4,7 +4,7 @@ import { useLang } from '../i18n/LanguageContext'
 const COPY = {
   nl: {
     title: 'Eén meetbare route van aandacht naar omzet',
-    body: 'Ik kijk niet naar advertenties, websites en automatiseringen als losse onderdelen. Ik verbind ze tot één systeem waarin elke stap een duidelijke commerciële functie heeft.',
+    body: 'We kijken niet naar advertenties, websites en automatiseringen als losse onderdelen. We verbinden ze tot één systeem waarin elke stap een duidelijke commerciële functie heeft.',
     stages: [
       { label: 'Aandacht', items: ['Meta Ads', 'Google Ads', 'Content', 'PR', 'Referrals', 'Outreach'] },
       { label: 'Conversiepunt', items: ['Gerichte landingspagina'] },
@@ -16,7 +16,7 @@ const COPY = {
   },
   en: {
     title: 'One measurable route from attention to revenue',
-    body: 'I don’t treat ads, websites and automations as separate pieces. I connect them into one system where every step has a clear commercial function.',
+    body: 'We don’t treat ads, websites and automations as separate pieces. We connect them into one system where every step has a clear commercial function.',
     stages: [
       { label: 'Attention', items: ['Meta Ads', 'Google Ads', 'Content', 'PR', 'Referrals', 'Outreach'] },
       { label: 'Conversion point', items: ['Focused landing page'] },

@@ -6,13 +6,13 @@ import { useLang } from '../i18n/LanguageContext'
 const COPY = {
   nl: {
     title: 'Van handmatig werk naar slimme workflows',
-    body: 'Veel bedrijven verliezen tijd aan repetitieve taken tussen marketing, sales en opvolging. Ik ontwerp AI-gestuurde workflows die informatie verwerken, leads kwalificeren en teams sneller laten handelen.',
+    body: 'Veel bedrijven verliezen tijd aan repetitieve taken tussen marketing, sales en opvolging. We ontwerpen AI-gestuurde workflows die informatie verwerken, leads kwalificeren en teams sneller laten handelen.',
     positioning: 'AI vervangt geen strategie. Het maakt een goed proces sneller, consistenter en beter meetbaar.',
     cta: 'Bespreek een automatisering',
   },
   en: {
     title: 'From manual work to smart workflows',
-    body: 'Many companies lose time on repetitive tasks between marketing, sales and follow-up. I design AI-driven workflows that process information, qualify leads and let teams act faster.',
+    body: 'Many companies lose time on repetitive tasks between marketing, sales and follow-up. We design AI-driven workflows that process information, qualify leads and let teams act faster.',
     positioning: 'AI doesn’t replace strategy. It makes a good process faster, more consistent and more measurable.',
     cta: 'Discuss an automation',
   },

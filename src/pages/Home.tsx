@@ -1,56 +1,46 @@
 import Seo from '../components/Seo'
 import PersonalHero from '../components/PersonalHero'
-import ClientWorkBar from '../components/ClientWorkBar'
-import ProblemSection from '../components/ProblemSection'
-import GrowthSystemVisual from '../components/GrowthSystemVisual'
-import ServiceGrid from '../components/ServiceGrid'
-import PricingSection from '../components/PricingSection'
-import CaseStudyGrid from '../components/CaseStudyGrid'
-import AIAutomationFlows from '../components/AIAutomationFlows'
-import ProcessSection from '../components/ProcessSection'
+import RevenueGrowth from '../components/RevenueGrowth'
+import PerformanceAds from '../components/PerformanceAds'
+import { usePageMotion } from '../lib/usePageMotion'
+import SelectedWork from '../components/SelectedWork'
+import AgencyCapabilities from '../components/AgencyCapabilities'
 import AboutStef from '../components/AboutStef'
-import VideoShowcase from '../components/VideoShowcase'
-import FunnelAuditOffer from '../components/FunnelAuditOffer'
-import QualificationFormSection from '../components/QualificationFormSection'
+import ProcessSection from '../components/ProcessSection'
+import PricingSection from '../components/PricingSection'
 import FAQ from '../components/FAQ'
 import FinalCTA from '../components/FinalCTA'
 import { useLang } from '../i18n/LanguageContext'
-
-const COPY = {
-  nl: {
-    title: 'Het volledige digitale groeisysteem achter ambitieuze bedrijven',
-    description:
-      "Ik help bedrijven met landingspagina's, funnels, Meta Ads, Google Ads, ecommerce-optimalisatie en AI-automatiseringen — één meetbaar groeisysteem van eerste klik tot omzet.",
-  },
-  en: {
-    title: 'The full digital growth system behind ambitious companies',
-    description:
-      'I help companies with landing pages, funnels, Meta Ads, Google Ads, ecommerce conversion and AI automations — one measurable growth system from first click to revenue.',
-  },
-}
-
 export default function Home() {
   const { lang } = useLang()
-  const t = COPY[lang]
-
+  const motionRef = usePageMotion()
   return (
-    <>
-      <Seo title={t.title} description={t.description} path="/" />
+    <div className="studio-home" ref={motionRef}>
+      <Seo
+        title={
+          lang === 'nl'
+            ? 'Meer online sales en omzet met Meta Ads, Google Ads en conversie'
+            : 'More online sales and revenue with Meta Ads, Google Ads and conversion'
+        }
+        description={
+          lang === 'nl'
+            ? 'Meer klanten en online omzet met performance marketing, sterke websites en conversieoptimalisatie. Ontdek de Pinacello-case: +120% online omzet.'
+            : 'Grow online sales and revenue through performance marketing, strong websites and conversion optimisation. Explore Pinacello: +120% online revenue.'
+        }
+        path="/"
+      />
       <PersonalHero />
-      <ClientWorkBar />
-      <ProblemSection />
-      <GrowthSystemVisual />
-      <ServiceGrid />
-      <PricingSection />
-      <CaseStudyGrid />
-      <AIAutomationFlows />
-      <ProcessSection />
+      <RevenueGrowth />
+      <PerformanceAds />
+      <SelectedWork />
+      <AgencyCapabilities />
       <AboutStef />
-      <VideoShowcase />
-      <FunnelAuditOffer />
-      <QualificationFormSection />
+      <div id="aanpak">
+        <ProcessSection />
+      </div>
+      <PricingSection />
       <FAQ />
       <FinalCTA />
-    </>
+    </div>
   )
 }

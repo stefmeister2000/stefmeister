@@ -5,18 +5,18 @@ import { useLang } from '../i18n/LanguageContext'
 
 const COPY = {
   nl: {
-    tagline: 'Ik bouw de complete digitale route van eerste klik tot conversie.',
+    tagline: 'We bouwen de complete digitale route van eerste klik tot conversie.',
     nav: 'Navigatie',
     services: 'Diensten',
     contact: 'Contact',
-    disclaimer: 'Projecten en resultaten worden alleen getoond waar toestemming beschikbaar is.',
+    disclaimer: 'Growth, design & development.',
   },
   en: {
-    tagline: 'I build the complete digital route from first click to conversion.',
+    tagline: 'We build the complete digital route from first click to conversion.',
     nav: 'Navigation',
     services: 'Services',
     contact: 'Contact',
-    disclaimer: 'Projects and results are only shown where permission is available.',
+    disclaimer: 'Growth, design & development.',
   },
 }
 
@@ -29,7 +29,7 @@ export default function Footer() {
       <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <p className="font-display text-lg text-paper">Stef Keppens</p>
+            <p className="font-display text-lg text-paper">Stef Keppens × LYTE Studios</p>
             <p className="mt-3 max-w-xs text-sm text-mute">{t.tagline}</p>
           </div>
 
@@ -77,7 +77,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col gap-2 border-t border-line pt-6 text-xs text-mute sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} Stef Keppens</p>
+          <p>© {new Date().getFullYear()} Stef Keppens × LYTE Studios</p>
           <p>{t.disclaimer}</p>
         </div>
       </div>

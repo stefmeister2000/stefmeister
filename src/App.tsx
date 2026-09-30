@@ -31,6 +31,9 @@ export default function App() {
           <Route path="cases/xpert-funding" element={<CaseStudyPage slug="xpert-funding" />} />
 
           <Route path="funnel-audit" element={<FunnelAudit />} />
+          <Route path="agency" element={<OverStef />} />
+          <Route path="websites" element={<ServicePage slug="websites" />} />
+          <Route path="software" element={<ServicePage slug="software" />} />
           <Route path="over-stef" element={<OverStef />} />
           <Route path="contact" element={<Contact />} />
 

@@ -6,7 +6,7 @@ interface SeoProps {
   path: string
 }
 
-const SITE_NAME = 'Stef Keppens'
+const SITE_NAME = 'Stef Keppens × LYTE Studios'
 const SITE_URL = 'https://www.stefkeppens.be'
 
 function setMeta(name: string, content: string, attr: 'name' | 'property' = 'name') {

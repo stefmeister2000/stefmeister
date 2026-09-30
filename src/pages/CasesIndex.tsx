@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import LyteWork from '../components/LyteWork'
 import Seo from '../components/Seo'
 import CaseVisual from '../components/CaseVisual'
 import { cases } from '../data/cases'
@@ -10,8 +11,8 @@ const COPY = {
     seoTitle: 'Cases',
     seoDescription:
       "Ecommerce, hospitality en consumer brands: cases van Pinacello, O'Learys, HealthFactor en Nooms.",
-    title: 'Van analyse naar een betere commerciële klantreis',
-    body: 'Ik werk aan digitale groei in verschillende commerciële omgevingen: van ecommerce en lokale leadgeneratie tot boekingsfunnels en B2B-events.',
+    title: 'Werk dat ideeën verder brengt',
+    body: 'Van groeicampagnes en ecommerce tot apps en platformen. Ontdek het werk van Stef Keppens en LYTE Studios, met de uitvoerende partner bij elk project.',
     ongoing: 'Lopend project',
     view: 'Bekijk de case',
   },
@@ -19,8 +20,8 @@ const COPY = {
     seoTitle: 'Cases',
     seoDescription:
       "Ecommerce, hospitality and consumer brands: cases from Pinacello, O'Learys, HealthFactor and Nooms.",
-    title: 'From analysis to a better commercial customer journey',
-    body: 'I work on digital growth across different commercial environments: from ecommerce and local lead generation to booking funnels and B2B events.',
+    title: 'Work that takes ideas further',
+    body: 'From growth campaigns and ecommerce to apps and platforms. Explore work by Stef Keppens and LYTE Studios, with the delivery partner credited on each project.',
     ongoing: 'Ongoing project',
     view: 'View the case',
   },
@@ -56,6 +57,7 @@ export default function CasesIndex() {
                 {c.status === 'ongoing' && <span className="text-xs italic text-accent-2">{t.ongoing}</span>}
               </div>
               <p className="mt-1 text-xs uppercase tracking-widest text-mute">{c.sector[lang]}</p>
+              <p className="mt-2 text-xs text-accent-2">Stef Keppens · Growth & strategy</p>
               <p className="mt-3 text-sm leading-relaxed text-bone">{c.summary[lang]}</p>
               <span className="mt-5 text-sm font-medium text-accent-2 underline decoration-transparent underline-offset-4 transition group-hover:decoration-accent-2">
                 {t.view}
@@ -64,6 +66,7 @@ export default function CasesIndex() {
           ))}
         </div>
       </section>
+      <LyteWork />
     </div>
   )
 }
