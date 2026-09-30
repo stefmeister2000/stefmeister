@@ -108,8 +108,8 @@ export const faqItems: FaqItem[] = [
   {
     question: { nl: 'Wat kost een samenwerking?', en: 'What does a collaboration cost?' },
     answer: {
-      nl: 'Doorlopende samenwerkingen lopen via drie groeipakketten, vanaf €1.500 per maand. De opstart — analyse, landingspagina, e-mailflows, campagne-opzet — zit daar altijd in inbegrepen. Losse strategische consulting kan ook, aan €250/uur of €1.250/dag.',
-      en: 'Ongoing collaborations run through three growth packages, starting at €1,500 per month. The setup — analysis, landing page, email flows, campaign setup — is always included. Standalone strategic consulting is also available, at €250/hour or €1,250/day.',
+      nl: 'Doorlopende samenwerkingen lopen via drie groeipakketten, vanaf €1.500 per maand. De invulling van de opstart en uitvoering hangt af van het gekozen pakket. Scope, advertentiebudget en eventuele bijkomende kosten leggen we vooraf vast in het voorstel. Losse strategische consulting kan ook, aan €250/uur of €1.250/dag.',
+      en: 'Ongoing collaborations run through three growth packages, starting at €1,500 per month. Setup and delivery depend on the package you choose. Scope, advertising budget and any additional costs are agreed in the proposal. Standalone strategic consulting is also available, at €250/hour or €1,250/day.',
     },
   },
 ]

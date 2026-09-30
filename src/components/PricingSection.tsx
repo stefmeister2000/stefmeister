@@ -1,155 +1,64 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { pricingTiers, featureRows, addOns } from '../data/pricing'
-import { persistentCta, persistentCtaHref } from '../data/nav'
-import { useInView } from '../lib/useInView'
 import { useLang } from '../i18n/LanguageContext'
 
-const COPY = {
-  nl: {
-    title: 'Groeipakketten',
-    body: 'Van marketingbasis tot quasi-volledige growth ownership. Kies het niveau van betrokkenheid dat bij jullie past.',
-    toggleShow: 'Bekijk volledige vergelijking',
-    toggleHide: 'Verberg volledige vergelijking',
-    featureCol: 'Inbegrepen',
-    addOnsLabel: 'Liever eerst even sparren?',
-    addOnsLead:
-      'Nog niet klaar voor een maandpakket? Je kunt ook los starten — eerst leren en meedenken, daarna beslis je pas over een verdere samenwerking.',
-    onRequest: 'Op aanvraag',
-    note: 'Richtprijzen voor doorlopende marketing. Websites, apps en software worden apart begroot op basis van de scope.',
+const positioning = {
+  foundation: {
+    label: ['Een sterke basis', 'A strong foundation'],
+    outcome: ['Van losse acties naar een meetbare aanpak.', 'From scattered activity to a measurable plan.'],
+    cta: ['Bespreek Foundation', 'Discuss Foundation'],
   },
-  en: {
-    title: 'Growth packages',
-    body: 'From marketing foundations to near-full growth ownership. Choose the level of involvement that fits.',
-    toggleShow: 'See full comparison',
-    toggleHide: 'Hide full comparison',
-    featureCol: 'Included',
-    addOnsLabel: 'Rather spar first?',
-    addOnsLead:
-      'Not ready for a monthly package yet? You can also start standalone — come to learn and think it through first, then decide on working together.',
-    onRequest: 'On request',
-    note: 'Indicative rates for ongoing marketing. Websites, apps and software are scoped and quoted separately.',
+  partner: {
+    label: ['Campagnes + conversie', 'Campaigns + conversion'],
+    outcome: ['Laat je campagnes, website en opvolging samenwerken.', 'Connect your campaigns, website and follow-up.'],
+    cta: ['Bespreek Partner', 'Discuss Partner'],
+  },
+  department: {
+    label: ['Een team naast je team', 'An extension of your team'],
+    outcome: ['Eén partner voor je volledige groeiaanpak.', 'One partner for your complete growth approach.'],
+    cta: ['Bespreek maatwerk', 'Discuss your needs'],
   },
 }
 
 export default function PricingSection() {
-  const { ref } = useInView<HTMLDivElement>()
   const { lang } = useLang()
-  const t = COPY[lang]
-  const [showTable, setShowTable] = useState(false)
-
+  const nl = lang === 'nl'
+  const i = nl ? 0 : 1
   return (
-    <section id="groeipakketten" className="border-b border-line">
-      <div ref={ref} className="reveal mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
-        <h2 className="max-w-2xl font-display text-3xl text-paper text-balance sm:text-4xl">{t.title}</h2>
-        <p className="mt-5 max-w-2xl text-bone">{t.body}</p>
-
-        <div className="no-scrollbar -mx-5 mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-2 sm:mx-0 sm:px-0 sm:pb-0 lg:grid lg:grid-cols-3 lg:overflow-visible">
-          {pricingTiers.map((tier) => (
-            <div
-              key={tier.key}
-              className="flex w-[85%] shrink-0 snap-center flex-col rounded-2xl border border-line bg-surface p-6 sm:w-[60%] sm:p-8 lg:w-auto lg:shrink"
-            >
-              <h3 className="font-display text-xl text-paper">{tier.name[lang]}</h3>
-              <p className="mt-2 font-display text-2xl text-paper">{tier.price[lang]}</p>
-              <p className="mt-3 text-sm text-mute">{tier.audience[lang]}</p>
-              <ul className="mt-6 flex-1 space-y-2 border-t border-line pt-6">
-                {tier.highlights[lang].map((item) => (
-                  <li key={item} className="flex items-start gap-2.5 text-sm text-bone">
-                    <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <Link
-                to={persistentCtaHref}
-                className="mt-6 rounded-full border border-line px-5 py-3 text-center text-sm font-semibold text-paper transition hover:border-accent"
-              >
-                {persistentCta[lang]}
-              </Link>
-            </div>
-          ))}
+    <section id="groeipakketten" className="growth-pricing" aria-labelledby="pricing-title">
+      <div className="pricing-wrap">
+        <header className="pricing-intro">
+          <p className="eyebrow">{nl ? 'Samenwerken met Freeflow' : 'Working with Freeflow'}</p>
+          <h2 id="pricing-title">{nl ? 'De juiste basis.' : 'The right foundation.'}<br /><span>{nl ? 'De ruimte om te groeien.' : 'Room to grow.'}</span></h2>
+          <p>{nl ? 'Meer grip op je marketing of een team dat mee de uitvoering draagt? Kies de samenwerking die past bij je doelen en wat je intern al kunt.' : 'More clarity in your marketing, or a team to help deliver it? Choose the collaboration that fits your goals and in-house capabilities.'}</p>
+        </header>
+        <div className="pricing-grid">
+          {pricingTiers.map((tier, index) => {
+            const copy = positioning[tier.key]
+            return <article key={tier.key} className={`growth-plan ${tier.key === 'partner' ? 'growth-plan-featured' : ''}`} aria-labelledby={`plan-${tier.key}`}>
+              <div className="plan-topline"><span>0{index + 1}</span><span>{copy.label[i]}</span></div>
+              <div className="plan-signal" aria-hidden="true">{[0, 1, 2].map(n => <span key={n} className={n <= index ? 'signal-active' : ''} />)}</div>
+              <h3 id={`plan-${tier.key}`}>{tier.name[lang]}</h3>
+              <p className="plan-outcome">{copy.outcome[i]}</p>
+              <p className="plan-price">{tier.price[lang]}</p>
+              <p className="plan-audience">{tier.audience[lang]}</p>
+              <div className="plan-includes"><p>{nl ? 'Dit pakken we aan' : 'What we work on'}</p><ul>{tier.highlights[lang].map(item => <li key={item}><span aria-hidden="true">✓</span>{item}</li>)}</ul></div>
+              <Link to={`/contact?pakket=${tier.key}`} className="plan-cta">{copy.cta[i]}<span aria-hidden="true">↗</span></Link>
+              <p className="plan-cta-note">{nl ? 'Eerst je doelen bespreken, dan een voorstel.' : 'Your goals first. A proposal comes next.'}</p>
+            </article>
+          })}
         </div>
-
-        <button
-          type="button"
-          onClick={() => setShowTable((v) => !v)}
-          className="mt-8 text-sm font-medium text-accent-2 hover:text-accent"
-        >
-          {showTable ? t.toggleHide : t.toggleShow}
-        </button>
-
-        {showTable && (
-          <div className="no-scrollbar mt-6 overflow-x-auto rounded-2xl border border-line">
-            <table className="w-full min-w-[720px] border-collapse text-sm">
-              <thead>
-                <tr className="border-b border-line bg-surface/50 text-left">
-                  <th className="px-4 py-3 font-medium text-mute">{t.featureCol}</th>
-                  {pricingTiers.map((tier) => (
-                    <th key={tier.key} className="px-4 py-3 font-medium text-paper">
-                      {tier.name[lang]}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {featureRows.map((row) => (
-                  <tr key={row.label[lang]} className="border-b border-line last:border-0">
-                    <td className="px-4 py-3 text-bone">{row.label[lang]}</td>
-                    {row.values.map((cell, i) => (
-                      <td key={i} className="px-4 py-3">
-                        {cell.type === 'check' && (
-                          <span aria-hidden className="text-accent-2">
-                            ✓
-                          </span>
-                        )}
-                        {cell.type === 'dash' && (
-                          <span aria-hidden className="text-line">
-                            —
-                          </span>
-                        )}
-                        {cell.type === 'text' && <span className="text-mute">{cell.label[lang]}</span>}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        <div className="pricing-scope"><span aria-hidden="true">↗</span><p><strong>{nl ? 'Duidelijke afspraken vooraf.' : 'Clear agreements upfront.'}</strong> {nl ? 'Dit zijn richtprijzen voor doorlopende marketing. In je voorstel leggen we de scope, prioriteiten, het advertentiebudget, eventuele toolkosten en btw vast. Websites, apps en software begroten we apart.' : 'These are indicative rates for ongoing marketing. Your proposal specifies scope, priorities, advertising budget, any tool costs and VAT. Websites, apps and software are quoted separately.'}</p></div>
+        <details className="pricing-comparison">
+          <summary>{nl ? 'Vergelijk wat er in elk pakket zit' : 'Compare what each package includes'}<span aria-hidden="true">+</span></summary>
+          <div className="pricing-table-scroll" role="region" aria-label={nl ? 'Pakketvergelijking, horizontaal scrollbaar' : 'Package comparison, scroll horizontally'} tabIndex={0}>
+            <table><caption className="sr-only">{nl ? 'Volledige vergelijking van de groeipakketten' : 'Full growth package comparison'}</caption><thead><tr><th scope="col">{nl ? 'Inbegrepen' : 'Included'}</th>{pricingTiers.map(tier => <th scope="col" key={tier.key}>{tier.name[lang]}</th>)}</tr></thead><tbody>{featureRows.map(row => <tr key={row.label[lang]}><th scope="row">{row.label[lang]}</th>{row.values.map((cell, index) => <td key={index}>{cell.type === 'text' ? cell.label[lang] : <><span aria-hidden="true">{cell.type === 'check' ? '✓' : '—'}</span><span className="sr-only">{cell.type === 'check' ? (nl ? 'Inbegrepen' : 'Included') : (nl ? 'Niet inbegrepen' : 'Not included')}</span></>}</td>)}</tr>)}</tbody></table>
           </div>
-        )}
-
-        <div className="mt-12 rounded-2xl border border-line bg-surface/40 p-6 sm:p-8">
-          <div className="max-w-2xl">
-            <h3 className="font-display text-xl text-paper sm:text-2xl">{t.addOnsLabel}</h3>
-            <p className="mt-3 text-sm leading-relaxed text-bone">{t.addOnsLead}</p>
-          </div>
-
-          <div className="mt-6 grid gap-4 sm:grid-cols-2">
-            {addOns.map((addOn) => (
-              <div
-                key={addOn.key}
-                className="flex flex-col rounded-xl border border-line bg-surface p-5"
-              >
-                <div className="flex items-baseline justify-between gap-3">
-                  <span className="font-display text-lg text-paper">{addOn.name[lang]}</span>
-                  <span className="shrink-0 text-sm font-semibold text-accent-2">
-                    {addOn.price ? addOn.price[lang] : t.onRequest}
-                  </span>
-                </div>
-                <p className="mt-2 text-sm leading-relaxed text-mute">{addOn.description[lang]}</p>
-              </div>
-            ))}
-          </div>
-
-          <Link
-            to={persistentCtaHref}
-            className="mt-6 inline-block rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-ink transition hover:bg-accent-2"
-          >
-            {persistentCta[lang]}
-          </Link>
+        </details>
+        <div className="pricing-first-step">
+          <div><p className="eyebrow">{nl ? 'Liever klein beginnen?' : 'Prefer to start small?'}</p><h3>{nl ? 'Je hoeft het nog niet te weten.' : 'You don’t have to know yet.'}</h3><p>{nl ? 'We bekijken eerst waar je staat. Een gericht gesprek of leertraject kan ook, zonder meteen voor een maandpakket te kiezen.' : 'Let’s look at where you are first. A focused session or learning track is also an option, without choosing a monthly package.'}</p><Link className="button-dark" to="/contact">{nl ? 'Help me kiezen' : 'Help me choose'} <span aria-hidden="true">↗</span></Link></div>
+          <div className="pricing-alternatives">{addOns.map(addOn => <div key={addOn.key}><h4>{addOn.name[lang]}</h4><strong>{addOn.price?.[lang] ?? (nl ? 'Op aanvraag' : 'On request')}</strong><p>{addOn.description[lang]}</p></div>)}</div>
         </div>
-
-        <p className="mt-6 text-xs text-mute">{t.note}</p>
       </div>
     </section>
   )

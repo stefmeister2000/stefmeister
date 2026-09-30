@@ -130,9 +130,10 @@ const initialState: FormState = {
 interface QualificationFormProps {
   id?: string
   compact?: boolean
+  inquiryContext?: string
 }
 
-export default function QualificationForm({ id = 'audit-formulier', compact = false }: QualificationFormProps) {
+export default function QualificationForm({ id = 'audit-formulier', compact = false, inquiryContext }: QualificationFormProps) {
   const { lang } = useLang()
   const t = COPY[lang]
   const [values, setValues] = useState<FormState>(initialState)
@@ -190,6 +191,7 @@ export default function QualificationForm({ id = 'audit-formulier', compact = fa
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...values,
+          extra: [inquiryContext, values.extra].filter(Boolean).join('\n'),
           form_id: id,
           lang,
           company_website: honeypotRef.current, // honeypot — bots fill this

@@ -30,7 +30,7 @@ export function usePageMotion(route = '/') {
         })
       })
     }, { threshold: 0.12 })
-    root.querySelectorAll('.work-intro, .growth-goal, .project-tile, .revenue-copy, .revenue-proof, .revenue-principles > div, .marketing-intro, .marketing-card, .lyte-case-card, .service-page-visual, #agency > div > p, #agency h2, #agency .rounded-2xl').forEach(el => observer.observe(el))
+    root.querySelectorAll('.pricing-intro, .growth-plan, .work-intro, .growth-goal, .project-tile, .revenue-copy, .revenue-proof, .revenue-principles > div, .marketing-intro, .marketing-card, .lyte-case-card, .service-page-visual, #agency > div > p, #agency h2, #agency .rounded-2xl').forEach(el => observer.observe(el))
 
     // No perpetual render loop: update only while a mouse moves over an artwork.
     root.querySelectorAll<HTMLElement>('.hero-art, .project-tile, .lyte-case-card').forEach(el => {

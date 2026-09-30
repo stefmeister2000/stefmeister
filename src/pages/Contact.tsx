@@ -1,3 +1,6 @@
+import { useEffect, useState } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
+import { pricingTiers } from '../data/pricing'
 import Seo from '../components/Seo'
 import QualificationForm from '../components/QualificationForm'
 import { useLang } from '../i18n/LanguageContext'
@@ -24,6 +27,10 @@ const COPY = {
 export default function Contact() {
   const { lang } = useLang()
   const t = COPY[lang]
+  const [params] = useSearchParams()
+  const [ready, setReady] = useState(false)
+  useEffect(() => { setReady(true) }, [])
+  const selectedPackage = ready ? pricingTiers.find(tier => tier.key === params.get('pakket')) : undefined
 
   return (
     <div>
@@ -41,13 +48,14 @@ export default function Contact() {
 
           </div>
 
+          {selectedPackage && <div className="selected-package">{lang === 'nl' ? 'Je wilt meer weten over' : 'You’re interested in'} <strong>{selectedPackage.name[lang]}</strong>.<Link to="/#groeipakketten">{lang === 'nl' ? 'Pakketten bekijken' : 'View packages'}</Link></div>}
           <ol className="contact-next-steps">
             <li>{lang === 'nl' ? '01 · Jij deelt je doel en uitdaging.' : '01 · You share your goal and challenge.'}</li>
             <li>{lang === 'nl' ? '02 · We bespreken de kansen en prioriteiten.' : '02 · We discuss opportunities and priorities.'}</li>
             <li>{lang === 'nl' ? '03 · Je krijgt een voorstel met scope en budget.' : '03 · You receive a proposal with scope and budget.'}</li>
           </ol>
           <div className="mt-10">
-            <QualificationForm id="audit-formulier-contact" />
+            <QualificationForm id="audit-formulier-contact" inquiryContext={selectedPackage ? `Pakket: ${selectedPackage.name[lang]}` : undefined} />
           </div>
         </div>
       </section>
