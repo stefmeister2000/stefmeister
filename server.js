@@ -1,14 +1,19 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import express from 'express'
-import { readFileSync } from 'node:fs'
+import { readFileSync, existsSync } from 'node:fs'
+import { crmPayload, sendToCrm } from './server-crm.js'
 import { Resend } from 'resend'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const DIST = path.join(__dirname, 'dist')
+const envFile = path.join(__dirname, '.env')
+if (existsSync(envFile)) process.loadEnvFile(envFile)
 
 const {
   RESEND_API_KEY,
+  CRM_INBOUND_URL,
+  CRM_INBOUND_TOKEN,
   // Where lead notifications are delivered. Your Resend account email works with
   // any sending setup, including the onboarding test sender.
   LEAD_TO = 'stefkeppens@gmail.com',
@@ -151,7 +156,23 @@ app.post('/api/lead', async (req, res) => {
     }
     if (!isEmail(b.email)) return res.status(400).json({ error: 'invalid_email' })
 
-    // Every integration below is independent: a misconfigured "from" address
+    // When connected, CRM storage must succeed before confirming the enquiry.
+    // Email failure can never discard a successfully stored CRM lead.
+    let crmCaptured = false
+    if (CRM_INBOUND_URL || CRM_INBOUND_TOKEN) {
+      let payload
+      try { payload = crmPayload(b) }
+      catch { return res.status(400).json({ error: 'invalid_fields' }) }
+      try {
+        await sendToCrm(payload, { url: CRM_INBOUND_URL, token: CRM_INBOUND_TOKEN })
+        crmCaptured = true
+      } catch (error) {
+        console.error('[lead] CRM capture failed:', error.message)
+        return res.status(502).json({ error: 'crm_unavailable' })
+      }
+    }
+
+    // Every email integration below is independent: a misconfigured "from" address
     // or an expired token in one of them shouldn't fail the whole submission
     // as long as the lead lands somewhere. Only report failure to the visitor
     // if literally none of them captured it.
@@ -175,13 +196,13 @@ app.post('/api/lead', async (req, res) => {
       attempts.push({ label: 'resend_contact', run: saveContact(b) })
     }
 
-    if (attempts.length === 0) {
-      console.error('[lead] no integration configured (RESEND_API_KEY unset)')
+    if (attempts.length === 0 && !crmCaptured) {
+      console.error('[lead] no lead integration configured')
       return res.status(503).json({ error: 'not_configured' })
     }
 
     const results = await Promise.allSettled(attempts.map((a) => a.run))
-    const captured = []
+    const captured = crmCaptured ? ['crm'] : []
     results.forEach((r, i) => {
       if (r.status === 'fulfilled') captured.push(attempts[i].label)
       else console.error(`[lead] ${attempts[i].label} failed:`, r.reason.message)

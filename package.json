@@ -13,7 +13,8 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "start": "node server.js",
-    "test:seo": "node --test scripts/seo.test.mjs"
+    "test:seo": "node --test scripts/seo.test.mjs",
+    "test:crm": "node --test tests/crm.test.mjs"
   },
   "dependencies": {
     "express": "^5.2.1",
