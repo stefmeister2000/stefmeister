@@ -1,13 +1,15 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { persistentCta, persistentCtaHref } from '../data/nav'
 import { trackEvent } from '../lib/analytics'
 import { useLang } from '../i18n/LanguageContext'
 
 export default function StickyMobileCTA() {
   const { lang } = useLang()
+  const { pathname } = useLocation()
+  if (pathname === '/contact' || pathname === '/funnel-audit') return null
 
   return (
-    <div className="pb-safe fixed inset-x-0 bottom-0 z-40 border-t border-line bg-ink/95 p-3 backdrop-blur lg:hidden">
+    <div className="mobile-contact-bar pb-safe fixed inset-x-0 bottom-0 z-40 border-t border-line bg-ink/95 p-3 backdrop-blur lg:hidden">
       <Link
         to={persistentCtaHref}
         onClick={() => trackEvent('audit_cta_clicked', { placement: 'sticky_mobile' })}

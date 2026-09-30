@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { navItems, persistentCta, persistentCtaHref } from '../data/nav'
 import { trackEvent } from '../lib/analytics'
 import { useLang } from '../i18n/LanguageContext'
 
 export default function Nav() {
+  const menuButton = useRef<HTMLButtonElement>(null)
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const location = useLocation()
@@ -20,6 +21,18 @@ export default function Nav() {
   useEffect(() => {
     setOpen(false)
   }, [location])
+
+  useEffect(() => {
+    if (!open) return
+    const close = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') { setOpen(false); menuButton.current?.focus() }
+    }
+    const desktop = window.matchMedia('(min-width: 1024px)')
+    const resize = () => { if (desktop.matches) setOpen(false) }
+    window.addEventListener('keydown', close)
+    desktop.addEventListener('change', resize)
+    return () => { window.removeEventListener('keydown', close); desktop.removeEventListener('change', resize) }
+  }, [open])
 
   function isActive(href: string) {
     if (href.startsWith('/#')) return false
@@ -79,7 +92,9 @@ export default function Nav() {
         <div className="flex items-center gap-2 lg:hidden">
           <LangSwitch lang={lang} onToggle={toggleLang} />
           <button
-            aria-label="Menu"
+            ref={menuButton}
+            aria-controls="mobile-navigation"
+            aria-label={open ? (lang === 'nl' ? 'Menu sluiten' : 'Close menu') : (lang === 'nl' ? 'Menu openen' : 'Open menu')}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
             className="flex h-11 w-11 items-center justify-center rounded-full border border-line text-paper"
@@ -107,12 +122,13 @@ export default function Nav() {
       </div>
 
       {open && (
-        <div className="border-t border-line bg-ink px-5 pb-6 pt-2 lg:hidden">
+        <div id="mobile-navigation" className="mobile-navigation border-t border-line bg-ink px-5 pb-6 pt-2 lg:hidden">
           <nav className="flex flex-col gap-1">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 to={item.href}
+                onClick={() => setOpen(false)}
                 aria-current={isActive(item.href) ? 'page' : undefined}
                 className={`rounded-lg px-3 py-3 text-base transition hover:bg-surface hover:text-paper ${
                   isActive(item.href) ? 'bg-surface text-paper' : 'text-bone'

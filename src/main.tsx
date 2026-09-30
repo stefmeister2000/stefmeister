@@ -4,6 +4,7 @@ import './index.css'
 import './motion.css'
 import './pricing.css'
 import './pinacello.css'
+import './mobile.css'
 import App from './App.tsx'
 import { LanguageProvider } from './i18n/LanguageContext.tsx'
 

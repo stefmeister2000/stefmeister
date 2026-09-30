@@ -1,0 +1,84 @@
+/* Phone and tablet refinements, after the shared component styles. */
+.mobile-navigation { max-height: calc(100dvh - 80px); overflow-y: auto; overscroll-behavior: contain; padding-bottom: max(24px, env(safe-area-inset-bottom)); }
+@media (max-width: 1023px) {
+  .site-shell { padding-bottom: calc(92px + env(safe-area-inset-bottom)); }
+  .site-shell:has(.mobile-navigation) .mobile-contact-bar,
+  .site-shell:has(form:focus-within) .mobile-contact-bar,
+  .site-shell:has(form:focus-within) .back-to-top { display: none; }
+  .mobile-contact-bar { padding-inline: max(16px, env(safe-area-inset-left)); }
+  .mobile-contact-bar a { min-height: 48px; display: flex; align-items: center; justify-content: center; }
+  .back-to-top { bottom: calc(96px + env(safe-area-inset-bottom)); }
+  .studio-nav nav a { min-height: 46px; display: flex; align-items: center; }
+  .site-shell :is(section[id], div[id], fieldset) { scroll-margin-top: 100px; }
+  .input { scroll-margin-block: 110px; font-size: 16px; min-height: 48px; }
+}
+@media (max-width: 600px) {
+  .site-shell { margin: 0; padding-inline: 0; }
+  .studio-nav { border-radius: 0; padding-top: env(safe-area-inset-top); }
+  .studio-nav > div:first-child { padding: 12px 16px; gap: 8px; }
+  .studio-brand { gap: 7px; min-width: 0; }
+  .brand-name { font-size: 15px; }
+  .brand-name > span { font-size: 12px; }
+  .freeflow-brand-icon { width: 30px; height: 30px; }
+  .studio-hero .hero-copy { padding: 30px 20px 12px; }
+  .studio-hero .hero-copy h1 { font-size: clamp(34px,9vw,52px); line-height: 1.08; }
+  .studio-hero .hero-description { font-size: 16px; line-height: 1.7; }
+  .studio-hero .hero-actions { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 24px; }
+  .studio-hero .hero-actions > a { width: 100%; min-height: 50px; font-size: 14px; padding: 14px 18px; }
+  .hero-reassurance { font-size: 12px; }
+  .studio-hero .hero-disciplines { grid-template-columns: repeat(2,minmax(0,1fr)); display: grid; gap: 8px; margin-top: 24px; }
+  .studio-hero .hero-disciplines > a,
+  .studio-hero .hero-disciplines > a:first-child { padding: 12px; min-height: 62px; border: 1px solid #dce2f3; border-radius: 10px; background: #ffffff70; }
+  .hero-disciplines strong { font-size: 12px; }
+  .studio-hero .hero-art { aspect-ratio: auto; height: clamp(300px,90vw,430px); min-height: 0; }
+  .studio-hero .floating-strategy { width: 160px; right: 20px; bottom: 24px; padding: 16px; }
+  .studio-hero .floating-strategy p { font-size: 12px; }
+  .studio-hero .strategy-link { font-size: 11px; }
+  .studio-home .selected-work { grid-template-columns: minmax(0,1fr); padding: 36px 20px; gap: 22px; }
+  .project-image { aspect-ratio: 1.45; }
+  .project-caption { padding: 20px; }
+  .project-caption h3 { font-size: 20px; }
+  .project-caption p { font-size: 14px; line-height: 1.7; margin-top: 8px; }
+  .project-caption > span { font-size: 12px; margin-top: 12px; }
+  .work-intro > p:not(.eyebrow) { font-size: 15px; }
+  .studio-home :is(.growth-goals,.marketing-services,.revenue-case) { padding: 36px 20px; }
+  .studio-home > section > div.max-w-6xl { padding: 40px 20px; }
+  .studio-home h2 { font-size: clamp(28px,7.5vw,36px); }
+  .growth-goal { padding: 22px; }
+  .growth-goal p,.marketing-card-copy > p { font-size: 15px; }
+  .goal-link,.service-more { font-size: 14px; }
+  .marketing-support a { min-height: 44px; display: inline-flex; align-items: center; }
+  .service-visual { padding-inline: 16px; }
+  .revenue-copy > p:not(.eyebrow),.revenue-principles p { font-size: 14px; line-height: 1.8; }
+  .revenue-proof { min-width: 0; }
+  .lyte-case-copy { padding: 22px; }
+  .lyte-case-heading { flex-wrap: wrap; gap: 10px; }
+  .lyte-credit { flex-wrap: wrap; }
+  .pricing-wrap { padding: 46px 20px; }
+  .plan-outcome,.plan-audience,.plan-includes li { font-size: 14px; }
+  .plan-cta { min-height: 50px; font-size: 14px; }
+  .plan-cta-note { font-size: 12px; }
+  .pricing-table-scroll { scrollbar-width: thin; }
+  .pricing-comparison summary { min-height: 60px; }
+  .pricing-first-step .button-dark { min-height: 48px; }
+  form { min-width: 0; }
+  div:has(> form) { padding: 22px 16px; }
+  .goal-option-description { font-size: 12px; }
+  .goal-option-body { min-height: 74px; }
+  .contact-next-steps { padding: 18px; font-size: 13px; line-height: 1.7; }
+  .selected-package a { margin: 8px 0 0; display: block; min-height: 32px; }
+  .pina-step p,.pina-step a { font-size: 14px; }
+  .pina-video-frame video { max-height: 65svh; }
+  .pina-showcase figcaption a,.pina-case-cta a { min-height: 44px; }
+  .pina-case-cta > div { flex-direction: column; gap: 12px; }
+  .pina-case-cta .button-dark { width: 100%; justify-content: center; }
+  .site-shell footer a { min-height: 44px; display: inline-flex; align-items: center; overflow-wrap: anywhere; }
+}
+@media (max-width: 359px) {
+  .studio-nav > div:first-child { padding-inline: 12px; }
+  .studio-brand { gap: 5px; }
+  .brand-name { font-size: 13px; }
+  .studio-nav button[aria-label='Switch language'] { padding-inline: 5px; }
+  .growth-plan { padding: 22px 18px; }
+  .pina-case-heading h1 { font-size: 42px; }
+}

@@ -218,6 +218,8 @@ export default function QualificationForm({ id = 'audit-formulier', compact = fa
           <input
             id="email"
             type="email"
+            autoCapitalize="none"
+            spellCheck={false}
             autoComplete="email"
             className="input"
             value={values.email}
@@ -237,6 +239,9 @@ export default function QualificationForm({ id = 'audit-formulier', compact = fa
         <Field label={t.labels.website} error={errors.website} htmlFor="website">
           <input
             id="website"
+            inputMode="url"
+            autoCapitalize="none"
+            spellCheck={false}
             placeholder="https://"
             className="input"
             value={values.website}
