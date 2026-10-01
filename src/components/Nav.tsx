@@ -1,3 +1,4 @@
+import BrandMark from './BrandMark'
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { navItems, persistentCta, persistentCtaHref } from '../data/nav'
@@ -55,7 +56,7 @@ export default function Nav() {
           className="studio-brand"
           aria-label="verkoop.studio — Home"
         >
-          <img src="/favicon.svg?v=verkoop-2" className="verkoop-brand-icon" alt="" width="34" height="34" />
+          <BrandMark />
           <span className="brand-name">
             verkoop<span>.studio</span>
           </span>

@@ -1,3 +1,4 @@
+import BrandMark from './BrandMark'
 import { Link } from 'react-router-dom'
 import { navItems, persistentCta, persistentCtaHref } from '../data/nav'
 import { services } from '../data/services'
@@ -29,7 +30,7 @@ export default function Footer() {
       <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <Link to="/" className="studio-brand" aria-label="verkoop.studio — Home"><img src="/favicon.svg?v=verkoop-2" className="verkoop-brand-icon" alt="" width="34" height="34" /><span className="font-display text-lg text-paper">verkoop.studio</span></Link>
+            <Link to="/" className="studio-brand" aria-label="verkoop.studio — Home"><BrandMark /><span className="font-display text-lg text-paper">verkoop.studio</span></Link>
             <p className="mt-2 text-sm text-mute">Lochristi, België</p>
             <p className="mt-3 max-w-xs text-sm text-mute">{t.tagline}</p>
           </div>
