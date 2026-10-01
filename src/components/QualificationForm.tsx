@@ -39,7 +39,7 @@ const COPY = {
     submit: 'Verstuur je aanvraag',
     doneTitle: 'Bedankt.',
     doneBody:
-      'We bekijken jullie website en commerciële klantreis persoonlijk en nemen contact op met de beste volgende stap.',
+      'Je aanvraag is goed ontvangen. We contacteren je binnen 24 uur via e-mail of telefoon om je doelen en de volgende stap te bespreken.',
     errorNote:
       'Er ging iets mis bij het versturen. Probeer het opnieuw of mail rechtstreeks naar stefkeppens@gmail.com.',
   },
@@ -69,7 +69,7 @@ const COPY = {
     submitting: 'One moment…',
     submit: 'Send your enquiry',
     doneTitle: 'Thank you.',
-    doneBody: 'We’ll personally review your website and commercial customer journey and reach out with the best next step.',
+    doneBody: 'Your request has been received. We’ll contact you within 24 hours by email or phone to discuss your goals and the next step.',
     errorNote:
       'Something went wrong while sending. Please try again or email directly at stefkeppens@gmail.com.',
   },

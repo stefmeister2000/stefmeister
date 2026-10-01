@@ -4,6 +4,7 @@ import express from 'express'
 import { readFileSync, existsSync } from 'node:fs'
 import { crmPayload, sendToCrm } from './server-crm.js'
 import { Resend } from 'resend'
+import { sendConfirmation } from './server-confirmation.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const DIST = path.join(__dirname, 'dist')
@@ -97,38 +98,6 @@ function leadHtml(b) {
   </div>`
 }
 
-// Confirmation ("thank you") email sent to the person who submitted the form.
-// Bilingual — matches the visitor's language (b.lang), defaults to Dutch.
-function confirmationEmail(b) {
-  const firstName = esc(splitName(b.naam).firstName || b.naam)
-  const wrap = (inner) =>
-    `<div style="font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:560px;margin:0 auto;color:#1a1a1a;line-height:1.6">${inner}</div>`
-
-  if (b.lang === 'en') {
-    return {
-      subject: 'Thanks for your request — Stef Keppens',
-      html: wrap(`
-        <p>Hi ${firstName},</p>
-        <p>Thanks for your request. I've received your details and will personally review your
-        website and commercial customer journey.</p>
-        <p>I'll get back to you soon with the best next step.</p>
-        <p>Talk soon,<br><strong>Stef Keppens</strong><br>
-        <span style="color:#8a8577">Digital Growth &amp; Conversion Specialist</span></p>`),
-    }
-  }
-
-  return {
-    subject: 'Bedankt voor je aanvraag — Stef Keppens',
-    html: wrap(`
-      <p>Hoi ${firstName},</p>
-      <p>Bedankt voor je aanvraag. Ik heb je gegevens goed ontvangen en bekijk jullie website en
-      commerciële klantreis persoonlijk.</p>
-      <p>Ik neem binnenkort contact op met de beste volgende stap.</p>
-      <p>Tot snel,<br><strong>Stef Keppens</strong><br>
-      <span style="color:#8a8577">Digital Growth &amp; Conversion Specialist</span></p>`),
-  }
-}
-
 // Save the lead as a Resend contact (incl. phone). Best-effort: never blocks the
 // form. Requires a full-access api key — send-only keys return 401 here.
 async function saveContact(b) {
@@ -214,16 +183,12 @@ app.post('/api/lead', async (req, res) => {
     // Send the submitter an instant confirmation ("thank you") email. Uses the
     // verified domain, so it delivers to any address. Best-effort.
     if (resend) {
-      const { subject, html } = confirmationEmail(b)
-      resend.emails
-        .send({
-          from: LEAD_REPLY_FROM || SENDER,
-          to: [b.email],
-          replyTo: LEAD_TO,
-          subject,
-          html,
-        })
-        .catch((err) => console.error('[lead] confirmation email failed:', err.message))
+      try {
+        await sendConfirmation(resend, b, {from: LEAD_REPLY_FROM || SENDER, replyTo: LEAD_TO})
+        captured.push('resend_confirmation')
+      } catch (error) {
+        console.error('[lead] confirmation email failed:', error.message)
+      }
     }
 
     return res.json({ ok: true, captured })
