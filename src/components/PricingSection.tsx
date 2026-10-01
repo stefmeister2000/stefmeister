@@ -28,7 +28,7 @@ export default function PricingSection() {
     <section id="groeipakketten" className="growth-pricing" aria-labelledby="pricing-title">
       <div className="pricing-wrap">
         <header className="pricing-intro">
-          <p className="eyebrow">{nl ? 'Samenwerken met Freeflow' : 'Working with Freeflow'}</p>
+          <p className="eyebrow">{nl ? 'Samenwerken met verkoop.studio' : 'Working with verkoop.studio'}</p>
           <h2 id="pricing-title">{nl ? 'De juiste basis.' : 'The right foundation.'}<br /><span>{nl ? 'De ruimte om te groeien.' : 'Room to grow.'}</span></h2>
           <p>{nl ? 'Meer grip op je marketing of een team dat mee de uitvoering draagt? Kies de samenwerking die past bij je doelen en wat je intern al kunt.' : 'More clarity in your marketing, or a team to help deliver it? Choose the collaboration that fits your goals and in-house capabilities.'}</p>
         </header>

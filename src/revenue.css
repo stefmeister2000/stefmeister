@@ -697,7 +697,7 @@
   .service-visual { padding-left: 18px; padding-right: 18px; min-height: 265px; }
 }
 @media (prefers-reduced-motion: reduce) { .marketing-card { transition: none; } }
-.freeflow-brand-icon { display: block; flex-shrink: 0; border-radius: 9px; }
+.verkoop-brand-icon { display: block; flex-shrink: 0; border-radius: 9px; }
 .lyte-case-card { display: block; overflow: hidden; border: 1px solid #dfe4ef; border-radius: 20px; background: #fff; transition: box-shadow .2s, border-color .2s; }
 .lyte-case-card:hover { border-color: #a2b2f5; box-shadow: 0 15px 40px #20377a12; }
 .lyte-case-cover { position: relative; aspect-ratio: 3 / 2; overflow: hidden; background: #edf0f8; }

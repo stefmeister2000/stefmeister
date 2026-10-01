@@ -16,7 +16,7 @@ export function crmPayload(body) {
     contactName: text(body.naam),
     email: text(body.email).toLowerCase(),
     phone: text(body.telefoon),
-    campaign: 'Stefmeister website',
+    campaign: 'verkoop.studio website',
     notes: fields.filter(([, value]) => text(value)).map(([label, value]) => `${label}: ${text(value)}`).join('\n'),
   }
   if (text(body.website)) payload.website = text(body.website)

@@ -9,7 +9,7 @@ export default function AboutStef({ standalone = false }: { standalone?: boolean
     <section id="agency" className="border-b border-line bg-surface/40">
       <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
         <p className="text-xs uppercase tracking-widest text-accent-2">
-          Freeflow Studio · Lochristi
+          verkoop.studio · Lochristi
         </p>
         <Heading className="mt-4 max-w-3xl font-display text-4xl text-paper sm:text-5xl">
           {nl

@@ -29,7 +29,7 @@ export default function Footer() {
       <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <p className="font-display text-lg text-paper">Freeflow Studio</p>
+            <Link to="/" className="studio-brand" aria-label="verkoop.studio — Home"><img src="/favicon.svg?v=verkoop-1" className="verkoop-brand-icon" alt="" width="34" height="34" /><span className="font-display text-lg text-paper">verkoop.studio</span></Link>
             <p className="mt-2 text-sm text-mute">Lochristi, België</p>
             <p className="mt-3 max-w-xs text-sm text-mute">{t.tagline}</p>
           </div>
@@ -78,7 +78,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col gap-2 border-t border-line pt-6 text-xs text-mute sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} Freeflow Studio</p>
+          <p>© {new Date().getFullYear()} verkoop.studio</p>
           <p>{t.disclaimer}</p>
         </div>
       </div>

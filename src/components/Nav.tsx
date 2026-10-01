@@ -53,11 +53,11 @@ export default function Nav() {
         <Link
           to="/"
           className="studio-brand"
-          aria-label="Freeflow Studio — Home"
+          aria-label="verkoop.studio — Home"
         >
-          <img src="/favicon.svg?v=freeflow-2" className="freeflow-brand-icon" alt="" width="34" height="34" />
+          <img src="/favicon.svg?v=verkoop-1" className="verkoop-brand-icon" alt="" width="34" height="34" />
           <span className="brand-name">
-            Freeflow <span>Studio</span>
+            verkoop<span>.studio</span>
           </span>
         </Link>
 

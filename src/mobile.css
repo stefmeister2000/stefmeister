@@ -19,7 +19,7 @@
   .studio-brand { gap: 7px; min-width: 0; }
   .brand-name { font-size: 15px; }
   .brand-name > span { font-size: 12px; }
-  .freeflow-brand-icon { width: 30px; height: 30px; }
+  .verkoop-brand-icon { width: 30px; height: 30px; }
   .studio-hero .hero-copy { padding: 30px 20px 12px; }
   .studio-hero .hero-copy h1 { font-size: clamp(34px,9vw,52px); line-height: 1.08; }
   .studio-hero .hero-description { font-size: 16px; line-height: 1.7; }
