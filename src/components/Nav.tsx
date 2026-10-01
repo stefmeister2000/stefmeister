@@ -55,7 +55,7 @@ export default function Nav() {
           className="studio-brand"
           aria-label="verkoop.studio — Home"
         >
-          <img src="/favicon.svg?v=verkoop-1" className="verkoop-brand-icon" alt="" width="34" height="34" />
+          <img src="/favicon.svg?v=verkoop-2" className="verkoop-brand-icon" alt="" width="34" height="34" />
           <span className="brand-name">
             verkoop<span>.studio</span>
           </span>
