@@ -1,0 +1,32 @@
+NIEUWE GROEIANALYSE — {{{BEDRIJF}}}
+Aanvraag van {{{NAAM}}}
+
+Beantwoord deze e-mail rechtstreeks om de aanvrager te contacteren.
+
+CONTACTGEGEVENS
+Naam: {{{NAAM}}}
+Bedrijf: {{{BEDRIJF}}}
+E-mailadres: {{{LEAD_EMAIL}}}
+Telefoon: {{{TELEFOON}}}
+Website: {{{WEBSITE}}}
+
+WAAR KUNNEN WE HELPEN?
+Belangrijkste doel:
+{{{DOEL}}}
+
+Grootste uitdaging:
+{{{UITDAGING}}}
+
+BUDGET & PLANNING
+Maandelijkse investering: {{{INVESTERING}}}
+Gewenste timing: {{{TIMING}}}
+Huidige kanalen: {{{KANALEN}}}
+
+EXTRA INFORMATIE
+{{{EXTRA}}}
+
+HERKOMST
+Formulier: {{{FORM_ID}}}
+{{{ATTRIBUTION}}}
+
+verkoop.studio · Interne aanvraagmelding

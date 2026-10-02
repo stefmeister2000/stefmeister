@@ -1,6 +1,8 @@
 import { enquiryTemplate } from './server-templates.js'
 import { createHash } from 'node:crypto'
 
+export const WEBSITE_ENQUIRY_SEGMENT = 'd6c1a8b8-b0a0-4ea8-af19-e93f4b07800d'
+
 const pause = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 // SDK errors are returned as values. Retry only temporary failures.
@@ -35,7 +37,7 @@ export async function saveLeadContact(resend, body, request = resendRequest) {
   }
   const [firstName, ...rest] = body.naam.trim().split(/\s+/)
   try {
-    // Do not make storage depend on account-specific custom properties/segments.
+    // Segment assignment is handled separately after contact storage succeeds.
     return await request(() => resend.contacts.create({ email, firstName, lastName: rest.join(' ') }))
   } catch (error) {
     // Another simultaneous submission may have created this email already.
@@ -44,11 +46,16 @@ export async function saveLeadContact(resend, body, request = resendRequest) {
   }
 }
 
-export async function captureLead({ resend, body, from, to = 'stefkeppens@gmail.com', crm, request = resendRequest }) {
+export async function captureLead({ resend, body, from, to = 'stefkeppens@gmail.com', crm, request = resendRequest, segmentId = WEBSITE_ENQUIRY_SEGMENT }) {
   if (!resend) return { ok: false, status: 503, captured: [], failed: ['resend_not_configured'] }
   const key = leadKey(body)
+  let contact
   const tasks = [
-    ['resend_contact', () => saveLeadContact(resend, body, request)],
+    ['resend_contact', async () => { contact = await saveLeadContact(resend, body, request) }],
+    ['resend_segment', async () => {
+      if (!contact?.id) throw new Error('Contact must be stored before segment assignment')
+      return request(() => resend.contacts.segments.add({ contactId: contact.id, segmentId }))
+    }],
     ['resend_email', () => request(() => resend.emails.send({
       from, to: [...new Set(['stefkeppens@gmail.com', to].filter(Boolean))], replyTo: body.email,
       subject: `Nieuwe groeianalyse-aanvraag — ${String(body.bedrijf || body.naam).replace(/[\r\n]/g, ' ').slice(0, 80)}`,
@@ -62,6 +69,6 @@ export async function captureLead({ resend, body, from, to = 'stefkeppens@gmail.
     try { await run(); captured.push(label) }
     catch { failed.push(label) }
   }
-  const ok = captured.includes('resend_contact') && captured.includes('resend_email') && !failed.includes('crm')
+  const ok = captured.includes('resend_contact') && captured.includes('resend_segment') && captured.includes('resend_email') && !failed.includes('crm')
   return { ok, status: ok ? 200 : 502, captured, failed, key }
 }

@@ -1,16 +1,16 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { captureLead, resendRequest, leadKey } from '../server-lead.js'
+import { captureLead, resendRequest, leadKey, WEBSITE_ENQUIRY_SEGMENT } from '../server-lead.js'
 const ok = {data:{id:'receipt'},error:null}
 const failure = {data:null,error:{name:'validation_error',statusCode:422}}
 const body = {naam:'Test Aanvraag',email:'test@example.com',submission_id:'test-1'}
 function fixture() {
-  const sent = [], created = []
+  const sent = [], created = [], segments = []
   const resend = {
-    contacts:{get:async()=>({error:{statusCode:404}}),create:async p=>{created.push(p);return ok}},
+    contacts:{segments:{add:async p=>{segments.push(p);return ok}},get:async()=>({error:{statusCode:404}}),create:async p=>{created.push(p);return ok}},
     emails:{send:async(p,o)=>{sent.push({p,o});return ok}},
   }
-  return {resend,sent,created}
+  return {resend,sent,created,segments}
 }
 const run = (f, more={})=>captureLead({resend:f.resend,body,from:'test@example.com',html:'Test',...more})
 test('requires contact storage and notification to requested inbox',async()=>{
@@ -18,6 +18,7 @@ test('requires contact storage and notification to requested inbox',async()=>{
  assert.equal(result.ok,true); assert.equal(f.created[0].email,body.email)
  assert.deepEqual(f.sent[0].p.to,['stefkeppens@gmail.com'])
  assert.equal(f.sent[0].p.replyTo,body.email)
+ assert.deepEqual(f.segments,[{contactId:'receipt',segmentId:WEBSITE_ENQUIRY_SEGMENT}])
 })
 test('contact failure still attempts notification but never reports success',async()=>{
  const f=fixture(); f.resend.contacts.create=async()=>failure
@@ -25,15 +26,16 @@ test('contact failure still attempts notification but never reports success',asy
 })
 test('email failure never reports success even when CRM and contact succeed',async()=>{
  const f=fixture();f.resend.emails.send=async()=>failure
- const r=await run(f,{crm:async()=>{}});assert.equal(r.ok,false);assert.deepEqual(r.captured,['resend_contact','crm'])
+ const r=await run(f,{crm:async()=>{}});assert.equal(r.ok,false);assert.deepEqual(r.captured,['resend_contact','resend_segment','crm'])
 })
 test('CRM failure does not prevent either Resend operation',async()=>{
  const f=fixture();const r=await run(f,{crm:async()=>{throw Error('down')}})
- assert.equal(r.ok,false);assert.deepEqual(r.captured,['resend_contact','resend_email'])
+ assert.equal(r.ok,false);assert.deepEqual(r.captured,['resend_contact','resend_segment','resend_email'])
 })
 test('existing contact retains subscription state without a create or update',async()=>{
  const f=fixture();f.resend.contacts.get=async()=>({data:{id:'existing',unsubscribed:true}})
  assert.equal((await run(f)).ok,true);assert.equal(f.created.length,0)
+ assert.deepEqual(f.segments,[{contactId:'existing',segmentId:WEBSITE_ENQUIRY_SEGMENT}])
 })
 test('retries transient failures and reuses notification key across submissions',async()=>{
  let count=0;await resendRequest(async()=>++count<3?{error:{statusCode:429}}:ok,async()=>{})
@@ -48,4 +50,19 @@ test('permanent errors are not retried and missing receipts fail',async()=>{
 })
 test('no key cannot report success through CRM alone',async()=>{
  const r=await captureLead({resend:null,body,crm:async()=>{}});assert.equal(r.status,503)
+})
+
+test('segment failure still sends notification but does not report a complete capture',async()=>{
+ const f=fixture();f.resend.contacts.segments.add=async()=>failure
+ const result=await run(f)
+ assert.equal(result.ok,false);assert.deepEqual(result.failed,['resend_segment']);assert.equal(f.sent.length,1)
+})
+test('retry after failed segment reuses existing contact and email idempotency key',async()=>{
+ const f=fixture();let attempts=0
+ f.resend.contacts.get=async()=>({data:{id:'existing',unsubscribed:true}})
+ f.resend.contacts.segments.add=async()=>++attempts===1?failure:ok
+ assert.equal((await run(f)).ok,false)
+ assert.equal((await run(f)).ok,true)
+ assert.equal(f.created.length,0)
+ assert.equal(f.sent[0].o.idempotencyKey,f.sent[1].o.idempotencyKey)
 })
