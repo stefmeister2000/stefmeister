@@ -77,3 +77,24 @@ test('production server returns route HTML, permanent redirects and real 404s', 
     await once(server, 'exit')
   }
 })
+
+
+test('FAQ answers exist in initial HTML and service sections use headings', async () => {
+  const { faqItems } = await import('../dist-ssr/entry-server.js')
+  const home = await readFile('dist/index.html', 'utf8')
+  const details = [...home.matchAll(/<details\b[^>]*name="studio-faq"[^>]*>([\s\S]*?)<\/details>/g)]
+  assert.equal(details.length, faqItems.length)
+  for (const [index, detail] of details.entries()) {
+    assert.match(detail[1], /<summary[\s>]/)
+    assert.match(detail[1], /<p[\s>]/)
+    const escaped = faqItems[index].answer.nl.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll("'", '&#x27;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
+    assert(detail[1].includes(escaped), faqItems[index].question.nl)
+  }
+  const service = await readFile('dist/google-ads/index.html', 'utf8')
+  for (const heading of ['Het probleem', 'Aanpak', 'Opleverpunten']) assert.match(service, new RegExp(`<h2[^>]*>${heading}</h2>`))
+  const agency = await readFile('dist/agency/index.html', 'utf8')
+  const graph = JSON.parse(agency.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1])['@graph']
+  const person = graph.find(item => item['@type'] === 'Person')
+  assert.equal(person.name, 'Stef Keppens')
+  assert.equal(graph.find(item => item['@type'] === 'WebPage').mainEntity['@id'], person['@id'])
+})

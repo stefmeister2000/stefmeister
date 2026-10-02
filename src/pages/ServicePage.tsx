@@ -87,9 +87,9 @@ export default function ServicePage({ slug }: { slug: ServiceSlug }) {
 
       <section className="border-b border-line bg-surface/30">
         <div className="mx-auto max-w-4xl px-5 py-16 sm:px-8 sm:py-20">
-          <p className="text-sm font-semibold uppercase tracking-widest text-accent-2">
+          <h2 className="text-sm font-semibold uppercase tracking-widest text-accent-2">
             {t.problemLabel}
-          </p>
+          </h2>
           <p className="mt-4 max-w-2xl font-display text-2xl text-paper text-balance">
             {service.problem[lang]}
           </p>
@@ -98,9 +98,9 @@ export default function ServicePage({ slug }: { slug: ServiceSlug }) {
 
       <section className="border-b border-line">
         <div className="mx-auto max-w-4xl px-5 py-16 sm:px-8 sm:py-20">
-          <p className="text-sm font-semibold uppercase tracking-widest text-accent-2">
+          <h2 className="text-sm font-semibold uppercase tracking-widest text-accent-2">
             {t.approachLabel}
-          </p>
+          </h2>
           <div className="mt-6 space-y-5">
             {service.process[lang].map((step, i) => (
               <div key={step} className="flex gap-5">
@@ -116,9 +116,9 @@ export default function ServicePage({ slug }: { slug: ServiceSlug }) {
 
       <section className="border-b border-line bg-surface/30">
         <div className="mx-auto max-w-4xl px-5 py-16 sm:px-8 sm:py-20">
-          <p className="text-sm font-semibold uppercase tracking-widest text-accent-2">
+          <h2 className="text-sm font-semibold uppercase tracking-widest text-accent-2">
             {t.deliverablesLabel}
-          </p>
+          </h2>
           <p className="mt-4 max-w-2xl text-bone">
             {service.deliverables[lang].join(' · ')}
           </p>
