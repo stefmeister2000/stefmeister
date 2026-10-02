@@ -200,7 +200,7 @@ export default function QualificationForm({ id = 'audit-formulier', compact = fa
   return (
     <div ref={ref} id={id} className="rounded-2xl border border-line bg-surface p-6 reveal sm:p-10">
       <form onSubmit={handleSubmit} noValidate className="grid gap-5 sm:grid-cols-2">
-        <Field label={t.labels.naam} error={errors.naam} htmlFor="naam">
+        <Field label={t.labels.naam} error={errors.naam ? t.errors.naam : undefined} htmlFor="naam">
           <input
             id="naam"
             autoComplete="name"
@@ -218,7 +218,7 @@ export default function QualificationForm({ id = 'audit-formulier', compact = fa
             onChange={(e) => update('bedrijf', e.target.value)}
           />
         </Field>
-        <Field label={t.labels.email} error={errors.email} htmlFor="email">
+        <Field label={t.labels.email} error={errors.email ? t.errors.email : undefined} htmlFor="email">
           <input
             id="email"
             type="email"
@@ -230,7 +230,7 @@ export default function QualificationForm({ id = 'audit-formulier', compact = fa
             onChange={(e) => update('email', e.target.value)}
           />
         </Field>
-        <Field label={t.labels.telefoon} error={errors.telefoon} htmlFor="telefoon">
+        <Field label={t.labels.telefoon} error={errors.telefoon ? t.errors.telefoon : undefined} htmlFor="telefoon">
           <input
             id="telefoon"
             type="tel"
@@ -265,7 +265,7 @@ export default function QualificationForm({ id = 'audit-formulier', compact = fa
           </div>
           {errors.doel && <p id={`${id}-goal-error`} className="mt-2 text-sm text-accent-2" role="alert">{t.errors.doel}</p>}
         </fieldset>
-        <Field label={t.labels.uitdaging} error={errors.uitdaging} htmlFor="uitdaging" full>
+        <Field label={t.labels.uitdaging} error={errors.uitdaging ? t.errors.uitdaging : undefined} htmlFor="uitdaging" full>
           <textarea
             id="uitdaging"
             rows={3}
