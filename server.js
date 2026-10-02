@@ -5,6 +5,7 @@ import { readFileSync, existsSync } from 'node:fs'
 import { crmPayload, sendToCrm } from './server-crm.js'
 import { Resend } from 'resend'
 import { sendConfirmation } from './server-confirmation.js'
+import { captureLead } from './server-lead.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const DIST = path.join(__dirname, 'dist')
@@ -18,24 +19,20 @@ const {
   // Where lead notifications are delivered. Your Resend account email works with
   // any sending setup, including the onboarding test sender.
   LEAD_TO = 'stefkeppens@gmail.com',
-  // "From" address for the notification. Uses the verified stefmeister.com
+  // "From" address for the notification. Uses the verified send.verkoop.studio
   // domain so notifications deliver to any inbox (e.g. stefkeppens@gmail.com).
-  LEAD_FROM = 'Stef Keppens website <noreply@stefmeister.com>',
+  LEAD_FROM = 'Verkoop Studio <noreply@send.verkoop.studio>',
   // Optional override for the confirmation ("thank you") sender. Defaults to
   // the verified domain sender below.
   LEAD_REPLY_FROM, // e.g. "Stef Keppens <stef@stefkeppens.be>"
-  // Segment that new contacts are added to. Requires a FULL-ACCESS api key
-  // (send-only keys cannot write contacts). Defaults to the "Website leads"
-  // segment created for this account.
-  LEAD_SEGMENT_ID = 'd7334c7f-8e7c-4822-aa56-29d6c1a2c5d8',
 } = process.env
 
 const resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : null
 
-// stefmeister.com is verified in Resend, so always send from it. This also
+// send.verkoop.studio is verified in Resend, so always send from it. This also
 // overrides any stale LEAD_FROM (e.g. the onboarding test sender) that can't
 // deliver to external inboxes like stefkeppens@gmail.com.
-const VERIFIED_SENDER = 'Stef Keppens website <noreply@stefmeister.com>'
+const VERIFIED_SENDER = 'Verkoop Studio <noreply@send.verkoop.studio>'
 const SENDER = /onboarding@resend\.dev/i.test(LEAD_FROM) ? VERIFIED_SENDER : LEAD_FROM
 
 const app = express()
@@ -45,11 +42,6 @@ app.use(express.static(DIST, { redirect: false, index: false }))
 const ESC = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }
 const esc = (s = '') => String(s).replace(/[&<>"']/g, (c) => ESC[c])
 const isEmail = (s) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(s || ''))
-
-function splitName(full = '') {
-  const parts = String(full).trim().split(/\s+/)
-  return { firstName: parts.shift() || '', lastName: parts.join(' ') }
-}
 
 function leadHtml(b) {
   const rows = [
@@ -98,21 +90,6 @@ function leadHtml(b) {
   </div>`
 }
 
-// Save the lead as a Resend contact (incl. phone). Best-effort: never blocks the
-// form. Requires a full-access api key — send-only keys return 401 here.
-async function saveContact(b) {
-  const { firstName, lastName } = splitName(b.naam)
-  const properties = {}
-  if (b.telefoon) properties.phone = String(b.telefoon)
-  if (b.bedrijf) properties.company = String(b.bedrijf)
-
-  const payload = { email: b.email, firstName, lastName, properties }
-  if (LEAD_SEGMENT_ID) payload.segments = [{ id: LEAD_SEGMENT_ID }]
-
-  const { error } = await resend.contacts.create(payload)
-  if (error) throw new Error(`${error.name}: ${error.message}`)
-}
-
 app.post('/api/lead', async (req, res) => {
   try {
     const b = req.body || {}
@@ -125,66 +102,27 @@ app.post('/api/lead', async (req, res) => {
     }
     if (!isEmail(b.email)) return res.status(400).json({ error: 'invalid_email' })
 
-    // When connected, CRM storage must succeed before confirming the enquiry.
-    // Email failure can never discard a successfully stored CRM lead.
-    let crmCaptured = false
-    if (CRM_INBOUND_URL || CRM_INBOUND_TOKEN) {
-      let payload
-      try { payload = crmPayload(b) }
-      catch { return res.status(400).json({ error: 'invalid_fields' }) }
-      try {
-        await sendToCrm(payload, { url: CRM_INBOUND_URL, token: CRM_INBOUND_TOKEN })
-        crmCaptured = true
-      } catch (error) {
-        console.error('[lead] CRM capture failed:', error.message)
-        return res.status(502).json({ error: 'crm_unavailable' })
-      }
-    }
-
-    // Every email integration below is independent: a misconfigured "from" address
-    // or an expired token in one of them shouldn't fail the whole submission
-    // as long as the lead lands somewhere. Only report failure to the visitor
-    // if literally none of them captured it.
-    const attempts = []
-
-    if (resend) {
-      attempts.push({
-        label: 'resend_email',
-        run: resend.emails
-          .send({
-            from: SENDER,
-            to: [LEAD_TO],
-            replyTo: b.email,
-            subject: `Nieuwe groeianalyse-aanvraag — ${String(b.bedrijf || b.naam).slice(0, 80)}`,
-            html: leadHtml(b),
-          })
-          .then(({ error }) => {
-            if (error) throw new Error(`${error.name}: ${error.message}`)
-          }),
-      })
-      attempts.push({ label: 'resend_contact', run: saveContact(b) })
-    }
-
-    if (attempts.length === 0 && !crmCaptured) {
-      console.error('[lead] no lead integration configured')
-      return res.status(503).json({ error: 'not_configured' })
-    }
-
-    const results = await Promise.allSettled(attempts.map((a) => a.run))
-    const captured = crmCaptured ? ['crm'] : []
-    results.forEach((r, i) => {
-      if (r.status === 'fulfilled') captured.push(attempts[i].label)
-      else console.error(`[lead] ${attempts[i].label} failed:`, r.reason.message)
+    b.email = String(b.email).trim().toLowerCase()
+    let payload
+    try { payload = crmPayload(b) }
+    catch { return res.status(400).json({ error: 'invalid_fields' }) }
+    const result = await captureLead({
+      resend, body: b, from: SENDER, to: LEAD_TO, html: leadHtml(b),
+      crm: CRM_INBOUND_URL || CRM_INBOUND_TOKEN
+        ? () => sendToCrm(payload, { url: CRM_INBOUND_URL, token: CRM_INBOUND_TOKEN })
+        : undefined,
     })
-    if (captured.length === 0) {
-      return res.status(502).json({ error: 'send_failed' })
+    if (!result.ok) {
+      console.error('[lead] capture incomplete:', result.failed.join(', '))
+      return res.status(result.status).json({ ok: false, error: 'capture_incomplete' })
     }
+    const captured = result.captured
 
     // Send the submitter an instant confirmation ("thank you") email. Uses the
     // verified domain, so it delivers to any address. Best-effort.
     if (resend) {
       try {
-        await sendConfirmation(resend, b, {from: LEAD_REPLY_FROM || SENDER, replyTo: LEAD_TO})
+        await sendConfirmation(resend, b, {from: LEAD_REPLY_FROM || SENDER, replyTo: LEAD_TO, idempotencyKey: `lead-confirmation/${result.key}`})
         captured.push('resend_confirmation')
       } catch (error) {
         console.error('[lead] confirmation email failed:', error.message)

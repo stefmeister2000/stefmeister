@@ -44,8 +44,8 @@ ${details.length ? `<table role="presentation" width="100%" cellpadding="0" cell
 }
 
 // Resend returns API errors as values, not only rejected promises.
-export async function sendConfirmation(resend, form, {from, replyTo}) {
-  const result = await resend.emails.send({from, to:[form.email], replyTo, ...confirmationEmail(form)})
+export async function sendConfirmation(resend, form, {from, replyTo, idempotencyKey}) {
+  const result = await resend.emails.send({from, to:[form.email], replyTo, ...confirmationEmail(form)}, {idempotencyKey})
   if (result.error) throw new Error(`${result.error.name}: ${result.error.message}`)
   return result.data
 }

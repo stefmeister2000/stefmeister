@@ -117,6 +117,7 @@ export default function QualificationForm({ id = 'audit-formulier', compact = fa
   const [status, setStatus] = useState<'idle' | 'submitting' | 'done'>('idle')
   const [submitError, setSubmitError] = useState(false)
   const [showOptional, setShowOptional] = useState(false)
+  const submissionRef = useRef('')
   const honeypotRef = useRef('')
   const startedRef = useRef(false)
   const abandonedRef = useRef(false)
@@ -155,7 +156,8 @@ export default function QualificationForm({ id = 'audit-formulier', compact = fa
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault()
-    if (!validate()) return
+    if (status === 'submitting' || !validate()) return
+    submissionRef.current ||= crypto.randomUUID()
 
     setStatus('submitting')
     setSubmitError(false)
@@ -167,6 +169,7 @@ export default function QualificationForm({ id = 'audit-formulier', compact = fa
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...values,
+          submission_id: submissionRef.current,
           doel: GOALS.find(goal => goal.key === values.doel)?.[lang][0] ?? values.doel,
           extra: [inquiryContext, values.extra].filter(Boolean).join('\n'),
           form_id: id,
@@ -175,7 +178,8 @@ export default function QualificationForm({ id = 'audit-formulier', compact = fa
           attribution,
         }),
       })
-      if (!res.ok) throw new Error(`Request failed: ${res.status}`)
+      const receipt = await res.json()
+      if (!res.ok || receipt.ok !== true) throw new Error(`Request failed: ${res.status}`)
       trackEvent('form_submitted', { form_id: id, doel: values.doel, ...attribution })
       setStatus('done')
     } catch {
