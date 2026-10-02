@@ -1,0 +1,22 @@
+.faq-chat { position: fixed; z-index: 60; right: 24px; bottom: 24px; color: #10131c; font-size: 14px; }
+.faq-chat-launcher { display: flex; align-items: center; gap: 10px; background: #111522; color: white; padding: 12px 18px; border-radius: 30px; box-shadow: 0 6px 25px #10131c25; font-weight: 600; min-height: 48px; }
+.faq-chat-launcher > span { display: grid; place-items: center; width: 24px; height: 24px; border: 1px solid #ffffff70; border-radius: 50%; }
+.faq-chat-panel { position: absolute; right: 0; bottom: 62px; width: 380px; max-width: calc(100vw - 32px); height: min(570px, calc(100dvh - 110px)); display: flex; flex-direction: column; background: #fff; border: 1px solid #e1e4ef; border-radius: 22px; box-shadow: 0 18px 80px #17245630; overflow: hidden; }
+.faq-chat-panel > header { display: flex; justify-content: space-between; align-items: center; padding: 18px 20px; background: #f2f4ff; }
+.faq-chat-panel h2 { font-weight: 650; font-size: 17px; }
+.faq-chat-panel header p { font-size: 11px; color: #5e6371; margin-top: 4px; }
+.faq-chat-panel header button { width: 44px; height: 44px; font-size: 25px; }
+.faq-chat-log { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 18px; }
+.faq-chat-answer { background: #f3f5fb; border-radius: 14px 14px 14px 3px; padding: 14px; line-height: 1.65; }
+.faq-chat-question { background: #254bfa; color: white; border-radius: 14px 14px 3px 14px; padding: 12px 14px; margin: 20px 0 12px 25px; overflow-wrap: anywhere; }
+.faq-chat-topics { display: grid; gap: 8px; margin-top: 12px; }
+.faq-chat-topics button { border: 1px solid #ccd4f3; border-radius: 10px; padding: 10px 12px; min-height: 44px; text-align: left; font-size: 12px; background: white; }
+.faq-chat-topics button:hover { background: #eef1ff; }
+.faq-chat-panel a { color: #2444ce; text-decoration: underline; text-underline-offset: 3px; }
+.faq-chat-panel form { display: flex; gap: 8px; padding: 12px 16px; border-top: 1px solid #e1e4ef; }
+.faq-chat-panel input { width: 100%; min-width: 0; font-size: 16px; padding: 10px; border: 1px solid #d8ddec; border-radius: 10px; }
+.faq-chat-panel form button { background: #254bfa; color: white; border-radius: 10px; width: 44px; flex-shrink: 0; font-size: 24px; }
+.faq-chat-panel form button:disabled { opacity: .4; }
+.faq-chat-panel footer { text-align: center; font-size: 11px; padding: 0 12px 14px; }
+.faq-chat :is(button,input,a):focus-visible { outline: 3px solid #6e8aff; outline-offset: 2px; }
+@media(max-width: 1023px) { .faq-chat { right: 16px; bottom: calc(86px + env(safe-area-inset-bottom)); } .faq-chat-panel { height: min(510px, calc(100dvh - 175px - env(safe-area-inset-bottom))); } }
