@@ -1,3 +1,4 @@
+import FaqChat from './FaqChat'
 import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import Nav from './Nav'
@@ -34,6 +35,7 @@ export default function Layout() {
       </main>
       <Footer />
       <BackToTop />
+      <FaqChat />
       <StickyMobileCTA />
     </div>
   )

@@ -58,7 +58,7 @@ export const pricingTiers: PricingTier[] = [
       en: [
         'Strategy',
         'Meta and Google Ads management',
-        'Betrouwbare tracking en data',
+        'Reliable tracking and data',
         'Monthly reporting',
         'CRO advice',
         'Content and ad direction',
