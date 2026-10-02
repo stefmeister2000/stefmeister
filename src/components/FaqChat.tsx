@@ -1,33 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { faqItems } from '../data/faq'
 import { useLang } from '../i18n/LanguageContext'
+import { findChatAnswers, getChatArticles, type ChatArticle } from '../lib/chatKnowledge'
 import './FaqChat.css'
 
-const topics = [
-  ['studio', 'lochristi', 'wie', 'who', 'location', 'locatie'],
-  ['website', 'webshop', 'app', 'software'],
-  ['bedrijven', 'sector', 'companies', 'startups'],
-  ['funnel', 'funnels', 'landing', 'landingspagina', 'klantreis'],
-  ['ads', 'google', 'meta', 'facebook', 'advertenties'],
-  ['email', 'mail', 'outreach', 'b2b', 'nieuwsbrief'],
-  ['optimaliseren', 'optimalisatie', 'checkout', 'conversie', 'optimise', 'conversion'],
-  ['intern', 'interne', 'teams', 'internal'],
-  ['ai', 'automatisering', 'automatiseringen', 'automation', 'crm'],
-  ['strategie', 'uitvoering', 'strategy', 'execution'],
-  ['projectmatig', 'maandbasis', 'monthly', 'project'],
-  ['starten', 'beginnen', 'start', 'contact', 'kennismaking'],
-  ['meten', 'resultaat', 'tracking', 'analytics', 'results', 'measure'],
-  ['consulting', 'consultancy', 'advies', 'leertraject', 'uur', 'hour'],
-  ['kost', 'kosten', 'prijs', 'prijzen', 'budget', 'tarieven', 'cost', 'price', 'pricing'],
-]
-const words = (s: string): string[] => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/e-mail/g, 'email').match(/[a-z0-9]+/g) ?? []
-function findAnswers(query: string, lang: 'nl' | 'en') {
-  const tokens = words(query)
-  return faqItems.map((item, index) => ({ index, score: topics[index].filter(word => tokens.includes(word)).length * 3 + words(item.question[lang]).filter(word => word.length > 4 && tokens.includes(word)).length }))
-    .filter(item => item.score >= 3).sort((a, b) => b.score - a.score).slice(0, 3)
+type Message = { question: string; answers: ChatArticle[] }
+function Spark({ small = false }: { small?: boolean }) {
+  return <svg width={small ? 20 : 26} height={small ? 20 : 26} viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M14 3 17 11 25 14 17 17 14 25 11 17 3 14 11 11Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><path d="m23 2 .8 2.2L26 5l-2.2.8L23 8l-.8-2.2L20 5l2.2-.8Z" fill="currentColor"/></svg>
 }
-type Message = { question: string; answer?: number; choices?: number[] }
 export default function FaqChat() {
   const { lang } = useLang()
   const nl = lang === 'nl'
@@ -37,30 +17,28 @@ export default function FaqChat() {
   const launcher = useRef<HTMLButtonElement>(null)
   const input = useRef<HTMLInputElement>(null)
   const log = useRef<HTMLDivElement>(null)
+  const previousLang = useRef(lang)
+  const articles = getChatArticles(lang)
+  const lastAnswer = messages.at(-1)?.answers[0]
   const close = () => { setOpen(false); launcher.current?.focus() }
   useEffect(() => { if (open) input.current?.focus() }, [open])
-  useEffect(() => { if (log.current) log.current.scrollTop = log.current.scrollHeight }, [messages, open])
-  function choose(index: number) {
-    setMessages(previous => [...previous, { question: faqItems[index].question[lang], answer: index }])
-  }
-  function send() {
-    const question = query.trim()
-    if (!question) return
-    const matches = findAnswers(question, lang)
-    setMessages(previous => [...previous, { question, ...(matches.length === 1 || (matches[0]?.score ?? 0) > (matches[1]?.score ?? 0) ? { answer: matches[0]?.index } : { choices: matches.map(m => m.index) }) }])
-    setQuery('')
-  }
+  useEffect(() => { if (previousLang.current !== lang) { setMessages([]); setQuery(''); previousLang.current = lang } }, [lang])
+  useEffect(() => { if (log.current) log.current.scrollTop = messages.length ? log.current.scrollHeight : 0 }, [messages, open])
+  const add = (question: string, answers: ChatArticle[]) => { setMessages(previous => [...previous.slice(-19), { question, answers }]); setQuery(''); input.current?.focus() }
+  function choose(id: string) { const article = articles.find(a => a.id === id); if (article) add(article.title, [article]) }
+  function send() { if (query.trim()) add(query.trim(), findChatAnswers(query.trim(), lang, lastAnswer?.id)) }
   return <div className="faq-chat" data-clarity-mask="true">
     {open && <section className="faq-chat-panel" role="dialog" aria-modal="false" aria-labelledby="faq-chat-title" onKeyDown={event => { if (event.key === 'Escape') { event.stopPropagation(); close() } }}>
-      <header><div><h2 id="faq-chat-title">{nl ? 'Een vraag? Stel ze hier.' : 'Have a question?'}</h2><p>{nl ? 'FAQ-assistent · verkoop.studio' : 'FAQ assistant · verkoop.studio'}</p></div><button type="button" onClick={close} aria-label={nl ? 'Chat sluiten' : 'Close chat'}>×</button></header>
+      <header className="chat-header"><div className="chat-orb"><Spark /></div><div className="chat-identity"><h2 id="faq-chat-title">Studio assistant<span>.</span></h2><p><i aria-hidden="true" />{nl ? 'Jouw wegwijzer bij verkoop.studio' : 'Your guide to verkoop.studio'}</p></div><button type="button" className="chat-icon-button" onClick={close} aria-label={nl ? 'Chat sluiten' : 'Close chat'}>×</button></header>
+      <div className="chat-context"><span>{nl ? 'KENNIS VAN ONZE STUDIO' : 'STUDIO KNOWLEDGE'}</span><button type="button" onClick={() => { setMessages([]); setQuery(''); input.current?.focus() }} disabled={!messages.length}>{nl ? 'Nieuw gesprek' : 'New conversation'} ↺</button></div>
       <div className="faq-chat-log" ref={log} role="log" aria-live="polite" aria-relevant="additions">
-        <p className="faq-chat-answer">{nl ? 'Ik help je zoeken in onze veelgestelde vragen. Kies een onderwerp of typ je vraag.' : 'I help you find answers in our FAQs. Choose a topic or type your question.'}</p>
-        <div className="faq-chat-topics">{[14, 1, 3, 11].map(index => <button type="button" key={index} onClick={() => choose(index)}>{faqItems[index].question[lang]}</button>)}</div>
-        {messages.map((message, index) => <div key={index} className="faq-chat-exchange"><p className="faq-chat-question">{message.question}</p>{message.answer !== undefined ? <p className="faq-chat-answer">{faqItems[message.answer].answer[lang]}</p> : message.choices?.length ? <div className="faq-chat-answer"><p>{nl ? 'Welke van deze vragen bedoel je?' : 'Which of these questions did you mean?'}</p><div className="faq-chat-topics">{message.choices.map(choice => <button key={choice} type="button" onClick={() => choose(choice)}>{faqItems[choice].question[lang]}</button>)}</div></div> : <div className="faq-chat-answer"><p>{nl ? 'Daar vind ik geen passend FAQ-antwoord op. Stel je vraag gerust aan ons team.' : 'I couldn’t find a matching FAQ answer. Please ask our team.'}</p><Link to="/contact" onClick={close}>{nl ? 'Neem contact op' : 'Contact us'} ↗</Link></div>}</div>)}
+        {!messages.length && <div className="chat-welcome"><div className="chat-welcome-icon"><Spark /></div><p className="chat-eyebrow">LET’S TALK GROWTH</p><h3>{nl ? 'Grote plannen?' : 'Big plans?'}<br /><span>{nl ? 'Begin met een vraag.' : 'Start with a question.'}</span></h3><p>{nl ? 'Ontdek onze diensten, prijzen en projecten. Ik zoek het antwoord in de informatie van onze studio.' : 'Explore our services, pricing and projects. I find answers in our studio information.'}</p><div className="chat-starters">{[['pricing',nl ? 'Wat past bij mijn budget?' : 'What fits my budget?','↗'],['service-websites',nl ? 'Een website die verkoopt' : 'A website that sells','⌘'],['cases',nl ? 'Laat jullie werk zien' : 'Show me your work','◈'],['service-ai-automatiseringen',nl ? 'Slimmer werken met AI' : 'Work smarter with AI','✧']].map(([id,label,icon]) => <button type="button" key={id} onClick={() => choose(id)}><span aria-hidden="true">{icon}</span>{label}<span aria-hidden="true">↗</span></button>)}</div></div>}
+        {messages.map((message, index) => <div key={index} className="faq-chat-exchange"><p className="faq-chat-question">{message.question}</p><div className="chat-answer-label"><Spark small />STUDIO ASSISTANT</div>{message.answers.length ? message.answers.map(answer => <article key={answer.id} className="faq-chat-answer"><h3>{answer.title}</h3><p>{answer.text}</p>{answer.bullets && <ul>{answer.bullets.map(bullet => <li key={bullet}>{bullet}</li>)}</ul>}<Link className="chat-source" to={answer.href} onClick={close}>{nl ? 'Bekijk op de website' : 'View on the website'} <span aria-hidden="true">↗</span></Link></article>) : <div className="faq-chat-answer"><h3>{nl ? 'Dat bespreken we graag persoonlijk.' : 'Let’s discuss that personally.'}</h3><p>{nl ? 'Ik vind hiervoor geen betrouwbaar antwoord in onze website-informatie. Ons team kan je verder helpen.' : 'I can’t find a reliable answer in our website information. Our team can help you further.'}</p><Link className="chat-source" to="/contact" onClick={close}>{nl ? 'Stel je vraag aan ons team' : 'Ask our team'} ↗</Link></div>}</div>)}
+        {!!messages.length && <div className="chat-followups">{(lastAnswer?.followups ?? ['pricing', 'cases', 'start']).map(id => { const a = articles.find(item => item.id === id); return a && <button key={id} type="button" onClick={() => choose(id)}>{a.title}<span aria-hidden="true"> ↗</span></button> })}</div>}
       </div>
-      <form onSubmit={event => { event.preventDefault(); send() }}><label className="sr-only" htmlFor="faq-chat-query">{nl ? 'Je vraag' : 'Your question'}</label><input id="faq-chat-query" ref={input} value={query} onChange={event => setQuery(event.target.value)} placeholder={nl ? 'Typ je vraag…' : 'Type your question…'} maxLength={400} autoComplete="off" data-clarity-mask="true" /><button type="submit" disabled={!query.trim()} aria-label={nl ? 'Vraag versturen' : 'Send question'}>↑</button></form>
-      <footer><Link to="/contact" onClick={close}>{nl ? 'Liever persoonlijk contact?' : 'Prefer to speak to us?'}</Link></footer>
+      <form className="chat-composer" onSubmit={event => { event.preventDefault(); send() }}><label className="sr-only" htmlFor="faq-chat-query">{nl ? 'Je vraag' : 'Your question'}</label><input id="faq-chat-query" ref={input} value={query} onChange={event => setQuery(event.target.value)} placeholder={nl ? 'Waar wil je meer over weten?' : 'What would you like to know?'} maxLength={400} autoComplete="off" data-clarity-mask="true" /><button type="submit" disabled={!query.trim()} aria-label={nl ? 'Vraag versturen' : 'Send question'}>↑</button></form>
+      <footer><span>{nl ? 'Antwoorden uit onze website' : 'Answers from our website'}</span><Link to="/contact" onClick={close}>{nl ? 'Praat met ons' : 'Talk to us'} ↗</Link></footer>
     </section>}
-    <button type="button" className="faq-chat-launcher" ref={launcher} onClick={() => open ? close() : setOpen(true)} aria-expanded={open} aria-label={nl ? (open ? 'FAQ-chat sluiten' : 'FAQ-chat openen') : (open ? 'Close FAQ chat' : 'Open FAQ chat')}><span aria-hidden="true">{open ? '×' : '?'}</span>{nl ? 'Stel een vraag' : 'Ask a question'}</button>
+    <button type="button" className={`faq-chat-launcher ${open ? 'is-open' : ''}`} ref={launcher} onClick={() => open ? close() : setOpen(true)} aria-expanded={open} aria-label={nl ? (open ? 'FAQ-chat sluiten' : 'FAQ-chat openen') : (open ? 'Close FAQ chat' : 'Open FAQ chat')}><span className="chat-launcher-icon">{open ? <span aria-hidden="true">×</span> : <Spark small />}</span><span>{nl ? 'Vraag het de studio' : 'Ask the studio'}</span><i aria-hidden="true" /></button>
   </div>
 }
