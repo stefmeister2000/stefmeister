@@ -57,9 +57,6 @@ export default function Nav() {
           aria-label="verkoop.studio — Home"
         >
           <BrandMark />
-          <span className="brand-name">
-            verkoop<span>.studio</span>
-          </span>
         </Link>
 
         <nav className="hidden items-center gap-8 lg:flex">

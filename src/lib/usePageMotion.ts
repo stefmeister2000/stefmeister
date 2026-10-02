@@ -60,12 +60,15 @@ export function usePageMotion(route = '/') {
           el.style.setProperty('--light-y', `${(y + .5) * 100}%`)
         })
       }
+      // Clear stale pointer offsets when scrolling moves the artwork beneath the mouse.
+      window.addEventListener('scroll', reset, { passive: true })
       el.addEventListener('pointermove', move, { passive: true })
       el.addEventListener('pointerleave', reset)
       preference.addEventListener('change', reset)
       pointer.addEventListener('change', reset)
       cleanups.push(() => {
         reset()
+        window.removeEventListener('scroll', reset)
         el.removeEventListener('pointermove', move)
         el.removeEventListener('pointerleave', reset)
         preference.removeEventListener('change', reset)
