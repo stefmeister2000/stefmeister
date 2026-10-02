@@ -4,6 +4,7 @@ import stefNooms from '../assets/stef.webp'
 import studioTeam from '../assets/studio-team.webp'
 export default function AboutStef({ standalone = false }: { standalone?: boolean }) {
   const Heading = standalone ? 'h1' : 'h2'
+  const CardHeading = standalone ? 'h2' : 'h3'
   const { lang } = useLang()
   const nl = lang === 'nl'
   return (
@@ -28,9 +29,9 @@ export default function AboutStef({ standalone = false }: { standalone?: boolean
             <p className="text-xs uppercase tracking-widest text-mute">
               Growth & strategy
             </p>
-            <h3 className="mt-3 font-display text-3xl text-paper">
+            <CardHeading className="mt-3 font-display text-3xl text-paper">
               Stef Keppens
-            </h3>
+            </CardHeading>
             <p className="mt-4 text-bone">
               {nl
                 ? 'Marketingstrategie, funnels, ecommerce, campagnes en AI-automatisering. Met de volledige klantreis als vertrekpunt.'
@@ -42,9 +43,9 @@ export default function AboutStef({ standalone = false }: { standalone?: boolean
             <p className="text-xs uppercase tracking-widest text-mute">
               Design & technology
             </p>
-            <h3 className="mt-3 font-display text-3xl text-paper">
+            <CardHeading className="mt-3 font-display text-3xl text-paper">
               Design & development
-            </h3>
+            </CardHeading>
             <p className="mt-4 text-bone">
               {nl
                 ? 'Websites, software en mobiele apps. Productdesign en ontwikkeling vanuit onze studio in Lochristi.'

@@ -71,6 +71,17 @@ test('production server returns route HTML, permanent redirects and real 404s', 
     const slash = await get('/google-ads/?utm_source=test')
     assert.equal(slash.status, 301)
     assert.equal(slash.headers.get('location'), '/google-ads?utm_source=test')
+    for (const path of ['/', '/sitemap.xml', '/nonexistent-page']) {
+      const response = await get(path)
+      assert.equal(response.headers.get('x-content-type-options'), 'nosniff')
+      assert.equal(response.headers.get('x-frame-options'), 'SAMEORIGIN')
+      assert.equal(response.headers.get('referrer-policy'), 'strict-origin-when-cross-origin')
+      assert.match(response.headers.get('content-security-policy'), /frame-ancestors 'self'/)
+      assert.equal(response.headers.get('strict-transport-security'), null)
+      assert.equal(response.headers.get('x-powered-by'), null)
+    }
+    const secure = await fetch('http://127.0.0.1:18791/', { headers: { 'x-forwarded-proto': 'https' } })
+    assert.equal(secure.headers.get('strict-transport-security'), 'max-age=31536000')
     const homepage = await (await get('/')).text()
     const asset = homepage.match(/src="(\/assets\/[^"]+)"/)[1]
     assert.match((await get(asset)).headers.get('cache-control'), /max-age=31536000.*immutable/)
@@ -128,5 +139,24 @@ test('hero uses responsive WebP candidates with explicit image dimensions', asyn
   for (const [,asset] of tag.matchAll(/(\/assets\/[^\s",]+\.webp)/g)) {
     const bytes = await readFile(`dist${asset}`)
     assert(bytes.length < 160000, asset)
+  }
+})
+
+
+test('all page images reserve space, headings are sequential and contact links exist', async () => {
+  for (const route of routes) {
+    const html = await readFile(`dist${route === '/' ? '' : route}/index.html`, 'utf8')
+    for (const [tag] of html.matchAll(/<img\b[^>]*>/g)) {
+      assert.match(tag, /width="\d+"/, route)
+      assert.match(tag, /height="\d+"/, route)
+      assert.match(tag, /alt="[^"]*"/, route)
+    }
+    let previous = 0
+    for (const [, level] of html.matchAll(/<h([1-6])\b/g)) {
+      assert(Number(level) <= previous + 1, `heading level skipped on ${route}`)
+      previous = Number(level)
+    }
+    const emails = [...html.matchAll(/<a\b[^>]*href="mailto:[^"]*"[^>]*>[\s\S]*?<\/a>/g)]
+    assert(emails.length > 0, route)
   }
 })

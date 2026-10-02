@@ -1,3 +1,4 @@
+import ResponsiveImage from './ResponsiveImage'
 import { clients } from '../data/clients'
 import { useInView } from '../lib/useInView'
 import { useLang } from '../i18n/LanguageContext'
@@ -28,7 +29,7 @@ export default function ClientWorkBar() {
           {clients.map((client) => (
             <div key={client.name} className="overflow-hidden rounded-2xl border border-line bg-surface">
               {client.image ? (
-                <img
+                <ResponsiveImage
                   src={client.image}
                   alt={client.name}
                   loading="lazy"

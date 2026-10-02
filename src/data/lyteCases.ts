@@ -12,7 +12,7 @@ export const lyteCases: LyteCase[] = [
     name: 'Jobr',
     category: 'Mobile app',
     url: 'https://lytestudios.be/projects/jobr/',
-    image: '/partners/jobr.jpg',
+    image: '/partners/jobr.webp',
     description: {
       nl: 'Een mobiele app die kandidaten en werkgevers verbindt via matching, sollicitaties en chat.',
       en: 'A mobile app connecting candidates and employers through matching, applications and chat.',
@@ -22,7 +22,7 @@ export const lyteCases: LyteCase[] = [
     name: 'WERKR',
     category: 'Software platform',
     url: 'https://lytestudios.be/projects/werkr/',
-    image: '/partners/werkr.jpg',
+    image: '/partners/werkr.webp',
     logo: '/partners/werkr-logo.svg',
     description: {
       nl: 'Software voor de planning en uitvoering van opdrachten door flexibele medewerkers.',
@@ -33,7 +33,7 @@ export const lyteCases: LyteCase[] = [
     name: 'Tinrate',
     category: 'Incubator',
     url: 'https://lytestudios.be/projects/tinrate/',
-    image: '/partners/tinrate.jpg',
+    image: '/partners/tinrate.webp',
     logo: '/partners/tinrate-logo.svg',
     description: {
       nl: 'Een platform om betaalde gesprekken met experts te boeken, mee uitgebouwd door LYTE.',
@@ -44,7 +44,7 @@ export const lyteCases: LyteCase[] = [
     name: 'EONLOG',
     category: 'Website',
     url: 'https://lytestudios.be/projects/eonlog-website/',
-    image: '/partners/eonlog-website.jpg',
+    image: '/partners/eonlog-website.webp',
     description: {
       nl: 'Een website die de investeringsaanpak van een family office uitlegt.',
       en: 'A website explaining the investment approach of a family office.',
@@ -54,7 +54,7 @@ export const lyteCases: LyteCase[] = [
     name: 'Tinrate',
     category: 'Website',
     url: 'https://lytestudios.be/projects/tinrate-website/',
-    image: '/partners/tinrate-website.jpg',
+    image: '/partners/tinrate-website.webp',
     logo: '/partners/tinrate-logo.svg',
     description: {
       nl: 'De website die bezoekers helpt experts te ontdekken en een gesprek te boeken.',
@@ -65,7 +65,7 @@ export const lyteCases: LyteCase[] = [
     name: 'Jobr',
     category: 'Website',
     url: 'https://lytestudios.be/projects/jobr-website/',
-    image: '/partners/jobr-website.jpg',
+    image: '/partners/jobr-website.webp',
     description: {
       nl: 'Een marketingwebsite gericht op app-downloads en nieuwe werkgevers.',
       en: 'A marketing website focused on app downloads and employer sign-ups.',

@@ -1,3 +1,4 @@
+import ResponsiveImage from './ResponsiveImage'
 import { Link } from 'react-router-dom'
 import { lyteCases } from '../data/lyteCases'
 import { useLang } from '../i18n/LanguageContext'
@@ -39,19 +40,19 @@ export default function LyteWork({ featured = false }: { featured?: boolean }) {
               className="lyte-case-card"
             >
               <div className="lyte-case-cover">
-                <img src={c.image} alt={`${c.name} — ${c.category}`} loading="lazy" width="1200" height="800" />
+                <ResponsiveImage src={c.image} alt={`${c.name} — ${c.category}`} loading="lazy" />
                 <span className="lyte-case-category">{c.category}</span>
                 <span className="lyte-case-arrow" aria-hidden="true">↗</span>
               </div>
               <div className="lyte-case-copy">
-                <div className="lyte-case-heading"><h3>{c.name}</h3>{c.logo && <img src={c.logo} alt="" className="lyte-client-logo" loading="lazy" />}</div>
+                <div className="lyte-case-heading"><h3>{c.name}</h3>{c.logo && <ResponsiveImage src={c.logo} alt="" className="lyte-client-logo" loading="lazy" />}</div>
                 <p className="text-sm leading-relaxed text-bone">
                   {c.description[lang]}
                 </p>
                 <p className="mt-5 text-xs text-accent-2">
                   {nl ? 'Bekijk de case' : 'Explore the case'} ↗
                 </p>
-                <div className="lyte-credit"><span>{nl ? 'Design & development door' : 'Design & development by'}</span><img src="/partners/lyte-logo.png" alt="LYTE Studios" loading="lazy" /></div>
+                <div className="lyte-credit"><span>{nl ? 'Design & development door' : 'Design & development by'}</span><ResponsiveImage src="/partners/lyte-logo.png" alt="LYTE Studios" loading="lazy" /></div>
               </div>
             </a>
           ))}

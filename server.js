@@ -36,6 +36,21 @@ const VERIFIED_SENDER = 'Verkoop Studio <noreply@send.verkoop.studio>'
 const SENDER = /onboarding@resend\.dev/i.test(LEAD_FROM) ? VERIFIED_SENDER : LEAD_FROM
 
 const app = express()
+app.disable('x-powered-by')
+app.use((req, res, next) => {
+  res.set({
+    'X-Content-Type-Options': 'nosniff',
+    'X-Frame-Options': 'SAMEORIGIN',
+    'Referrer-Policy': 'strict-origin-when-cross-origin',
+    // Restrict embedding and document capabilities without blocking analytics.
+    'Content-Security-Policy': "base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'",
+  })
+  // Railway terminates TLS at its proxy. Do not send HSTS over local HTTP.
+  if (req.secure || req.get('x-forwarded-proto')?.split(',')[0].trim() === 'https') {
+    res.set('Strict-Transport-Security', 'max-age=31536000')
+  }
+  next()
+})
 app.use(express.json({ limit: '32kb' }))
 app.use('/assets', express.static(path.join(DIST, 'assets'), { immutable: true, maxAge: '1y' }))
 app.use(express.static(DIST, { redirect: false, index: false }))

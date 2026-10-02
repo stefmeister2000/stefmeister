@@ -55,6 +55,7 @@ export default function Contact() {
             <li>{lang === 'nl' ? '03 · Je krijgt een voorstel met scope en budget.' : '03 · You receive a proposal with scope and budget.'}</li>
           </ol>
           <div className="mt-10">
+            <h2 className="mb-6 font-display text-2xl text-paper">{lang === 'nl' ? 'Vertel ons over je project' : 'Tell us about your project'}</h2>
             <QualificationForm id="audit-formulier-contact" inquiryContext={selectedPackage ? `Pakket: ${selectedPackage.name[lang]}` : undefined} />
           </div>
         </div>

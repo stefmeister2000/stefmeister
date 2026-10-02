@@ -1,3 +1,4 @@
+import { seoMetadata } from '../data/seoMetadata'
 import { useLang } from '../i18n/LanguageContext'
 import { SITE_NAME, SITE_URL, socialImage } from '../lib/site'
 import { services } from '../data/services'
@@ -7,7 +8,9 @@ export default function Seo({ title, description, path, noindex = false, languag
   const { lang: selectedLang } = useLang()
   const lang = language ?? selectedLang
   const url = `${SITE_URL}${path === '/' ? '/' : path}`
-  const fullTitle = `${title} — ${SITE_NAME}`
+  const metadata = seoMetadata[path]?.[lang]
+  const fullTitle = `${metadata?.title ?? title} — ${SITE_NAME}`
+  const metaDescription = metadata?.description ?? description
   const service = services.find(s => `/${s.slug}` === path)
   const organization = {
     '@type': 'ProfessionalService', '@id': `${SITE_URL}/#organization`, name: SITE_NAME,
@@ -23,7 +26,7 @@ export default function Seo({ title, description, path, noindex = false, languag
   }
   const graph = [organization, person,
     { '@type': 'WebSite', '@id': `${SITE_URL}/#website`, url: `${SITE_URL}/`, name: SITE_NAME, publisher: { '@id': organization['@id'] } },
-    { '@type': 'WebPage', '@id': `${url}#webpage`, url, name: fullTitle, description, inLanguage: lang === 'nl' ? 'nl-BE' : 'en', isPartOf: { '@id': `${SITE_URL}/#website` }, about: { '@id': organization['@id'] }, ...(path === '/agency' ? { mainEntity: { '@id': person['@id'] } } : {}) },
+    { '@type': 'WebPage', '@id': `${url}#webpage`, url, name: fullTitle, description: metaDescription, inLanguage: lang === 'nl' ? 'nl-BE' : 'en', isPartOf: { '@id': `${SITE_URL}/#website` }, about: { '@id': organization['@id'] }, ...(path === '/agency' ? { mainEntity: { '@id': person['@id'] } } : {}) },
     ...(service ? [{ '@type': 'Service', name: service.title[lang], description: service.summary[lang], url, provider: { '@id': organization['@id'] }, serviceType: service.title[lang] }] : []),
     ...(path !== '/' && !noindex ? [{ '@type': 'BreadcrumbList', itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
@@ -33,12 +36,12 @@ export default function Seo({ title, description, path, noindex = false, languag
   ]
   return <>
     <title>{fullTitle}</title>
-    <meta name="description" content={description} />
+    <meta name="description" content={metaDescription} />
     <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
     <link rel="canonical" href={url} />
     <meta property="og:site_name" content={SITE_NAME} />
     <meta property="og:title" content={fullTitle} />
-    <meta property="og:description" content={description} />
+    <meta property="og:description" content={metaDescription} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={url} />
     <meta property="og:locale" content={lang === 'nl' ? 'nl_BE' : 'en_GB'} />
@@ -46,7 +49,7 @@ export default function Seo({ title, description, path, noindex = false, languag
     <meta property="og:image:alt" content="verkoop.studio — Meer aanvragen. Meer verkoop." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
-    <meta name="twitter:description" content={description} />
+    <meta name="twitter:description" content={metaDescription} />
     <meta name="twitter:image" content={socialImage} />
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c') }} />
   </>
