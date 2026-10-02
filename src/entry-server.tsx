@@ -9,3 +9,5 @@ export const routes = ['/', '/cases', '/agency', '/contact', '/funnel-audit', ..
 export function render(location: string) {
   return renderToString(<LanguageProvider><App location={location} /></LanguageProvider>)
 }
+
+export { faqItems } from './data/faq'
