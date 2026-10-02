@@ -1,3 +1,4 @@
+import ResponsiveImage from '../components/ResponsiveImage'
 import { Link } from 'react-router-dom'
 import { useLang } from '../i18n/LanguageContext'
 import { cases } from '../data/cases'
@@ -45,7 +46,7 @@ export default function SelectedWork() {
           to={'/cases/' + c.slug}
         >
           <div className="project-image">
-            <img src={c.image} alt={c.name} loading="lazy" />
+            <ResponsiveImage src={c.image} alt={c.name} loading="lazy" />
             <span className="project-arrow">↗</span>
           </div>
           <div className="project-caption">
@@ -69,13 +70,13 @@ export default function SelectedWork() {
           rel="noopener noreferrer"
         >
           <div className="project-image">
-            <img src={c.image} alt={c.name} loading="lazy" />
+            <ResponsiveImage src={c.image} alt={c.name} loading="lazy" />
             <span className="project-arrow">↗</span>
           </div>
           <div className="project-caption">
             <div className="partner-project-heading">
               <h3>{c.name}</h3>
-              {c.logo && <img src={c.logo} alt="" loading="lazy" className="lyte-client-logo" />}
+              {c.logo && <ResponsiveImage src={c.logo} alt="" loading="lazy" className="lyte-client-logo" />}
             </div>
             <p>{c.description[lang]}</p>
             <span>{nl ? 'Bekijk de case' : 'Explore the case'} ↗ · LYTE Studios</span>

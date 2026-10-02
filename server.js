@@ -37,6 +37,7 @@ const SENDER = /onboarding@resend\.dev/i.test(LEAD_FROM) ? VERIFIED_SENDER : LEA
 
 const app = express()
 app.use(express.json({ limit: '32kb' }))
+app.use('/assets', express.static(path.join(DIST, 'assets'), { immutable: true, maxAge: '1y' }))
 app.use(express.static(DIST, { redirect: false, index: false }))
 
 const isEmail = (s) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(s || ''))

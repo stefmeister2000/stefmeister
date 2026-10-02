@@ -2,9 +2,10 @@ import { useLang } from '../i18n/LanguageContext'
 import { SITE_NAME, SITE_URL, socialImage } from '../lib/site'
 import { services } from '../data/services'
 
-interface SeoProps { title: string; description: string; path: string; noindex?: boolean }
-export default function Seo({ title, description, path, noindex = false }: SeoProps) {
-  const { lang } = useLang()
+interface SeoProps { title: string; description: string; path: string; noindex?: boolean; language?: 'nl' | 'en' }
+export default function Seo({ title, description, path, noindex = false, language }: SeoProps) {
+  const { lang: selectedLang } = useLang()
+  const lang = language ?? selectedLang
   const url = `${SITE_URL}${path === '/' ? '/' : path}`
   const fullTitle = `${title} — ${SITE_NAME}`
   const service = services.find(s => `/${s.slug}` === path)
@@ -15,9 +16,14 @@ export default function Seo({ title, description, path, noindex = false }: SeoPr
     address: { '@type': 'PostalAddress', addressLocality: 'Lochristi', addressCountry: 'BE' },
     description: 'Google Ads, Meta Ads, e-mailmarketing, data-analyse, websites en software vanuit Lochristi.',
   }
-  const graph = [organization,
+  const person = {
+    '@type': 'Person', '@id': `${SITE_URL}/#stef-keppens`, name: 'Stef Keppens',
+    url: `${SITE_URL}/agency`, jobTitle: 'Growth & Strategy',
+    worksFor: { '@id': organization['@id'] },
+  }
+  const graph = [organization, person,
     { '@type': 'WebSite', '@id': `${SITE_URL}/#website`, url: `${SITE_URL}/`, name: SITE_NAME, publisher: { '@id': organization['@id'] } },
-    { '@type': 'WebPage', '@id': `${url}#webpage`, url, name: fullTitle, description, inLanguage: lang === 'nl' ? 'nl-BE' : 'en', isPartOf: { '@id': `${SITE_URL}/#website` }, about: { '@id': organization['@id'] } },
+    { '@type': 'WebPage', '@id': `${url}#webpage`, url, name: fullTitle, description, inLanguage: lang === 'nl' ? 'nl-BE' : 'en', isPartOf: { '@id': `${SITE_URL}/#website` }, about: { '@id': organization['@id'] }, ...(path === '/agency' ? { mainEntity: { '@id': person['@id'] } } : {}) },
     ...(service ? [{ '@type': 'Service', name: service.title[lang], description: service.summary[lang], url, provider: { '@id': organization['@id'] }, serviceType: service.title[lang] }] : []),
     ...(path !== '/' && !noindex ? [{ '@type': 'BreadcrumbList', itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },

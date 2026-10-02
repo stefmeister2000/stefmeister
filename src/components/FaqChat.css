@@ -8,7 +8,7 @@
 .chat-identity h2 { font-size: 16px; letter-spacing: -.4px; font-weight: 600; }
 .chat-identity h2 > span { color: #9bafff; }
 .chat-identity p { display: flex; align-items: center; gap: 6px; font-size: 10px; color: #b8c4e2; margin-top: 5px; }
-.chat-icon-button { width: 36px; height: 44px; border-radius: 10px; font-size: 24px; font-weight: 300; color: #cbd5ee; }
+.chat-icon-button { display: grid; place-items: center; padding: 0; line-height: 1; width: 44px; height: 44px; border-radius: 10px; font-size: 24px; font-weight: 300; color: #cbd5ee; }
 .chat-icon-button:hover { background: #ffffff10; }
 .chat-context { display: flex; justify-content: space-between; align-items: center; padding: 0 18px; min-height: 42px; border-bottom: 1px solid #e9edf7; background: #f5f7fc; gap: 8px; }
 .chat-context > span { font-size: 8px; letter-spacing: .13em; color: #697893; font-weight: 600; }

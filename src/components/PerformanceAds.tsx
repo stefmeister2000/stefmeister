@@ -1,7 +1,8 @@
+import ResponsiveImage from '../components/ResponsiveImage'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useLang } from '../i18n/LanguageContext'
-import pinacello from '../assets/cases/pinacello.png'
+import pinacello from '../assets/cases/pinacello.webp'
 
 export default function PerformanceAds() {
   const { lang } = useLang()
@@ -75,7 +76,7 @@ export default function PerformanceAds() {
                 <span>•••</span>
               </div>
               <div className="social-creative">
-                <img
+                <ResponsiveImage
                   src={pinacello}
                   alt="Pinacello — campagnevisual"
                   loading="lazy"

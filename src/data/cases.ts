@@ -1,8 +1,8 @@
 import type { CaseStudy } from './types'
-import olearys from '../assets/cases/olearys.png'
-import nooms from '../assets/cases/nooms.png'
-import pinacello from '../assets/cases/pinacello.png'
-import ekart from '../assets/cases/ekart.jpg'
+import olearys from '../assets/cases/olearys.webp'
+import nooms from '../assets/cases/nooms.webp'
+import pinacello from '../assets/cases/pinacello.webp'
+import ekart from '../assets/cases/ekart.webp'
 
 export const cases: CaseStudy[] = [
   {

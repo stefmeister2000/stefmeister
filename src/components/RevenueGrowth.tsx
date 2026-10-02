@@ -1,6 +1,7 @@
+import ResponsiveImage from '../components/ResponsiveImage'
 import { Link } from 'react-router-dom'
 import { useLang } from '../i18n/LanguageContext'
-import pinacello from '../assets/cases/pinacello.png'
+import pinacello from '../assets/cases/pinacello.webp'
 
 export default function RevenueGrowth() {
   const { lang } = useLang()
@@ -26,7 +27,7 @@ export default function RevenueGrowth() {
         </Link>
       </div>
       <Link to="/cases/pinacello" className="revenue-proof">
-        <img src={pinacello} alt="Pinacello webshop" loading="lazy" />
+        <ResponsiveImage src={pinacello} alt="Pinacello webshop" loading="lazy" />
         <div className="revenue-stat">
           <span className="proof-label">PINACELLO / ECOMMERCE</span>
           <strong>

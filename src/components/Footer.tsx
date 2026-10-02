@@ -38,6 +38,7 @@ export default function Footer() {
           <div>
             <p className="text-sm font-semibold text-paper">{t.nav}</p>
             <ul className="mt-3 space-y-2">
+              <li><Link to="/blog" className="text-sm text-mute transition hover:text-paper">Blog · Gent & omgeving</Link></li>
               {navItems.map((item) => (
                 <li key={item.href}>
                   <Link to={item.href} className="text-sm text-mute transition hover:text-paper">

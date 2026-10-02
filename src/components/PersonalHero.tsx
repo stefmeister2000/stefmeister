@@ -1,7 +1,8 @@
+import ResponsiveImage from '../components/ResponsiveImage'
 import { Link } from 'react-router-dom'
 import { useLang } from '../i18n/LanguageContext'
 import { trackEvent } from '../lib/analytics'
-import heroGraphic from '../assets/freeflow-hero-3d.png'
+import heroGraphic from '../assets/freeflow-hero-3d.webp'
 export default function PersonalHero() {
   const { lang } = useLang()
   const nl = lang === 'nl'
@@ -43,7 +44,7 @@ export default function PersonalHero() {
         </div>
       </div>
       <div className="hero-art hero-graphic">
-        <img src={heroGraphic} alt="" width="1254" height="1254" fetchPriority="high" decoding="async" />
+        <ResponsiveImage src={heroGraphic} alt="" width="1254" height="1254" fetchPriority="high" decoding="async" />
         <Link to="/cases/pinacello" className="floating-strategy">
           <div>
             <span>+120%</span>

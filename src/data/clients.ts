@@ -1,8 +1,8 @@
 import type { Client } from './types'
-import pinacello from '../assets/cases/pinacello.png'
-import nooms from '../assets/cases/nooms.png'
-import olearys from '../assets/cases/olearys.png'
-import ekart from '../assets/cases/ekart.jpg'
+import pinacello from '../assets/cases/pinacello.webp'
+import nooms from '../assets/cases/nooms.webp'
+import olearys from '../assets/cases/olearys.webp'
+import ekart from '../assets/cases/ekart.webp'
 
 export const clients: Client[] = [
   {

@@ -1,3 +1,4 @@
+import CaseEvidence from '../components/CaseEvidence'
 import PinacelloCase from './PinacelloCase'
 import { Link } from 'react-router-dom'
 import Seo from '../components/Seo'
@@ -125,6 +126,7 @@ export default function CaseStudyPage({ slug }: { slug: CaseSlug }) {
         </div>
       </section>
 
+      <CaseEvidence project={c} />
       <section>
         <div className="mx-auto max-w-4xl px-5 py-16 text-center sm:px-8 sm:py-24">
           <h2 className="font-display text-3xl text-paper text-balance sm:text-4xl">{t.closingTitle}</h2>

@@ -1,6 +1,7 @@
+import ResponsiveImage from '../components/ResponsiveImage'
 import { useLang } from '../i18n/LanguageContext'
-import stefNooms from '../assets/stef.jpg'
-import studioTeam from '../assets/studio-team.png'
+import stefNooms from '../assets/stef.webp'
+import studioTeam from '../assets/studio-team.webp'
 export default function AboutStef({ standalone = false }: { standalone?: boolean }) {
   const Heading = standalone ? 'h1' : 'h2'
   const { lang } = useLang()
@@ -23,7 +24,7 @@ export default function AboutStef({ standalone = false }: { standalone?: boolean
         </p>
         <div className="mt-12 grid gap-6 md:grid-cols-2">
           <div className="rounded-2xl border border-line p-8">
-            <img className="agency-team-photo agency-nooms-photo" src={stefNooms} alt={nl ? 'Stef Keppens bij Nooms' : 'Stef Keppens at Nooms'} loading="lazy" />
+            <ResponsiveImage className="agency-team-photo agency-nooms-photo" src={stefNooms} alt={nl ? 'Stef Keppens bij Nooms' : 'Stef Keppens at Nooms'} loading="lazy" />
             <p className="text-xs uppercase tracking-widest text-mute">
               Growth & strategy
             </p>
@@ -37,7 +38,7 @@ export default function AboutStef({ standalone = false }: { standalone?: boolean
             </p>
           </div>
           <div className="rounded-2xl border border-line p-8">
-            <img className="agency-team-photo" src={studioTeam} alt={nl ? 'Samen aan het werk in de studio' : 'Working together in the studio'} loading="lazy" />
+            <ResponsiveImage className="agency-team-photo" src={studioTeam} alt={nl ? 'Samen aan het werk in de studio' : 'Working together in the studio'} loading="lazy" />
             <p className="text-xs uppercase tracking-widest text-mute">
               Design & technology
             </p>

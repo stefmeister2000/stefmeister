@@ -1,3 +1,4 @@
+import ResponsiveImage from '../components/ResponsiveImage'
 import type { CaseStudy, Lang } from '../data/types'
 import Placeholder from './Placeholder'
 
@@ -32,7 +33,7 @@ export default function CaseVisual({ case: c, lang, ratio = 'aspect-[16/10]', cl
 
   if (c.image) {
     return (
-      <img
+      <ResponsiveImage
         src={c.image}
         alt={c.name}
         loading="lazy"

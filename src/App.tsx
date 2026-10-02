@@ -1,5 +1,6 @@
 import { BrowserRouter, StaticRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
+import Blog from './pages/Blog'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 import ServicePage from './pages/ServicePage'
@@ -16,6 +17,8 @@ export default function App({ location }: { location?: string }) {
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path="blog" element={<Blog />} />
+          <Route path="blog/:slug" element={<Blog />} />
 
           <Route path="landing-pages" element={<ServicePage slug="landing-pages" />} />
           <Route path="funnels" element={<ServicePage slug="funnels" />} />

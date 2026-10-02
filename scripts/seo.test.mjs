@@ -71,9 +71,62 @@ test('production server returns route HTML, permanent redirects and real 404s', 
     const slash = await get('/google-ads/?utm_source=test')
     assert.equal(slash.status, 301)
     assert.equal(slash.headers.get('location'), '/google-ads?utm_source=test')
+    const homepage = await (await get('/')).text()
+    const asset = homepage.match(/src="(\/assets\/[^"]+)"/)[1]
+    assert.match((await get(asset)).headers.get('cache-control'), /max-age=31536000.*immutable/)
     for (const path of ['/robots.txt', '/sitemap.xml', '/favicon.svg', '/social-cover.png']) assert.equal((await get(path)).status, 200, path)
   } finally {
     server.kill('SIGTERM')
     await once(server, 'exit')
+  }
+})
+
+
+test('FAQ answers exist in initial HTML and service sections use headings', async () => {
+  const { faqItems } = await import('../dist-ssr/entry-server.js')
+  const home = await readFile('dist/index.html', 'utf8')
+  const details = [...home.matchAll(/<details\b[^>]*name="studio-faq"[^>]*>([\s\S]*?)<\/details>/g)]
+  assert.equal(details.length, faqItems.length)
+  for (const [index, detail] of details.entries()) {
+    assert.match(detail[1], /<summary[\s>]/)
+    assert.match(detail[1], /<p[\s>]/)
+    const escaped = faqItems[index].answer.nl.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll("'", '&#x27;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
+    assert(detail[1].includes(escaped), faqItems[index].question.nl)
+  }
+  const service = await readFile('dist/google-ads/index.html', 'utf8')
+  for (const heading of ['Het probleem', 'Aanpak', 'Opleverpunten']) assert.match(service, new RegExp(`<h2[^>]*>${heading}</h2>`))
+  const agency = await readFile('dist/agency/index.html', 'utf8')
+  const graph = JSON.parse(agency.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1])['@graph']
+  const person = graph.find(item => item['@type'] === 'Person')
+  assert.equal(person.name, 'Stef Keppens')
+  assert.equal(graph.find(item => item['@type'] === 'WebPage').mainEntity['@id'], person['@id'])
+})
+
+test('articles have crawlable content, authorship, links and sitemap entries', async () => {
+  const blogRoutes = routes.filter(route => route.startsWith('/blog/'))
+  assert.equal(blogRoutes.length, 3)
+  for (const route of blogRoutes) {
+    const html = await readFile(`dist${route}/index.html`, 'utf8')
+    const graphs = [...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/gs)].map(m => JSON.parse(m[1]))
+    const article = graphs.find(g => g['@type'] === 'BlogPosting')
+    assert.equal(article.url, origin + route)
+    assert.equal(article.author.name, 'verkoop.studio')
+    assert.equal(article.inLanguage, 'nl-BE')
+    assert.match(html, /<article[\s>]/)
+    assert.match(html, /href="\/contact"/)
+    assert(sitemap.includes(`<loc>${origin}${route}</loc>`))
+  }
+})
+
+test('hero uses responsive WebP candidates with explicit image dimensions', async () => {
+  const html = await readFile('dist/index.html', 'utf8')
+  const tag = html.match(/<img[^>]*src="([^"]*freeflow-hero-3d[^" ]*\.webp)"[^>]*>/)[0]
+  assert.match(tag, /width="\d+"/)
+  assert.match(tag, /height="\d+"/)
+  assert.match(tag, /srcSet="[^"]+640w/)
+  assert.match(tag, /sizes="/)
+  for (const [,asset] of tag.matchAll(/(\/assets\/[^\s",]+\.webp)/g)) {
+    const bytes = await readFile(`dist${asset}`)
+    assert(bytes.length < 160000, asset)
   }
 })
