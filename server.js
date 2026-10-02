@@ -39,56 +39,7 @@ const app = express()
 app.use(express.json({ limit: '32kb' }))
 app.use(express.static(DIST, { redirect: false, index: false }))
 
-const ESC = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }
-const esc = (s = '') => String(s).replace(/[&<>"']/g, (c) => ESC[c])
 const isEmail = (s) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(s || ''))
-
-function leadHtml(b) {
-  const rows = [
-    ['Naam', b.naam],
-    ['Bedrijf', b.bedrijf],
-    ['E-mail', b.email],
-    ['Telefoon', b.telefoon],
-    ['Website', b.website],
-    ['Belangrijkste doel', b.doel],
-    ['Grootste uitdaging', b.uitdaging],
-    ['Maandelijkse investering', b.investering],
-    ['Huidige kanalen', b.kanalen],
-    ['Gewenste timing', b.timing],
-    ['Extra informatie', b.extra],
-  ].filter(([, v]) => v && String(v).trim())
-
-  const attr = b.attribution && typeof b.attribution === 'object' ? b.attribution : {}
-  const attrRows = Object.entries(attr).filter(([, v]) => v && String(v).trim())
-
-  const rowsHtml = rows
-    .map(
-      ([k, v]) =>
-        `<tr><td style="padding:6px 12px;color:#8a8577;vertical-align:top;white-space:nowrap">${esc(
-          k,
-        )}</td><td style="padding:6px 12px;color:#1a1a1a">${esc(v).replace(/\n/g, '<br>')}</td></tr>`,
-    )
-    .join('')
-
-  const attrHtml = attrRows.length
-    ? `<p style="margin:20px 0 6px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#8a8577">Attributie</p>
-       <table style="border-collapse:collapse;font-size:13px">${attrRows
-         .map(
-           ([k, v]) =>
-             `<tr><td style="padding:4px 12px;color:#8a8577;white-space:nowrap">${esc(
-               k,
-             )}</td><td style="padding:4px 12px;color:#1a1a1a">${esc(v)}</td></tr>`,
-         )
-         .join('')}</table>`
-    : ''
-
-  return `<div style="font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:560px;margin:0 auto">
-    <h2 style="font-size:18px;color:#1a1a1a;margin:0 0 4px">Nieuwe groeianalyse-aanvraag</h2>
-    <p style="margin:0 0 16px;color:#8a8577;font-size:13px">Formulier: ${esc(b.form_id || 'onbekend')}</p>
-    <table style="border-collapse:collapse;font-size:14px;width:100%">${rowsHtml}</table>
-    ${attrHtml}
-  </div>`
-}
 
 app.post('/api/lead', async (req, res) => {
   try {
@@ -107,7 +58,7 @@ app.post('/api/lead', async (req, res) => {
     try { payload = crmPayload(b) }
     catch { return res.status(400).json({ error: 'invalid_fields' }) }
     const result = await captureLead({
-      resend, body: b, from: SENDER, to: LEAD_TO, html: leadHtml(b),
+      resend, body: b, from: SENDER, to: LEAD_TO,
       crm: CRM_INBOUND_URL || CRM_INBOUND_TOKEN
         ? () => sendToCrm(payload, { url: CRM_INBOUND_URL, token: CRM_INBOUND_TOKEN })
         : undefined,

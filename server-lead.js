@@ -1,3 +1,4 @@
+import { enquiryTemplate } from './server-templates.js'
 import { createHash } from 'node:crypto'
 
 const pause = ms => new Promise(resolve => setTimeout(resolve, ms))
@@ -43,7 +44,7 @@ export async function saveLeadContact(resend, body, request = resendRequest) {
   }
 }
 
-export async function captureLead({ resend, body, from, to = 'stefkeppens@gmail.com', html, crm, request = resendRequest }) {
+export async function captureLead({ resend, body, from, to = 'stefkeppens@gmail.com', crm, request = resendRequest }) {
   if (!resend) return { ok: false, status: 503, captured: [], failed: ['resend_not_configured'] }
   const key = leadKey(body)
   const tasks = [
@@ -51,7 +52,7 @@ export async function captureLead({ resend, body, from, to = 'stefkeppens@gmail.
     ['resend_email', () => request(() => resend.emails.send({
       from, to: [...new Set(['stefkeppens@gmail.com', to].filter(Boolean))], replyTo: body.email,
       subject: `Nieuwe groeianalyse-aanvraag — ${String(body.bedrijf || body.naam).replace(/[\r\n]/g, ' ').slice(0, 80)}`,
-      html,
+      template: enquiryTemplate(body),
     }, { idempotencyKey: `lead-notification/${key}` }))],
   ]
   if (crm) tasks.push(['crm', crm])
