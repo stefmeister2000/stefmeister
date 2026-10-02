@@ -2,16 +2,17 @@ import { enquiryTemplate } from './server-templates.js'
 import { createHash } from 'node:crypto'
 
 export const WEBSITE_ENQUIRY_SEGMENT = 'd6c1a8b8-b0a0-4ea8-af19-e93f4b07800d'
+export const WEBSITE_ENQUIRY_EVENT = 'website.enquiry_received'
 
 const pause = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 // SDK errors are returned as values. Retry only temporary failures.
-export async function resendRequest(run, sleep = pause) {
+export async function resendRequest(run, sleep = pause, valid = data => Boolean(data?.id)) {
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
       const result = await run()
       if (result.error) throw Object.assign(new Error('Resend request failed'), result.error)
-      if (!result.data?.id) throw Object.assign(new Error('Missing Resend receipt'), { statusCode: 502 })
+      if (!valid(result.data)) throw Object.assign(new Error('Missing Resend receipt'), { statusCode: 502 })
       return result.data
     } catch (error) {
       const temporary = error.statusCode === 429 || error.statusCode >= 500 || error instanceof TypeError || error.name === 'application_error'
@@ -69,6 +70,17 @@ export async function captureLead({ resend, body, from, to = 'stefkeppens@gmail.
     try { await run(); captured.push(label) }
     catch { failed.push(label) }
   }
-  const ok = captured.includes('resend_contact') && captured.includes('resend_segment') && captured.includes('resend_email') && !failed.includes('crm')
+  // Start follow-up only after the enquiry is safely captured. The automation
+  // also checks this persistent marker and subscription state before sending.
+  if (!failed.length && !contact.unsubscribed && contact.properties?.website_flow_started !== 1) {
+    try {
+      await resendRequest(() => resend.events.send({
+        event: WEBSITE_ENQUIRY_EVENT, contactId: contact.id,
+        payload: { submission_id: key, source: 'website' },
+      }), pause, data => data?.object === 'event' && data.event === WEBSITE_ENQUIRY_EVENT)
+      captured.push('resend_flow')
+    } catch { failed.push('resend_flow') }
+  }
+  const ok = captured.includes('resend_contact') && captured.includes('resend_segment') && captured.includes('resend_email') && !failed.length
   return { ok, status: ok ? 200 : 502, captured, failed, key }
 }

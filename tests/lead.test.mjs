@@ -5,12 +5,13 @@ const ok = {data:{id:'receipt'},error:null}
 const failure = {data:null,error:{name:'validation_error',statusCode:422}}
 const body = {naam:'Test Aanvraag',email:'test@example.com',submission_id:'test-1'}
 function fixture() {
-  const sent = [], created = [], segments = []
+  const sent = [], created = [], segments = [], events = []
   const resend = {
+    events:{send:async p=>{events.push(p);return {data:{object:'event',event:p.event}}}},
     contacts:{segments:{add:async p=>{segments.push(p);return ok}},get:async()=>({error:{statusCode:404}}),create:async p=>{created.push(p);return ok}},
     emails:{send:async(p,o)=>{sent.push({p,o});return ok}},
   }
-  return {resend,sent,created,segments}
+  return {resend,sent,created,segments,events}
 }
 const run = (f, more={})=>captureLead({resend:f.resend,body,from:'test@example.com',html:'Test',...more})
 test('requires contact storage and notification to requested inbox',async()=>{
@@ -19,6 +20,8 @@ test('requires contact storage and notification to requested inbox',async()=>{
  assert.deepEqual(f.sent[0].p.to,['stefkeppens@gmail.com'])
  assert.equal(f.sent[0].p.replyTo,body.email)
  assert.deepEqual(f.segments,[{contactId:'receipt',segmentId:WEBSITE_ENQUIRY_SEGMENT}])
+ assert.equal(f.events[0].event,'website.enquiry_received')
+ assert.ok(result.captured.includes('resend_flow'))
 })
 test('contact failure still attempts notification but never reports success',async()=>{
  const f=fixture(); f.resend.contacts.create=async()=>failure
@@ -36,6 +39,19 @@ test('existing contact retains subscription state without a create or update',as
  const f=fixture();f.resend.contacts.get=async()=>({data:{id:'existing',unsubscribed:true}})
  assert.equal((await run(f)).ok,true);assert.equal(f.created.length,0)
  assert.deepEqual(f.segments,[{contactId:'existing',segmentId:WEBSITE_ENQUIRY_SEGMENT}])
+ assert.equal(f.events.length,0)
+})
+test('enrolled contacts do not restart the follow-up sequence',async()=>{
+ const f=fixture();f.resend.contacts.get=async()=>({data:{id:'existing',properties:{website_flow_started:1}}})
+ assert.equal((await run(f)).ok,true);assert.equal(f.events.length,0)
+})
+test('incomplete capture does not start follow-up',async()=>{
+ const f=fixture();f.resend.emails.send=async()=>failure
+ assert.equal((await run(f)).ok,false);assert.equal(f.events.length,0)
+})
+test('rejected flow event is surfaced rather than reporting complete success',async()=>{
+ const f=fixture();f.resend.events.send=async()=>failure
+ const result=await run(f);assert.equal(result.ok,false);assert.deepEqual(result.failed,['resend_flow'])
 })
 test('retries transient failures and reuses notification key across submissions',async()=>{
  let count=0;await resendRequest(async()=>++count<3?{error:{statusCode:429}}:ok,async()=>{})
